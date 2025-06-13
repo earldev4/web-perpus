@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="./assets/script/script.js"></script>
     <link rel="stylesheet" href="./assets/style/style.css">
     <title>Bappeda - Perpustakaan</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-light p-3">
+    <nav class="navbar navbar-expand-lg bg-light p-3" id="mainNavbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="#" >
                 <img src="./assets/img/Lampung_coa.png" alt="" class="img-fluid lampung-logo">
@@ -51,14 +52,47 @@
                         <a class="nav-link text-dark" href="#">Login</a>
                     </li>
                 </ul>
-                <div class="d-flex">
-                    <p>Halo</p>
-                    <p>Hai</p>
-                </div>
+                <a class="borrow-book p-2">
+                    <button class="btn btn-primary p-0">
+                        Pinjam Buku
+                    </button>
+                </a>
             </div>
         </div>
     </nav>
     <h1>Selamat Datang</h1>
+    <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit minima illo nemo hic earum laborum eius fugiat, quasi optio magnam minus? Consectetur eos consequatur dolorem! Tenetur voluptatum illo aut eum.
+    Quam, magnam. Officia atque voluptatum dolorum quos eaque quis veniam amet iusto eum consequuntur odio natus nemo, dicta repudiandae repellat quidem quia sed numquam, ut, distinctio reprehenderit sequi sit reiciendis.
+    In temporibus cum, tempora fuga dolor tempore nihil maiores sequi eveniet tenetur placeat sit nam cupiditate quod neque magni! Veniam accusantium quos id, quam ea velit sed excepturi totam modi.
+    Nihil laboriosam, iure mollitia rerum corrupti ut tenetur consequuntur velit animi id, maiores enim. Praesentium, distinctio aut facilis minima molestiae, veniam omnis quas cumque iure rerum at alias error reprehenderit!
+    Quia, laborum? Facilis consequatur autem voluptatibus excepturi voluptate, porro quae odit cumque quidem nesciunt id. Facilis commodi nisi doloribus impedit corrupti. Unde ducimus veniam rerum minus enim mollitia sint dolor.
+    Quis sunt sit similique blanditiis impedit sequi optio. Amet nam voluptatibus aliquid, consectetur, sit ipsam excepturi at possimus consequatur itaque optio provident veritatis laborum eum quos eos aut unde eveniet?
+    Iste debitis architecto fugit voluptate tempora suscipit veniam omnis neque cum. Saepe natus porro dolores sit corrupti a nobis cumque enim sequi ex? Nobis odit adipisci non, incidunt blanditiis at.
+    Necessitatibus consequuntur suscipit porro dolores cum asperiores, laboriosam eaque illo voluptates recusandae nam obcaecati vero officiis fugit corporis unde quibusdam nesciunt nostrum odit beatae quam. Veniam laudantium pariatur ad libero!
+    Quas odio expedita minima tenetur et? Quisquam odio, dolorum quibusdam magni magnam delectus, accusamus doloremque nesciunt iste dolore voluptates, fuga id error nulla neque. Officiis dolor distinctio animi error neque.
+    Ratione distinctio autem, accusamus magni aspernatur, laborum nemo debitis nam error corporis magnam rem dicta cum aut consequatur eveniet adipisci similique deleniti nulla a possimus tenetur ducimus? Doloribus, repudiandae soluta.
+    Sint obcaecati rerum modi numquam incidunt deserunt ex culpa tempora, ipsam magni nobis mollitia quas ullam eum! Provident quo eaque, numquam neque amet dolor, quisquam voluptatum omnis veniam consectetur quia?
+    Totam inventore, sit quas autem praesentium dolores magnam alias minima pariatur reiciendis maiores nulla non cum odio incidunt tempore? Amet reiciendis cupiditate aliquam deserunt eaque beatae aliquid, quae vitae cumque.
+    Sit, consequatur sed incidunt voluptas nemo libero voluptatum nesciunt eveniet cum doloribus aliquid repellat! Corporis quo sapiente esse reprehenderit, fugiat quisquam, animi cupiditate et sint necessitatibus asperiores. Tempore, nostrum suscipit!
+    Vitae facere voluptate omnis tempore obcaecati molestias magnam necessitatibus perspiciatis et? Natus optio consequatur quaerat quia, necessitatibus ad quo asperiores accusamus velit, expedita hic voluptatem? Consequatur natus dolore sit. Perferendis!
+    Distinctio neque ea in tenetur sequi! Vitae sit qui minus quasi perferendis dolorum porro labore blanditiis deleniti suscipit quis quod, id quisquam sint accusamus aliquam ex eius minima a beatae.
+    Sequi, qui earum dolorum esse explicabo inventore perferendis, harum odio atque nobis dolore, omnis dolorem beatae corrupti quae dolor neque enim? Dolorum nulla, cumque nostrum corporis tempora ratione enim error.
+    Temporibus odio nobis aperiam! Aliquid, eligendi in repellat, veritatis debitis ipsam porro amet quis consequatur pariatur ipsum expedita quos quasi autem voluptate. Numquam, molestiae voluptates. Earum quibusdam aspernatur incidunt delectus.
+    Enim, tempora officiis. Cum amet debitis quis nam vero? Quis nisi dolores quas quae. Architecto placeat necessitatibus veritatis ullam, totam, reiciendis consectetur autem doloremque, possimus eius consequuntur odio quasi molestias.
+    Possimus laborum dolore rerum facilis cum suscipit quibusdam. Doloribus magnam incidunt cum, expedita numquam eius autem odit neque eligendi. Sapiente odit tempore libero sed deleniti natus reprehenderit doloribus! Itaque, numquam!
+    Nesciunt, consectetur numquam et tenetur, minima laudantium alias ex pariatur nemo nam saepe aut, quia eius illum neque! Nisi sunt officia totam voluptatem, eaque aspernatur molestiae eligendi. Eligendi, quia inventore?</h3>
+    <footer>
+        <div class="container-fluid p-5 footer-color">
+            <div>
+                <div class="row">
+                    <div class="col">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta molestiae officia quis ex incidunt rerum nostrum, dignissimos cumque expedita iste sed neque iure commodi vitae beatae eligendi? Tempora, nihil dicta!</div>
+                    <div class="col">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum ipsam ullam aliquam corrupti alias amet magni laudantium voluptatum veritatis quibusdam eveniet a repudiandae asperiores expedita rerum, repellat distinctio tempore. Saepe?</div>
+                    <div class="col">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis accusamus doloribus soluta fuga eveniet amet blanditiis reiciendis! At exercitationem odit ea nemo laboriosam, provident deserunt, dolor porro corporis quaerat voluptatem.</div>
+                    <div class="col">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor voluptates illum officiis magnam. Facilis enim aliquid quas commodi, pariatur libero blanditiis alias repellendus esse non accusantium vel doloremque nostrum nobis.</div>
+                </div>
+            </div>
+        </div>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
