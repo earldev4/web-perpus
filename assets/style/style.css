@@ -1,0 +1,7 @@
+body .navbar .container-fluid .navbar-brand img{
+    width: 50px; 
+    height: 70px;
+}
+/* .navbar .container-fluid .collapse .navbar-nav .nav-item .dropdown-toggle::after{
+    content:"\F22C";
+} */
