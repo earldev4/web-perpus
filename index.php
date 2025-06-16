@@ -61,7 +61,7 @@
             </div>
         </div>
     </nav>
-    <h1 class="text-center my-3 py-1">Selamat Datang Di Website Perpustakaan <br>Bappeda Lampung</h1>
+    <h1 class="text-center my-3 py-1"> Datang Di Website Perpustakaan <br>Bappeda Lampung</h1>
     <div id="carouselExampleIndicators" class="carousel slide mx-auto" style="max-width: 1200px;" data-bs-ride="carousel" data-bs-touch="true">
         <div class="carousel-inner">
             <div class="carousel-item active">
