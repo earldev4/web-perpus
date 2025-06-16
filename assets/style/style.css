@@ -11,6 +11,12 @@ body {
     height: 70px;
 }
 
+.navbar .borrow-book .btn-primary{
+    background: linear-gradient(135deg, #036280, #012e4a);
+    color: white;
+    font-weight: 500;
+}
+
 #mainNavbar {
     position: sticky;
     top: 0;
