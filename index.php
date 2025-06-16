@@ -22,7 +22,7 @@
     </div>
 
     <?php include 'components/carousel.php'; ?>
-
+    <!-- tes -->
     <?php include 'components/stats.php'; ?>
 
     <?php include 'components/footer.php'; ?>
