@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <script src="./assets/script/script.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./assets/style/style.css">
+    <script src="./assets/script/script.js"></script>
     <title>Bappeda - Perpustakaan</title>
 </head>
 <body>
@@ -61,7 +61,119 @@
             </div>
         </div>
     </nav>
-    <h1>Selamat Datang</h1>
+    <h1 class="text-center my-3 py-1">Selamat Datang Di Website Perpustakaan <br>Bappeda Lampung</h1>
+    <div id="carouselExampleIndicators" class="carousel slide mx-auto" style="max-width: 1200px;" data-bs-ride="carousel" data-bs-touch="true">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row justify-content-center gx-3 gy-3">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="card">
+                                <img src="./assets/img/buku/buku1.jpg" class="card-img-top" alt="Book 1" style="height: 220px; object-fit: cover;">
+                                <div class="card-body text-center">
+                                    <p class="text-muted small mb-0">Pemerintahan</p>
+                                    <h6 class="fw-bold mb-1">Buku 1</h6>
+                                    <p class="text-muted small mb-1">Alexander</p>
+                                    <a href="#" class="btn btn-outline-primary btn-sm">Pinjam Sekarang</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="card">
+                                <img src="./assets/img/buku/buku2.jpg" class="card-img-top" alt="Book 1" style="height: 220px; object-fit: cover;">
+                                <div class="card-body text-center">
+                                    <p class="text-muted small mb-0">Politik</p>
+                                    <h6 class="fw-bold mb-1">Buku2</h6>
+                                    <p class="text-muted small mb-1">Michael</p>
+                                    <a href="#" class="btn btn-outline-primary btn-sm">Pinjam Sekarang</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="card">
+                                <img src="./assets/img/buku/buku3.jpg" class="card-img-top" alt="Book 1" style="height: 220px; object-fit: cover;">
+                                <div class="card-body text-center">
+                                    <p class="text-muted small mb-0">Hewan</p>
+                                    <h6 class="fw-bold mb-1">Buku3</h6>
+                                    <p class="text-muted small mb-1">Alexander</p>
+                                    <a href="#" class="btn btn-outline-primary btn-sm">Pinjam Sekarang</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="card">
+                                <img src="./assets/img/buku/buku3.jpg" class="card-img-top" alt="Book 1" style="height: 220px; object-fit: cover;">
+                                <div class="card-body text-center">
+                                    <p class="text-muted small mb-0">Hewan</p>
+                                    <h6 class="fw-bold mb-1">Buku3</h6>
+                                    <p class="text-muted small mb-1">Alexander</p>
+                                    <a href="#" class="btn btn-outline-primary btn-sm">Pinjam Sekarang</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item ">
+                <div class="container">
+                    <div class="row justify-content-center gx-2 gy-3">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="card">
+                                <img src="./assets/img/buku/buku4.jpg" class="card-img-top" alt="Book 1" style="height: 220px; object-fit: cover;">
+                                <div class="card-body text-center">
+                                    <p class="text-muted small mb-0">Teknologi</p>
+                                    <h6 class="fw-bold mb-1">Buku 4</h6>
+                                    <p class="text-muted small mb-1">Alexander</p>
+                                    <a href="#" class="btn btn-outline-primary btn-sm">Pinjam Sekarang</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="card">
+                                <img src="./assets/img/buku/buku5.jpg" class="card-img-top" alt="Book 1" style="height: 220px; object-fit: cover;">
+                                <div class="card-body text-center">
+                                    <p class="text-muted small mb-0">Sosial</p>
+                                    <h6 class="fw-bold mb-1">Buku 5</h6>
+                                    <p class="text-muted small mb-1">Alexander</p>
+                                    <a href="#" class="btn btn-outline-primary btn-sm">Pinjam Sekarang</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="card">
+                                <img src="./assets/img/buku/buku1.jpg" class="card-img-top" alt="Book 1" style="height: 220px; object-fit: cover;">
+                                <div class="card-body text-center">
+                                    <p class="text-muted small mb-0">Politik</p>
+                                    <h6 class="fw-bold mb-1">Buku6</h6>
+                                    <p class="text-muted small mb-1">Alexander</p>
+                                    <a href="#" class="btn btn-outline-primary btn-sm">Pinjam Sekarang</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="card">
+                                <img src="./assets/img/buku/buku1.jpg" class="card-img-top" alt="Book 1" style="height: 220px; object-fit: cover;">
+                                <div class="card-body text-center">
+                                    <p class="text-muted small mb-0">Politik</p>
+                                    <h6 class="fw-bold mb-1">Buku6</h6>
+                                    <p class="text-muted small mb-1">Alexander</p>
+                                    <a href="#" class="btn btn-outline-primary btn-sm">Pinjam Sekarang</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
     <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit minima illo nemo hic earum laborum eius fugiat, quasi optio magnam minus? Consectetur eos consequatur dolorem! Tenetur voluptatum illo aut eum.
     Quam, magnam. Officia atque voluptatum dolorum quos eaque quis veniam amet iusto eum consequuntur odio natus nemo, dicta repudiandae repellat quidem quia sed numquam, ut, distinctio reprehenderit sequi sit reiciendis.
     In temporibus cum, tempora fuga dolor tempore nihil maiores sequi eveniet tenetur placeat sit nam cupiditate quod neque magni! Veniam accusantium quos id, quam ea velit sed excepturi totam modi.
