@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-6 footer-content">
                     <div class="logo-section">
-                        <img src="./assets/img/Lampung_coa.png" alt="Logo" class="footer-logo">
+                        <img src="/assets/img/Lampung_coa.png" alt="Logo" class="footer-logo">
                     </div>
                     <div class="footer-text">
                         <p>Bappeda Provinsi Lampung merupakan lembaga perencana pembangunan daerah yang membantu Gubernur dalam perumusan kebijakan pembangunan. Sejak dibentuk tahun 1980, struktur dan tugasnya telah beberapa kali mengalami penyesuaian sesuai peraturan perundang-undangan, terakhir melalui Pergub No. 88 Tahun 2016.</p>
