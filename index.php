@@ -11,57 +11,8 @@
     <title>Bappeda - Perpustakaan</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-light p-3" id="mainNavbar">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#" >
-                <img src="./assets/img/Lampung_coa.png" alt="" class="img-fluid lampung-logo">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ps-5 me-auto mb-2 mb-lg-0 gap-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="#">Catalog</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                    <a class="nav-link text-dark d-flex align-items-center gap-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
-                        Profil <i class="bi bi-chevron-down" style="text-shadow: 0 0 1px currentColor;"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Kelembagaan</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Struktur Organisasi</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Sejarah</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link text-dark d-flex align-items-center gap-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Social Media <i class="bi bi-chevron-down" style="text-shadow: 0 0 1px currentColor;"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Instagram</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">YouTube</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="#">Login</a>
-                    </li>
-                </ul>
-                <a class="borrow-book p-2">
-                    <button class="btn btn-primary p-0">
-                        Pinjam Buku
-                    </button>
-                </a>
-            </div>
-        </div>
-    </nav>
-    <h1 class="text-center my-3 py-1"> Datang Di Website Perpustakaan <br>Bappeda Lampung</h1>
+    <?php include 'components/navbar.php'; ?>
+    <h1 class="text-center my-3 py-1">Selamat Datang Di Website Perpustakaan <br>Bappeda Lampung</h1>
     <div id="carouselExampleIndicators" class="carousel slide mx-auto" style="max-width: 1200px;" data-bs-ride="carousel" data-bs-touch="true">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -194,68 +145,9 @@
     Enim, tempora officiis. Cum amet debitis quis nam vero? Quis nisi dolores quas quae. Architecto placeat necessitatibus veritatis ullam, totam, reiciendis consectetur autem doloremque, possimus eius consequuntur odio quasi molestias.
     Possimus laborum dolore rerum facilis cum suscipit quibusdam. Doloribus magnam incidunt cum, expedita numquam eius autem odit neque eligendi. Sapiente odit tempore libero sed deleniti natus reprehenderit doloribus! Itaque, numquam!
     Nesciunt, consectetur numquam et tenetur, minima laudantium alias ex pariatur nemo nam saepe aut, quia eius illum neque! Nisi sunt officia totam voluptatem, eaque aspernatur molestiae eligendi. Eligendi, quia inventore?</h3>
-    <footer>
-    <div class="container-fluid p-5 footer-color">
-        <div>
-            <div class="row">
-                <div class="col-6 footer-content">
-                    <div class="logo-section">
-                        <img src="./assets/img/Lampung_coa.png" alt="Logo" class="footer-logo">
-                    </div>
-                    <div class="footer-text">
-                        <p>Bappeda Provinsi Lampung merupakan lembaga perencana pembangunan daerah yang membantu Gubernur dalam perumusan kebijakan pembangunan. Sejak dibentuk tahun 1980, struktur dan tugasnya telah beberapa kali mengalami penyesuaian sesuai peraturan perundang-undangan, terakhir melalui Pergub No. 88 Tahun 2016.</p>
-                    </div>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="mailto:example@example.com"><i class="fas fa-envelope"></i></a>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="row contact-info">
-                        <div class="col-12 d-flex align-items-center mb-3">
-                            <i class="fas fa-phone-alt contact-icon"></i>
-                            <div class="contact-details">
-                                <span class="contact-label">Kontak</span>
-                                <span class="contact-value">(0721) 485458</span>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row contact-info">
-                        <div class="col-12 d-flex align-items-center mb-3">
-                            <i class="fas fa-envelope contact-icon"></i>
-                            <div class="contact-details">
-                                <span class="contact-label">E-Mail</span>
-                                <span class="contact-value">example@gmail.com</span>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row contact-info">
-                        <div class="col-12 d-flex align-items-center mb-3">
-                            <i class="fas fa-clock contact-icon"></i>
-                            <div class="contact-details">
-                                <span class="contact-label">Jam Kerja</span>
-                                <span class="contact-value">Monday - Fri: 7.30 am - 4.00 pm</span>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row contact-info">
-                        <div class="col-12 d-flex align-items-center mb-3">
-                            <i class="fas fa-map-marker-alt contact-icon"></i>
-                            <div class="contact-details">
-                                <span class="contact-label">Lokasi</span>
-                                <span class="contact-value">Jalan Robert Wolter Monginsidi No. 223</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
+    
+    <?php include 'components/footer.php'; ?>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
