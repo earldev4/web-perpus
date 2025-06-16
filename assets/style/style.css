@@ -1,20 +1,24 @@
-body{
+/* General Styles */
+body {
     color: #012e4a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
 }
 
+/* Navbar Styles (keeping your existing navbar styles) */
 .navbar-brand img {
     width: 50px;
     height: 70px;
 }
 
 #mainNavbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  transition: top 0.3s ease-in-out;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: top 0.3s ease-in-out;
 }
 
-.navbar.navbar-position.bg-light{
+.navbar.navbar-position.bg-light {
     background-color: white !important;
 }
 
@@ -27,11 +31,6 @@ body{
     box-shadow: none;
     border: 1px solid #dee2e6;
     padding: 0.25rem 0;
-}
-
-.carousel-item img {
-    height: 500px; 
-    object-fit: cover; 
 }
 
 @media (min-width: 992px) {
@@ -61,6 +60,7 @@ body{
     margin: 0.5rem 0;
     opacity: 0.6;
 }
+
 .dropdown-item {
     padding: 1.25rem 1.75rem;
     font-weight: 500;
@@ -73,42 +73,124 @@ body{
     background-color: transparent;
     position: relative;
 }
+
 .dropdown-menu {
-  padding: 0 !important; 
+    padding: 0 !important;
 }
+
 .dropdown-item:hover {
     background-color: #036280;
     color: white;
 }
+
 .navbar-nav .nav-link {
     font-weight: 400;
     position: relative;
     transition: all 0.3s ease;
 }
-.dropdown-divider{
+
+.dropdown-divider {
     margin: 0 !important;
     padding: 0 !important;
 }
+
 button.btn {
-  padding: 10px !important;
-  line-height: 1;
-} 
+    padding: 10px !important;
+    line-height: 1;
+}
+
 button.btn.btn-primary {
-  background-color: #012e4a;
-  transition: all 0.3s ease;
-} 
-button.btn.btn-primary:hover {
-  background-color: #036280;
-} 
-.footer-color{
     background-color: #012e4a;
+    transition: all 0.3s ease;
+}
+
+button.btn.btn-primary:hover {
+    background-color: #036280;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #012e4a 0%, #036280 100%);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="books" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="20" height="20" fill="none"/><path d="M2 2h16v16H2z" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23books)"/></svg>') repeat;
+    opacity: 0.1;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+/* Statistics Section */
+.stats-section {
+    background: linear-gradient(135deg, #012e4a 0%, #036280 100%);
+    padding: 60px 0;
     color: white;
 }
 
-/* footer-style.css */
+.stat-card {
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+}
 
+.stat-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+.stat-number {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 1rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+/* Footer Styles (keeping your existing footer styles) */
 .footer-color {
-    background-color: #1e3a5f;
+    background-color: #012e4a;
     color: white;
 }
 
@@ -125,7 +207,6 @@ button.btn.btn-primary:hover {
 .footer-logo {
     width: 70px;
     height: 90px;
-
 }
 
 .footer-text {
@@ -191,6 +272,41 @@ button.btn.btn-primary:hover {
 .contact-value {
     font-weight: bold;
     font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .custom-control-prev {
+        left: -25px;
+    }
+    
+    .custom-control-next {
+        right: -25px;
+    }
+}
+
+@media (max-width: 992px) {
+    .custom-control-prev,
+    .custom-control-next {
+        display: none;
+    }
+    
+    .book-carousel {
+        padding: 30px 20px;
+    }
+    
+    .book-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
 }
 
 /* Responsive adjustments */
