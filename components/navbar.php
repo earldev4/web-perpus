@@ -31,9 +31,9 @@
                             Social Media <i class="bi bi-chevron-down" style="text-shadow: 0 0 1px currentColor;"></i>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Instagram</a></li>
+                            <li><a class="dropdown-item" href="https://www.instagram.com/bappeda_lampung/?hl=en" target="_blank" rel="noopener noreferrer">Instagram</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">YouTube</a></li>
+                            <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCZMZAzUJh0EDYEU5FfV64eg" target="_blank" rel="noopener noreferrer">YouTube</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
