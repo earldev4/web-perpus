@@ -14,7 +14,7 @@
                         <a class="nav-link active" aria-current="page" href="/index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="#">Catalog</a>
+                        <a class="nav-link text-dark" href="/pages/katalog.php">Catalog</a>
                     </li>
                     <li class="nav-item dropdown">
                     <a class="nav-link text-dark d-flex align-items-center gap-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
