@@ -11,6 +11,12 @@ body {
     height: 70px;
 }
 
+.w-100 .borrow-book .btn-primary{
+    background: linear-gradient(135deg, #036280, #012e4a);
+    color: white;
+    font-weight: 500;
+}
+
 .navbar .borrow-book .btn-primary{
     background: linear-gradient(135deg, #036280, #012e4a);
     color: white;
@@ -122,8 +128,17 @@ button.btn.btn-primary:hover {
     text-align: center;
     position: relative;
     overflow: hidden;
+    z-index: 1;
+}
+.hero-section input,
+.hero-section button {
+    position: relative;
+    z-index: 3;
 }
 
+.hero-section table {
+    z-index: 2;
+}
 .hero-section::before {
     content: '';
     position: absolute;

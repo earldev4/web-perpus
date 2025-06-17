@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../assets/style/carousel.css">
     <script src="../assets/script/script.js"></script>   
     
-    <title>Perpustakaan</title>
+    <title>Perpustakaan - Struktur Organisasi</title>
 </head>
 <body>
     <?php include '../components/navbar.php'; ?>
