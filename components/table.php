@@ -1,3 +1,4 @@
+<!-- components/table.php -->
 <div class="table-responsive rounded overflow-hidden bg-white">
     <table class="table custom-table table-hover">
         <thead>
@@ -12,10 +13,10 @@
         <tbody>
             <tr>
                 <th scope="row" class="fs-5">1</th>
-                <th><img src="../assets/img/buku/buku1.jpg" alt="" class="img-fluid rounded" style="width: 150px; height: 200px;"></th>
+                <th><img src="/assets/img/buku/buku1.jpg" alt="" class="img-fluid rounded" style="width: 150px; height: 200px;"></th>
                 <td class="fs-5">Das Kapital</td>
                 <td class="fs-5">500</td>
-                <td><button class="btn btn-primary">Lihat Selengkapnya</button></td>
+                <td><button class="btn btn-primary" onclick="window.location.href='./detail.php'">Lihat Selengkapnya</button></td>
             </tr>
         </tbody>
     </table>

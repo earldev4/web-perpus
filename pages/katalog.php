@@ -17,6 +17,7 @@
 </head>
 <body>
     <?php include '../components/navbar.php'; ?>
+    
     <div class="hero-section">
         <div class="container">
             <h1 class="hero-title">Katalog Buku</h1>
