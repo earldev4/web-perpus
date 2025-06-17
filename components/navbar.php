@@ -37,7 +37,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="#">Login</a>
+                        <a class="nav-link text-dark" href="/pages/login.php">Login</a>
                     </li>
                 </ul>
                 <a class="borrow-book p-2">
