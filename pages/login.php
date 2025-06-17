@@ -11,11 +11,13 @@
     <title>Login - Sistem Perpustakaan Bappeda</title>
 </head>
 <body>
+    <a href="../index.php" class="home-icon">
+        <i class="bi bi-house-door-fill"></i>
+    </a>
     <div class="login-container">
         <div class="login-card">
             <div class="login-header">
                 <div class="banner-section">
-                    <!-- Banner image akan dimasukkan di sini -->
                     <div class="banner-placeholder"></div>
                     <div class="header-content">
                         <h2>Sistem Perpustakaan Bappeda</h2>
@@ -45,7 +47,7 @@
                     
                     <div class="forgot-password">
                         <i class="fas fa-lock"></i>
-                        <a href="#" class="forgot-link">Lupa Password?</a>
+                        <a href="https://wa.me/6282269522432" class="forgot-link" target="_blank" rel="noopener noreferrer">Lupa Password?</a>
                     </div>
                 </form>
             </div>

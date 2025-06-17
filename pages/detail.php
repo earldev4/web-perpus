@@ -25,7 +25,11 @@ $no_panggil = "342.02 ASS k";
     
     <?php include '../components/navbar.php'; ?>
 
+    
     <div class="container">
+        <a href="./katalog.php" class="home-icon">
+            <i class="bi bi-arrow-left-circle-fill"></i>
+        </a>
         <header class="book-header">
             <h1 class="book-title"><?php echo $judul_buku; ?></h1>
         </header>

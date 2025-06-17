@@ -15,6 +15,20 @@ body {
     color: white;
 }
 
+.home-icon {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 1.8rem;
+    color: #012e4a;
+    z-index: 1000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.home-icon:hover {
+    color: #0d6efd;
+}
 
 .login-container {
     width: 100%;
@@ -54,8 +68,6 @@ body {
     opacity: 0.1;
     z-index: 0;
 }
-
-
 
 .banner-section {
     position: relative;
