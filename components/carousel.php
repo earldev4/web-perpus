@@ -187,7 +187,7 @@
 
             <!-- Browse All Books Button -->
             <div class="text-center mt-5">
-                <a href="#" class="btn-browse-all">
+                <a href="../pages/katalog.php" class="btn-browse-all">
                     <i class="fas fa-book-open"></i>
                     Jelajahi Semua Koleksi
                 </a>
