@@ -1,11 +1,22 @@
 <?php
-// Data buku
-$judul_buku = "Konstitusi & konstitusionalisme Indonesia";
+require_once "../config/db.php";
+$conn = getConnection();
 
-$deskripsi = "Dalam buku ini Prof. Dr. Jimly Asshiddiqie, S.H., ketua Mahkamah Konstitusi RI yang juga guru besar fakultas hukum UI, membahas sejarah mula konstitusi dan sejarah konstitusi Indonesia, membicarakan demokrasi dan nomokrasi, mengetengahkan prinsip pemisahan kekuasaan dan bagaimana penerapan-penerapan ideal sebuah konstitusi.";
-
-// Informasi detail
-$no_panggil = "342.02 ASS k";
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $sql = <<<SQL
+        SELECT buku.*, informasi.jumlah_halaman, informasi.bahasa_buku, informasi.isbn_buku
+        FROM buku
+        JOIN informasi ON buku.id_informasi = informasi.id_informasi
+        WHERE buku.id_buku = ?
+    SQL;
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(1, $id);
+    $stmt->execute();
+    $book = $stmt->fetch(PDO::FETCH_ASSOC);
+} else {
+    header("Location: ../pages/katalog.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,36 +30,36 @@ $no_panggil = "342.02 ASS k";
     <link rel="stylesheet" href="../assets/style/style.css">
     <link rel="stylesheet" href="../assets/style/detail.css">
     <script src="../assets/script/script.js"></script>   
-    <title>Perpustakaan Bappeda - <?php echo $judul_buku; ?></title>
+    <title>Perpustakaan - Detail<?php echo $judul_buku; ?></title>
 </head>
 <body>
     
     <?php include '../components/navbar.php'; ?>
 
     <div class="container">
-        <header class="book-header">
-            <h1 class="book-title"><?php echo $judul_buku; ?></h1>
+        <header class="book-header d-flex">
+            <h1 class="book-title"><?= $book['judul_buku']; ?></h1>
+            <p class="text-muted fs-4 px-2"> - <?= $book['kategori_buku'];?>
         </header>
 
         <div class="book-image">
-            <img src="/assets/img/buku/buku1.jpg" alt="<?php echo $judul_buku; ?>" class="img-fluid rounded">
+            <img src="/assets/img/buku/<?= $book['gambar_buku']; ?>" alt="<?= $book['judul_buku']; ?>" class="img-fluid rounded"></p>
         </div>
 
         <h2>Deskripsi Singkat</h2>
         <section class="book-description">
-            <p><?php echo $deskripsi; ?></p>
+            <p><?= $book['deskripsi_buku']; ?></p>
         </section>
 
         <section class="detail-section">
             <h2>Informasi Detail</h2>
             <div class="detail-list">
-                <div><strong>No. Panggil:</strong> 342.02 ASS k</div>
-                <div><strong>Penerbit:</strong> Konstitusi Press, Jakarta., 2006</div>
-                <div><strong>Deskripsi Fisik:</strong> xviii, 414 hal. ; 21 cm.</div>
-                <div><strong>Bahasa:</strong> Indonesia</div>
-                <div><strong>ISBN/ISSN:</strong> 979-96962-7-5</div>
-                <div><strong>Klasifikasi:</strong> 342.02</div>
-                <div><strong>Subjek:</strong> Konstitusi, konstitusionalisme</div>
+                <div><strong>Penerbit:</strong> <?= $book['penerbit_buku']; ?></div>
+                <div><strong>Jumlah Buku:</strong> <?= $book['jumlah_buku']; ?></div>
+                <div><strong>Jumlah Halaman:</strong> <?= $book['jumlah_halaman']; ?></div>
+                <div><strong>Deskripsi Buku:</strong> <?= $book['deskripsi_buku']; ?></div>
+                <div><strong>Bahasa:</strong> <?= $book['bahasa_buku']; ?></div>
+                <div><strong>ISBN/ISSN:</strong><?= $book['isbn_buku']; ?></div>
             </div>
         </section>
     </div>

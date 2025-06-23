@@ -1,5 +1,11 @@
 <?php
+require_once '../config/db.php';
 
+$conn = getConnection();
+
+$stmt = $conn->prepare("SELECT * FROM buku");
+$stmt->execute();
+$books = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">

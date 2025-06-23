@@ -1,5 +1,5 @@
-<!-- components/table.php -->
-<div class="table-responsive rounded overflow-hidden bg-white">
+<?php if(isset($books)){ ?>
+    <div class="table-responsive rounded overflow-hidden bg-white">
     <table class="table custom-table table-hover">
         <thead>
             <tr>
@@ -11,13 +11,17 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row" class="fs-5">1</th>
-                <th><img src="/assets/img/buku/buku1.jpg" alt="" class="img-fluid rounded" style="width: 150px; height: 200px;"></th>
-                <td class="fs-5">Das Kapital</td>
-                <td class="fs-5">500</td>
-                <td><button class="btn btn-primary" onclick="window.location.href='./detail.php'">Lihat Selengkapnya</button></td>
-            </tr>
+            <?php
+            $id_buku = 1;
+            foreach ($books as $book){?>
+                <tr>
+                    <th scope="row" class="fs-5"><?= $id_buku++?></th>
+                    <th><img src="/assets/img/buku/<?= $book["gambar_buku"]?>" alt="" class="img-fluid rounded" style="width: 150px; height: 200px;"></th>
+                    <td class="fs-5"><?= $book["judul_buku"]?></td>
+                    <td class="fs-5"><?= $book["jumlah_buku"]?></td>
+                    <td><button class="btn btn-primary" onclick="window.location.href='./detail.php?id=<?= $book['id_buku'] ?>'">Lihat Selengkapnya</button></td>
+                </tr>
+            <?php } ?>
         </tbody>
     </table>
     <nav aria-label="Page navigation example">
@@ -30,3 +34,6 @@
         </ul>
     </nav>
 </div>
+<?php } else {?>
+    <p>Tidak Ada Buku</p>
+<?php } ?>
