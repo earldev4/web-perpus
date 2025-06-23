@@ -1,3 +1,32 @@
+<?php
+require_once "../config/db.php";
+$conn = getConnection();
+
+if ($_SERVER['REQUEST_METHOD'] == "POST"){
+    if(isset($_POST["username"]) && isset($_POST["password"])){
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+
+        if($username && $password){
+            $sql = <<<SQL
+                SELECT * FROM user WHERE nama_user = ? AND password_user = ?;
+            SQL;
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(1, $username);
+            $stmt->bindParam(2, $password);
+            $stmt->execute();
+
+            if($stmt->fetch()){
+                echo "<script>alert('Login berhasil!'); window.location.href='../admin/home.php';</script>";
+                exit();
+            } else {
+                echo "<script>alert('Login gagal! Username atau Password salah.');</script>";
+            }
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -30,10 +59,10 @@
             </div>
             
             <div class="login-form-section">
-                <form action="" method="POST" class="login-form">
+                <form action="login.php" method="POST" class="login-form">
                     <div class="form-group">
-                        <label for="nip">NIP</label>
-                        <input type="text" id="nip" name="nip" placeholder="Masukan NIP" required>
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Masukan Username" required>
                     </div>
                     
                     <div class="form-group">
@@ -51,28 +80,5 @@
             </div>
         </div>
     </div>
-
-    <?php
-        // Dummy akun
-        $akun_dummy = [
-            'nip' => '123',
-            'password' => 'admin123' // bisa pakai hash di sistem sebenarnya
-        ];
-
-        // Cek jika ada input login
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $nip = $_POST['nip'] ?? '';
-            $password = $_POST['password'] ?? '';
-
-            // Validasi terhadap akun dummy
-            if ($nip === $akun_dummy['nip'] && $password === $akun_dummy['password']) {
-                echo "<script>alert('Login berhasil!'); window.location.href='../index.php';</script>";
-                exit();
-            } else {
-                echo "<script>alert('Login gagal! NIP atau Password salah.');</script>";
-            }
-        }
-    ?>
-
 </body>
 </html>
