@@ -36,6 +36,7 @@ if (isset($_GET['id'])) {
     
     <?php include '../components/navbar.php'; ?>
 
+    
     <div class="container">
         <header class="book-header d-flex">
             <h1 class="book-title"><?= $book['judul_buku']; ?></h1>
