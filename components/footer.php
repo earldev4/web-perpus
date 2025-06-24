@@ -2,7 +2,7 @@
     <div class="container-fluid p-5 footer-color">
         <div>
             <div class="row">
-                <div class="col-6 footer-content">
+                <div class="col-sm-6 col-12 footer-content">
                     <div class="logo-section">
                         <img src="/assets/img/Lampung_coa.png" alt="Logo" class="footer-logo">
                     </div>
@@ -15,7 +15,7 @@
                         <a href="mailto:example@example.com"><i class="fas fa-envelope"></i></a>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-sm-6 col-12 py-sm-0 py-3">
                     <div class="row contact-info">
                         <div class="col-12 d-flex align-items-center mb-3">
                             <i class="fas fa-phone-alt contact-icon"></i>

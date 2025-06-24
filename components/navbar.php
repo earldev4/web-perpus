@@ -41,7 +41,7 @@
                     </li>
                 </ul>
                 <a class="borrow-book p-2">
-                    <button class="btn btn-primary p-0">
+                    <button class="btn btn-primary p-0 px-3 py-2 rounded">
                         Pinjam Buku
                     </button>
                 </a>
