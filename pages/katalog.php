@@ -1,11 +1,11 @@
 <?php
-require_once '../config/db.php';
+require_once __DIR__ . "/../config/db.php";
+require_once __DIR__ . "/../config/class.php";
 
 $conn = getConnection();
+$perpustakaan = new Perpustakaan($conn);
 
-$stmt = $conn->prepare("SELECT * FROM buku");
-$stmt->execute();
-$books = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$book_collections = $perpustakaan->displayCatalogBook();
 ?>
 <!DOCTYPE html>
 <html lang="en">

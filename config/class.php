@@ -53,4 +53,14 @@ class Perpustakaan{
             "redirect" => "../pages/login.php"
         ];
     }
+
+    public function displayCatalogBook(): array{
+        $stmt = $this->conn->prepare("SELECT * FROM buku");
+        $stmt->execute();
+        $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return [
+            "books" => $books,
+        ];
+    }
 }

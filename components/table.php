@@ -1,4 +1,4 @@
-<?php if(isset($books)){ ?>
+<?php if(isset($book_collections)){ ?>
     <div class="table-responsive rounded overflow-hidden ">
         <table class="table custom-table table-hover text-light mt-3">
             <thead>
@@ -12,7 +12,7 @@
             <tbody>
                 <?php
                 $id_buku = 1;
-                foreach ($books as $book){?>
+                foreach ($book_collections["books"] as $book){?>
                     <tr>
                         <th scope="row" class="fs-sm-5"><?= $id_buku++?></th>
                         <td class="fs-sm-5"><?= $book["judul_buku"]?></td>

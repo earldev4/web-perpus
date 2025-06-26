@@ -19,3 +19,7 @@
     background: linear-gradient(135deg, #036280, #012e4a);
     color: white;
 }
+.pagination .page-item .page-link:hover{
+    background: linear-gradient(135deg, #012e4a, #036280);
+    color: white;
+}
