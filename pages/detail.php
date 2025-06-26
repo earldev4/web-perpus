@@ -1,21 +1,16 @@
 <?php
-require_once "../config/db.php";
-$conn = getConnection();
+require_once __DIR__ . "/../config/db.php";
+require_once __DIR__ . "/../config/class.php";
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $sql = <<<SQL
-        SELECT buku.*, informasi.jumlah_halaman, informasi.bahasa_buku, informasi.isbn_buku
-        FROM buku
-        JOIN informasi ON buku.id_informasi = informasi.id_informasi
-        WHERE buku.id_buku = ?
-    SQL;
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(1, $id);
-    $stmt->execute();
-    $book = $stmt->fetch(PDO::FETCH_ASSOC);
-} else {
-    header("Location: ../pages/katalog.php");
+$conn = getConnection();
+$perpustakaan = new Perpustakaan($conn);
+
+if($_SERVER["REQUEST_METHOD"] == "GET") {
+    if (isset($_GET['id'])) {
+        $id_berita = $_GET['id'];
+        $result = $perpustakaan->viewBookDetail($id_berita);
+        $book = $result['book'];
+    }
 }
 ?>
 
