@@ -6,7 +6,7 @@ class Perpustakaan{
         $this->conn = $dbConnection;
         session_start();
     }
-    public function handleLogin($data){
+    public function handleLogin($data): array{
         $username = $data['username'];
         $password = $data['password'];
 
@@ -44,13 +44,13 @@ class Perpustakaan{
             ];
         }
     }
-    public function handleLogout($data) {
+    public function handleLogout(): array {
         session_unset();
         session_destroy();
         return [
             "status" => "success",
             "message" => "Logout Berhasil",
-            "redirect" => ""
+            "redirect" => "../pages/login.php"
         ];
     }
 }

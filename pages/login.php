@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once __DIR__ . "/../config/db.php";
 require_once __DIR__ . "/../config/class.php";
 
@@ -59,10 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     <button type="submit" class="login-btn">Masuk</button>
                     
-                    <!-- <div class="forgot-password">
-                        <i class="fas fa-lock"></i>
-                        <a href="#" class="forgot-link">Lupa Password?</a>
-                    </div> -->
+                    <div class="forgot-password">
+                       <i class="fa-solid fa-house"></i>
+                        <a href="../index.php" class="forgot-link">Kembali ke Beranda</a>
+                    </div>
                 </form>
             </div>
         </div>

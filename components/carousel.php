@@ -9,15 +9,16 @@
                 <div class="swiper-wrapper">
                     <?php foreach($books as $book){?>
                         <div class="swiper-slide">
-                            <div class="card" style="width: 18rem;">
-                                <img src="/assets/img/buku/<?= $book["gambar_buku"]?>" alt="<?= $book["judul_buku"]?>" class="card-img-top img-fluid" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title"><?= $book["judul_buku"]?></h5>
-                                    <p class="card-text text-muted"><?= $book["kategori_buku"]?></p>
-                                    <p class="card-text"><?= $book["deskripsi_buku"]?></p>
-                                    <a href="./pages/detail.php?id=<?= $book['id_buku'] ?>" class="btn btn-primary">Lihat Selengkapnya</a>
+                            <a href="./pages/detail.php?id=<?= $book['id_buku'] ?>" class="text-decoration-none">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="/assets/img/buku/<?= $book["gambar_buku"]?>" alt="<?= $book["judul_buku"]?>" class="card-img-top img-fluid" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?= $book["judul_buku"]?></h5>
+                                        <p class="card-text text-muted"><?= $book["kategori_buku"]?></p>
+                                        <p class="card-text"><?= $book["deskripsi_buku"]?></p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     <?php } ?>
                 </div>

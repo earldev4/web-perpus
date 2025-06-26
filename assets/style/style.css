@@ -348,8 +348,3 @@ button.btn.btn-primary:hover {
     }
 }
 
-@media (max-width: 576px){
-    body{
-        font-size: 10px;
-    }
-}
