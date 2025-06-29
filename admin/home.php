@@ -16,10 +16,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($response);
         exit();
     }
+    if (isset($_POST["edit_click"])){
+        $response = $perpustakaan->editLinkClicks($_POST);
+        echo json_encode($response);
+        exit();
+    }
 }
+
 
 $result = $perpustakaan->getHomeHero();
 $heroText = $result['hero'];
+
+$result = $perpustakaan->getClicks();
+$clicks = intval($result['clicks']['clicks']);
 
 if (isset($_SESSION["is_login"]) == false) {
     header("location: ../pages/login.php");
@@ -39,12 +48,6 @@ if (isset($_SESSION["is_login"]) == false) {
     <title>Admin - Home</title>
 </head>
 <body>
-    <!-- 
-    <h1>Hello World</h1>
-    <form action="home.php" method="POST" id="btn_logout">
-        <input type="hidden" name="logout" value="logout">
-        <button type="submit">Logout</button>
-    </form> -->
     <div class="container-fluid">
         <div class="row min-vh-100">
             <div class="col-md-2 col-12 bg-primary">
@@ -60,12 +63,22 @@ if (isset($_SESSION["is_login"]) == false) {
                 </nav>
             </div>
             <div class="col-md-10 col-12 bg-success">
-                <h1>Ubah teks hero home</h1>
-                <form action="home.php" method="POST" id="form_hero">
-                    <label for="hero_title">Deskripsi Hero</label><br>
-                    <textarea name="hero_title" id="hero_title" rows="4" cols="50"><?= $heroText["hero_desc"] ?></textarea><br>
-                    <button type="submit">Simpan</button>
-                </form>
+                <div>
+                    <h1>Ubah teks hero home</h1>
+                    <form action="home.php" method="POST" id="form_hero">
+                        <label for="hero_title">Deskripsi Hero</label><br>
+                        <textarea name="hero_title" id="hero_title" rows="4" cols="50"><?= $heroText["hero_desc"] ?></textarea><br>
+                        <button type="submit">Simpan</button>
+                    </form>
+                </div>
+                <div>
+                    <h1>Ubah jumlah click</h1>
+                    <form action="home.php" method="POST" id="form_click">
+                        <label for="clicks">Deskripsi Hero</label><br>
+                        <input type="text" name="edit_click" id="clicks" value="<?= $clicks ?>">
+                        <button type="submit">Simpan</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -76,6 +89,44 @@ if (isset($_SESSION["is_login"]) == false) {
     <script>
         $(document).ready(function(){
             $('#form_hero').submit(function(e){
+                e.preventDefault();
+                let form = $(this);
+                let url = form.attr('action');
+                let method = form.attr('method');
+                let data = new FormData(form[0]);
+                console.log("Coba")
+                $.ajax({
+                    url: url,
+                    type: method,
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    dataType: 'JSON',
+                    success: function(response){
+                        if(response.status == "success"){
+                            toastr.success(response.message, "Success !",{
+                                closeButton: true,
+                                progressBar: true,
+                                timeOut: 1500
+                            });
+                            setTimeout(function(){
+                                if (response.redirect != "") {
+                                    location.href = response.redirect
+                                }
+                            }, 1800);
+                        } else{
+                            toastr.error(response.message, "Error !",{
+                                closeButton: true,
+                                progressBar: true,
+                                timeOut: 1500
+                            });
+                        }
+                    }
+                })
+            })
+        })
+        $(document).ready(function(){
+            $('#form_click').submit(function(e){
                 e.preventDefault();
                 let form = $(this);
                 let url = form.attr('action');

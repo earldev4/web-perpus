@@ -107,4 +107,64 @@ class Perpustakaan{
             ];
         }
     }
+
+    public function countLinkClicks($data): array {
+        $id = $data["id_link"];
+        $stmt = $this->conn->prepare("SELECT link_url FROM link_clicks WHERE id_link = ?");
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $link = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($link){
+            $update = $this->conn->prepare("UPDATE link_clicks SET clicks = clicks + 1 WHERE id_link = ?");
+            $update->execute([$id]);
+            return [
+                "status" => "success",
+                "message" => "Tunggu Sebentar",
+                "redirect" => $link["link_url"]
+            ];
+        } else {
+            return [
+                "status" => "error",
+                "message" => "Link Tidak Ditemukan",
+                "redirect" => ""
+            ];
+        }
+    }
+    public function getClicks(): array {
+        $stmt = $this->conn->prepare("SELECT * FROM link_clicks");
+        $stmt->execute();
+        $clicks = $stmt->fetch(PDO::FETCH_ASSOC);
+        return [
+            "clicks" => $clicks
+        ];
+    }
+    public function editLinkClicks($data): array {
+        if($data["edit_click"] != ""){
+            $edit = $data["edit_click"];
+            $id = 1;
+            if(filter_var($data["edit_click"], FILTER_VALIDATE_INT)){
+                $stmt = $this->conn->prepare("UPDATE link_clicks SET clicks = ? WHERE id_link = ?");
+                $stmt->bindParam(1, $edit);
+                $stmt->bindParam(2, $id);
+                $stmt->execute();
+                return [
+                    "status" => "success",
+                    "message" => "Nilai berhasil diubah",
+                    "redirect" => "/admin/home.php"
+                ];
+            } else {
+                return [
+                    "status" => "error",
+                    "message" => "Nilai bukan angka",
+                    "redirect" => "/admin/home.php"
+                ];
+            }
+        } else {
+            return [
+                "status" => "error",
+                "message" => "Nilai tidak ada",
+                "redirect" => "/admin/home.php"
+            ];
+        }
+    }
 }
