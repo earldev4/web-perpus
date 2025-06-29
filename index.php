@@ -12,6 +12,10 @@
     $result = $perpustakaan->getHomeHero();
     $heroText = $result['hero'];
 
+    $statisticResult = $perpustakaan->displayStatistic();
+    $statisticBook = $statisticResult['statistic'];
+    $statisticMember = $statisticResult['total_klik'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

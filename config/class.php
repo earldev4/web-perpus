@@ -167,4 +167,21 @@ class Perpustakaan{
             ];
         }
     }
+    public function displayStatistic(): array {
+        $sql = <<<SQL
+        SELECT 
+            (SELECT COUNT("id_buku") FROM buku) AS total_buku,
+            (SELECT COUNT(DISTINCT kategori_buku) FROM buku) AS total_kategori
+        SQL;
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $statistic = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $this->conn->prepare("SELECT clicks FROM link_clicks");
+        $stmt->execute();
+        $total_klik = $stmt->fetch(PDO::FETCH_ASSOC);
+        return [
+            "statistic" => $statistic,
+            "total_klik" => $total_klik
+        ];
+    }
 }
