@@ -184,4 +184,46 @@ class Perpustakaan{
             "total_klik" => $total_klik
         ];
     }
+
+    public function setDisplayFooter($data): array{
+        $footer_text = $data["footer_text"];
+        $kontak = $data["footer_kontak"];
+        $email = $data["footer_email"];
+        $hari = $data["footer_hari"];
+        $jam = $data["footer_jam"];
+        $lokasi = $data["footer_lokasi"];
+        $id = 1;
+        if ($footer_text != "" && $kontak != "" && $email != "" && $hari != "" && $jam != "" && $lokasi != "") {
+            $stmt = $this->conn->prepare("UPDATE footer SET footer_text = ?, kontak = ?, email = ?, hari = ?, jam = ?, lokasi = ? WHERE id_footer = ?");
+            $stmt->bindParam(1, $footer_text);
+            $stmt->bindParam(2, $kontak);
+            $stmt->bindParam(3, $email);
+            $stmt->bindParam(4, $hari);
+            $stmt->bindParam(5, $jam);
+            $stmt->bindParam(6, $lokasi);
+            $stmt->bindParam(7, $id);
+            $stmt->execute();
+            return [
+                "status" => "success",
+                "message" => "Footer Berhasil Diubah",
+                "redirect" => "/admin/home.php"
+            ];
+        } else {
+            return [
+                "status" => "error",
+                "message" => "Input tidak lengkap",
+                "redirect" => "/admin/home.php"
+            ];
+        }
+    } 
+    public function displayFooter(): array{
+        $id = 1;
+        $stmt = $this->conn->prepare("SELECT * FROM footer WHERE id_footer = ?");
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $footer = $stmt->fetch(PDO::FETCH_ASSOC);
+        return [
+            "footer" => $footer
+        ];
+    }
 }

@@ -7,7 +7,7 @@
                         <img src="/assets/img/Lampung_coa.png" alt="Logo" class="footer-logo">
                     </div>
                     <div class="footer-text">
-                        <p>Bappeda Provinsi Lampung merupakan lembaga perencana pembangunan daerah yang membantu Gubernur dalam perumusan kebijakan pembangunan. Sejak dibentuk tahun 1980, struktur dan tugasnya telah beberapa kali mengalami penyesuaian sesuai peraturan perundang-undangan, terakhir melalui Pergub No. 88 Tahun 2016.</p>
+                        <p><?= $footerResult["footer_text"]; ?></p>
                     </div>
                     <div class="social-icons">
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -21,7 +21,7 @@
                             <i class="fas fa-phone-alt contact-icon"></i>
                             <div class="contact-details">
                                 <span class="contact-label">Kontak</span>
-                                <span class="contact-value">(0721) 485458</span>
+                                <span class="contact-value"><?= $footerResult["kontak"]; ?></span>
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                             <i class="fas fa-envelope contact-icon"></i>
                             <div class="contact-details">
                                 <span class="contact-label">E-Mail</span>
-                                <span class="contact-value">example@gmail.com</span>
+                                <span class="contact-value"><?= $footerResult["email"]; ?></span>
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                             <i class="fas fa-clock contact-icon"></i>
                             <div class="contact-details">
                                 <span class="contact-label">Jam Kerja</span>
-                                <span class="contact-value">Monday - Fri: 7.30 am - 4.00 pm</span>
+                                <span class="contact-value"><?= $footerResult["hari"]; ?>: <?= $footerResult["jam"]; ?></span>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                             <i class="fas fa-map-marker-alt contact-icon"></i>
                             <div class="contact-details">
                                 <span class="contact-label">Lokasi</span>
-                                <span class="contact-value">Jalan Robert Wolter Monginsidi No. 223</span>
+                                <span class="contact-value"><?= $footerResult["lokasi"]; ?></span>
                             </div>
                         </div>
                     </div>

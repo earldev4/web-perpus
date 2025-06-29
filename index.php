@@ -16,6 +16,8 @@
     $statisticBook = $statisticResult['statistic'];
     $statisticMember = $statisticResult['total_klik'];
 
+    $footer = $perpustakaan->displayFooter();
+    $footerResult = $footer['footer'];
 ?>
 <!DOCTYPE html>
 <html lang="en">

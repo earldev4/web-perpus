@@ -21,6 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($response);
         exit();
     }
+    if (isset($_POST["footer_text"])){
+        $response = $perpustakaan->setDisplayFooter($_POST);
+        echo json_encode($response);
+        exit();
+    }
 }
 
 
@@ -29,6 +34,9 @@ $heroText = $result['hero'];
 
 $result = $perpustakaan->getClicks();
 $clicks = intval($result['clicks']['clicks']);
+
+$result = $perpustakaan->displayFooter();
+$footerInfo = $result['footer'];
 
 if (isset($_SESSION["is_login"]) == false) {
     header("location: ../pages/login.php");
@@ -76,6 +84,24 @@ if (isset($_SESSION["is_login"]) == false) {
                     <form action="home.php" method="POST" id="form_click">
                         <label for="clicks">Deskripsi Hero</label><br>
                         <input type="text" name="edit_click" id="clicks" value="<?= $clicks ?>">
+                        <button type="submit">Simpan</button>
+                    </form>
+                </div>
+                <div>
+                    <h1>Ubah informasi footer</h1>
+                    <form action="home.php" method="POST" id="form_footer">
+                        <label for="footer_text">Deskripsi footer</label><br>
+                        <textarea name="footer_text" id="footer_text" rows="4" cols="50"><?= $footerInfo["footer_text"] ?></textarea><br>
+                        <label for="footer_kontak">Footer kontak</label><br>
+                        <input type="text" name="footer_kontak" id="footer_kontak" value="<?= $footerInfo["kontak"] ?>"><br>
+                        <label for="footer_email">Footer email</label><br>
+                        <input type="text" name="footer_email" id="footer_email" value="<?= $footerInfo["email"] ?>"><br>
+                        <label for="footer_hari">Footer jam</label><br>
+                        <input type="text" name="footer_hari" id="footer_hari" value="<?= $footerInfo["hari"] ?>"><br>
+                        <label for="footer_jam">Footer lokasi</label><br>
+                        <input type="text" name="footer_jam" id="footer_jam" value="<?= $footerInfo["jam"] ?>"><br>
+                        <label for="footer_lokasi">Footer lokasi</label><br>
+                        <input type="text" name="footer_lokasi" id="footer_lokasi" value="<?= $footerInfo["lokasi"] ?>"><br>
                         <button type="submit">Simpan</button>
                     </form>
                 </div>
@@ -127,6 +153,44 @@ if (isset($_SESSION["is_login"]) == false) {
         })
         $(document).ready(function(){
             $('#form_click').submit(function(e){
+                e.preventDefault();
+                let form = $(this);
+                let url = form.attr('action');
+                let method = form.attr('method');
+                let data = new FormData(form[0]);
+                console.log("Coba")
+                $.ajax({
+                    url: url,
+                    type: method,
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    dataType: 'JSON',
+                    success: function(response){
+                        if(response.status == "success"){
+                            toastr.success(response.message, "Success !",{
+                                closeButton: true,
+                                progressBar: true,
+                                timeOut: 1500
+                            });
+                            setTimeout(function(){
+                                if (response.redirect != "") {
+                                    location.href = response.redirect
+                                }
+                            }, 1800);
+                        } else{
+                            toastr.error(response.message, "Error !",{
+                                closeButton: true,
+                                progressBar: true,
+                                timeOut: 1500
+                            });
+                        }
+                    }
+                })
+            })
+        })
+        $(document).ready(function(){
+            $('#form_footer').submit(function(e){
                 e.preventDefault();
                 let form = $(this);
                 let url = form.attr('action');
