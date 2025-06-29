@@ -76,4 +76,35 @@ class Perpustakaan{
             "book" => $book
         ];
     }
+    public function getHomeHero(): array {
+        $id = 1;
+        $stmt = $this->conn->prepare("SELECT * FROM home_hero WHERE id_hero = ?"); 
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $hero = $stmt->fetch(PDO::FETCH_ASSOC);
+        return [
+            "hero" => $hero
+        ];
+    }
+    public function editHeroText($data): array {
+        if($data["hero_title"] != ""){
+            $hero_text = $data["hero_title"];
+            $id = 1;
+            $stmt = $this->conn->prepare("UPDATE home_hero SET hero_desc = ? WHERE id_hero = ?");
+            $stmt->bindParam(1, $hero_text);
+            $stmt->bindParam(2, $id);
+            $stmt->execute();
+            return [
+                "status" => "success",
+                "message" => "Hero Text Berhasil Diubah",
+                "redirect" => "/admin/home.php"
+            ];
+        } else {
+            return [
+                "status" => "error",
+                "message" => "Hero Text Kosong",
+                "redirect" => "/admin/home.php"
+            ];
+        }
+    }
 }

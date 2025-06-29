@@ -1,11 +1,17 @@
 <?php
     require_once __DIR__ . '/config/db.php';
+    require_once __DIR__ . '/config/class.php';
 
     $conn = getConnection();
+    $perpustakaan = new Perpustakaan($conn);
 
     $stmt = $conn->prepare("SELECT * FROM buku");
     $stmt->execute();
     $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $result = $perpustakaan->getHomeHero();
+    $heroText = $result['hero'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +33,9 @@
     <div class="hero-section rounded-end-circle">
         <div class="container">
             <h1 class="hero-title">Selamat Datang Di Website Perpustakaan <br>Bappeda Lampung</h1>
-            <p class="hero-subtitle">Temukan koleksi buku terbaik untuk menambah wawasan dan pengetahuan Anda</p>
+            <p class="hero-subtitle">
+                <?php echo $heroText["hero_desc"]; ?>
+            </p>
         </div>
         <a href="#" class="borrow-book p-5 mt-3">
             <button class="btn btn-primary px-3 py-2 rounded mt-3 w-50" id="daftar">

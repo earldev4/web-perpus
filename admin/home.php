@@ -11,7 +11,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($response);
         exit();
     }
+    if (isset($_POST['hero_title'])) {
+        $response = $perpustakaan->editHeroText($_POST);
+        echo json_encode($response);
+        exit();
+    }
 }
+
+$result = $perpustakaan->getHomeHero();
+$heroText = $result['hero'];
+
 if (isset($_SESSION["is_login"]) == false) {
     header("location: ../pages/login.php");
     exit();
@@ -26,20 +35,47 @@ if (isset($_SESSION["is_login"]) == false) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="..assets/style/admin_home.css">
     <title>Admin - Home</title>
 </head>
 <body>
-    <h1><?= isset($_SESSION['nama_user']) ? $_SESSION['nama_user'] : "Belom login" ?></h1>
+    <!-- 
     <h1>Hello World</h1>
     <form action="home.php" method="POST" id="btn_logout">
         <input type="hidden" name="logout" value="logout">
         <button type="submit">Logout</button>
-    </form>
+    </form> -->
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <div class="col-md-2 col-12 bg-primary">
+                <nav>
+                    <div class="d-flex flex-column align-items-center py-3 px-2">
+                        <i class="fa-solid fa-circle-user img-profile" style="font-size: 80px;"></i>
+                        <h3 class="text-center p-2">Selamat datang <?= isset($_SESSION['nama_user']) ? $_SESSION['nama_user'] : "Belom login" ?></h3>
+                    </div>
+                    <div class="page-home"><a href="" class="text-light">Home</a></div>
+                    <div class="page-profile"><a href="" class="text-light">Profile</a></div>
+                    <div class="page-profile"><a href="" class="text-light">Catalog</a></div>
+                    <div class="page-socialmedia"><a href="" class="text-light">Social Media</a></div>
+                </nav>
+            </div>
+            <div class="col-md-10 col-12 bg-success">
+                <h1>Ubah teks hero home</h1>
+                <form action="home.php" method="POST" id="form_hero">
+                    <label for="hero_title">Deskripsi Hero</label><br>
+                    <textarea name="hero_title" id="hero_title" rows="4" cols="50"><?= $heroText["hero_desc"] ?></textarea><br>
+                    <button type="submit">Simpan</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function(){
-            $('#btn_logout').submit(function(e){
+            $('#form_hero').submit(function(e){
                 e.preventDefault();
                 let form = $(this);
                 let url = form.attr('action');

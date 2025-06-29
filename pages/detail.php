@@ -10,6 +10,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
         $id_berita = $_GET['id'];
         $result = $perpustakaan->viewBookDetail($id_berita);
         $book = $result['book'];
+        exit();
     }
 }
 ?>
