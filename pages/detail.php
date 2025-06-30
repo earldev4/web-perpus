@@ -35,28 +35,28 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     
     <div class="container">
         <header class="book-header d-flex">
-            <h1 class="book-title"><?= $book['judul_buku']; ?></h1>
-            <p class="text-muted fs-4 px-2"> - <?= $book['kategori_buku'];?>
+            <h1 class="book-title"><?= htmlspecialchars($book['judul_buku']) ?></h1>
+            <p class="text-muted fs-4 px-2"> - <?= htmlspecialchars($book['kategori_buku']);?>
         </header>
 
         <div class="book-image">
-            <img src="/assets/img/buku/<?= $book['gambar_buku']; ?>" alt="<?= $book['judul_buku']; ?>" class="img-fluid rounded"></p>
+            <img src="/assets/img/buku/<?= htmlspecialchars($book['gambar_buku']); ?>" alt="<?= htmlspecialchars($book['judul_buku']); ?>" class="img-fluid rounded"></p>
         </div>
 
         <h2>Deskripsi Singkat</h2>
         <section class="book-description">
-            <p><?= $book['deskripsi_buku']; ?></p>
+            <p><?= htmlspecialchars($book['deskripsi_buku']); ?></p>
         </section>
 
         <section class="detail-section">
             <h2>Informasi Detail</h2>
             <div class="detail-list">
-                <div><strong>Penerbit:</strong> <?= $book['penerbit_buku']; ?></div>
-                <div><strong>Jumlah Buku:</strong> <?= $book['jumlah_buku']; ?></div>
-                <div><strong>Jumlah Halaman:</strong> <?= $book['jumlah_halaman']; ?></div>
-                <div><strong>Deskripsi Buku:</strong> <?= $book['deskripsi_buku']; ?></div>
-                <div><strong>Bahasa:</strong> <?= $book['bahasa_buku']; ?></div>
-                <div><strong>ISBN/ISSN:</strong><?= $book['isbn_buku']; ?></div>
+                <div><strong>Penerbit:</strong> <?= htmlspecialchars($book['penerbit_buku']); ?></div>
+                <div><strong>Jumlah Buku:</strong> <?= htmlspecialchars($book['jumlah_buku']); ?></div>
+                <div><strong>Jumlah Halaman:</strong> <?= htmlspecialchars($book['jumlah_halaman']); ?></div>
+                <div><strong>Deskripsi Buku:</strong> <?= htmlspecialchars($book['deskripsi_buku']); ?></div>
+                <div><strong>Bahasa:</strong> <?= htmlspecialchars($book['bahasa_buku']); ?></div>
+                <div><strong>ISBN/ISSN:</strong><?= htmlspecialchars($book['isbn_buku']); ?></div>
             </div>
         </section>
     </div>

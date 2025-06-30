@@ -40,7 +40,7 @@
         <div class="container">
             <h1 class="hero-title">Selamat Datang Di Website Perpustakaan <br>Bappeda Lampung</h1>
             <p class="hero-subtitle">
-                <?php echo $heroText["hero_desc"]; ?>
+                <?php echo htmlspecialchars($heroText["hero_desc"]); ?>
             </p>
         </div>
         <a href="./admin/pages/link_click.php?id_link=1" class="borrow-book p-5 mt-3">

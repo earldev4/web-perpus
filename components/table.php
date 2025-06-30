@@ -14,10 +14,10 @@
                 $id_buku = 1;
                 foreach ($book_collections["books"] as $book){?>
                     <tr>
-                        <th scope="row" class="fs-sm-5"><?= $id_buku++?></th>
-                        <td class="fs-sm-5"><?= $book["judul_buku"]?></td>
-                        <td class="fs-sm-5"><?= $book["jumlah_buku"]?></td>
-                        <td><button class="btn btn-primary" onclick="window.location.href='./detail.php?id=<?= $book['id_buku'] ?>'">Lihat Selengkapnya</button></td>
+                        <th scope="row" class="fs-sm-5"><?= htmlspecialchars($id_buku++)?></th>
+                        <td class="fs-sm-5"><?= htmlspecialchars($book["judul_buku"])?></td>
+                        <td class="fs-sm-5"><?= htmlspecialchars($book["jumlah_buku"])?></td>
+                        <td><button class="btn btn-primary" onclick="window.location.href='./detail.php?id=<?= htmlspecialchars($book['id_buku']) ?>'">Lihat Selengkapnya</button></td>
                     </tr>
                 <?php } ?>
             </tbody>

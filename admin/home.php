@@ -75,7 +75,7 @@ if (isset($_SESSION["is_login"]) == false) {
                     <h1>Ubah teks hero home</h1>
                     <form action="home.php" method="POST" id="form_hero">
                         <label for="hero_title">Deskripsi Hero</label><br>
-                        <textarea name="hero_title" id="hero_title" rows="4" cols="50"><?= $heroText["hero_desc"] ?></textarea><br>
+                        <textarea name="hero_title" id="hero_title" rows="4" cols="50" required><?= $heroText["hero_desc"] ?></textarea><br>
                         <button type="submit">Simpan</button>
                     </form>
                 </div>
@@ -83,7 +83,7 @@ if (isset($_SESSION["is_login"]) == false) {
                     <h1>Ubah jumlah click</h1>
                     <form action="home.php" method="POST" id="form_click">
                         <label for="clicks">Deskripsi Hero</label><br>
-                        <input type="text" name="edit_click" id="clicks" value="<?= $clicks ?>">
+                        <input type="text" name="edit_click" id="clicks" value="<?= $clicks ?>" required>
                         <button type="submit">Simpan</button>
                     </form>
                 </div>
@@ -91,17 +91,17 @@ if (isset($_SESSION["is_login"]) == false) {
                     <h1>Ubah informasi footer</h1>
                     <form action="home.php" method="POST" id="form_footer">
                         <label for="footer_text">Deskripsi footer</label><br>
-                        <textarea name="footer_text" id="footer_text" rows="4" cols="50"><?= $footerInfo["footer_text"] ?></textarea><br>
+                        <textarea name="footer_text" id="footer_text" rows="4" cols="50" required><?= $footerInfo["footer_text"] ?></textarea><br>
                         <label for="footer_kontak">Footer kontak</label><br>
-                        <input type="text" name="footer_kontak" id="footer_kontak" value="<?= $footerInfo["kontak"] ?>"><br>
+                        <input type="text" name="footer_kontak" id="footer_kontak" value="<?= $footerInfo["kontak"] ?>" required><br>
                         <label for="footer_email">Footer email</label><br>
-                        <input type="text" name="footer_email" id="footer_email" value="<?= $footerInfo["email"] ?>"><br>
+                        <input type="text" name="footer_email" id="footer_email" value="<?= $footerInfo["email"] ?>" required><br>
                         <label for="footer_hari">Footer jam</label><br>
-                        <input type="text" name="footer_hari" id="footer_hari" value="<?= $footerInfo["hari"] ?>"><br>
+                        <input type="text" name="footer_hari" id="footer_hari" value="<?= $footerInfo["hari"] ?>" required><br>
                         <label for="footer_jam">Footer lokasi</label><br>
-                        <input type="text" name="footer_jam" id="footer_jam" value="<?= $footerInfo["jam"] ?>"><br>
+                        <input type="text" name="footer_jam" id="footer_jam" value="<?= $footerInfo["jam"] ?>" required><br>
                         <label for="footer_lokasi">Footer lokasi</label><br>
-                        <input type="text" name="footer_lokasi" id="footer_lokasi" value="<?= $footerInfo["lokasi"] ?>"><br>
+                        <input type="text" name="footer_lokasi" id="footer_lokasi" value="<?= $footerInfo["lokasi"] ?>" required><br>
                         <button type="submit">Simpan</button>
                     </form>
                 </div>

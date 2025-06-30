@@ -7,7 +7,7 @@
                         <div class="stat-icon">
                             <i class="fas fa-book"></i>
                         </div>
-                        <div class="stat-number"><?= $statisticBook['total_buku'] ?></div>
+                        <div class="stat-number"><?= htmlspecialchars($statisticBook['total_buku']) ?></div>
                         <div class="stat-label">Total Buku</div>
                     </div>
                 </div>
@@ -16,7 +16,7 @@
                         <div class="stat-icon">
                             <i class="fas fa-users"></i>
                         </div>
-                        <div class="stat-number"><?= $statisticMember['clicks']?></div>
+                        <div class="stat-number"><?= htmlspecialchars($statisticMember['clicks'])?></div>
                         <div class="stat-label">Anggota Aktif</div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                         <div class="stat-icon">
                             <i class="fas fa-bookmark"></i>
                         </div>
-                        <div class="stat-number"><?= $statisticBook['total_kategori'] ?></div>
+                        <div class="stat-number"><?= htmlspecialchars($statisticBook['total_kategori']) ?></div>
                         <div class="stat-label">Kategori</div>
                     </div>
                 </div>
