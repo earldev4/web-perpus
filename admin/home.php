@@ -64,45 +64,61 @@ if (isset($_SESSION["is_login"]) == false) {
                         <i class="fa-solid fa-circle-user img-profile" style="font-size: 80px;"></i>
                         <h3 class="text-center p-2">Selamat datang <?= isset($_SESSION['nama_user']) ? $_SESSION['nama_user'] : "Belom login" ?></h3>
                     </div>
-                    <div class="page-home"><a href="" class="text-light">Home</a></div>
-                    <div class="page-profile"><a href="" class="text-light">Profile</a></div>
-                    <div class="page-profile"><a href="" class="text-light">Catalog</a></div>
-                    <div class="page-socialmedia"><a href="" class="text-light">Social Media</a></div>
+                    <div class="kumpulanLink">
+                        <div class="page-home"><a href="" class="text-light">Home</a></div>
+                        <div class="page-profile"><a href="" class="text-light">Profile</a></div>
+                        <div class="page-profile"><a href="" class="text-light">Catalog</a></div>
+                        <div class="page-socialmedia"><a href="" class="text-light">Social Media</a></div>
+                        <div class="page-logout p-3">
+                            <form action="home.php" method="POST" id="form_logout" name="form_logout">
+                                <input type="hidden" name="logout" class="btn btn-danger w-100" value="">
+                                <button type="submit" class="btn btn-danger w-100">Logout</button>
+                            </form>
+                        </div>
+                    </div>
                 </nav>
             </div>
             <div class="col-md-10 col-12 bg-success">
                 <div>
                     <h1>Ubah teks hero home</h1>
-                    <form action="home.php" method="POST" id="form_hero">
-                        <label for="hero_title">Deskripsi Hero</label><br>
-                        <textarea name="hero_title" id="hero_title" rows="4" cols="50" required><?= $heroText["hero_desc"] ?></textarea><br>
-                        <button type="submit">Simpan</button>
+                    <form action="home.php" method="POST" id="form_hero" name="form_hero" >
+                        <label for="hero_title" class="form-label">Deskripsi Hero</label><br>
+                        <textarea class="form-control" name="hero_title" id="hero_title" rows="4" cols="50" required placeholder="cth: Selamat Datang di Perpustakaan..."><?= $heroText["hero_desc"] ?></textarea><br>
+                        <p class="text-danger" id="hero_error"></p>
+                        <button class="btn btn-primary w-100" type="submit">Simpan</button>
                     </form>
                 </div>
                 <div>
                     <h1>Ubah jumlah click</h1>
-                    <form action="home.php" method="POST" id="form_click">
-                        <label for="clicks">Deskripsi Hero</label><br>
-                        <input type="text" name="edit_click" id="clicks" value="<?= $clicks ?>" required>
-                        <button type="submit">Simpan</button>
+                    <form action="home.php" method="POST" id="form_click" name="form_click">
+                        <label for="clicks" class="form-label">Deskripsi Hero</label><br>
+                        <input class="form-control" type="text" name="edit_click" id="clicks" value="<?= $clicks ?>" required placeholder="Masukan jumlah pengunjung">
+                        <p class="text-danger" id="click_error"></p>
+                        <button class="btn btn-primary w-100" type="submit">Simpan</button>
                     </form>
                 </div>
-                <div>
+                <div class="p-3">
                     <h1>Ubah informasi footer</h1>
-                    <form action="home.php" method="POST" id="form_footer">
-                        <label for="footer_text">Deskripsi footer</label><br>
-                        <textarea name="footer_text" id="footer_text" rows="4" cols="50" required><?= $footerInfo["footer_text"] ?></textarea><br>
-                        <label for="footer_kontak">Footer kontak</label><br>
-                        <input type="text" name="footer_kontak" id="footer_kontak" value="<?= $footerInfo["kontak"] ?>" required><br>
-                        <label for="footer_email">Footer email</label><br>
-                        <input type="text" name="footer_email" id="footer_email" value="<?= $footerInfo["email"] ?>" required><br>
-                        <label for="footer_hari">Footer jam</label><br>
-                        <input type="text" name="footer_hari" id="footer_hari" value="<?= $footerInfo["hari"] ?>" required><br>
-                        <label for="footer_jam">Footer lokasi</label><br>
-                        <input type="text" name="footer_jam" id="footer_jam" value="<?= $footerInfo["jam"] ?>" required><br>
-                        <label for="footer_lokasi">Footer lokasi</label><br>
-                        <input type="text" name="footer_lokasi" id="footer_lokasi" value="<?= $footerInfo["lokasi"] ?>" required><br>
-                        <button type="submit">Simpan</button>
+                    <form action="home.php" method="POST" id="form_footer" name="form_footer">
+                        <label for="footer_text" class="form-label" >Deskripsi footer</label><br>
+                        <textarea  class="form-control" name="footer_text" id="footer_text" rows="4" cols="50" required placeholder="cth: Bandar Lampung merupakan..."><?= $footerInfo["footer_text"] ?></textarea><br>
+                        <p class="text-danger" id="footer_text_error"></p>
+                        <label for="footer_kontak" class="form-label">Footer kontak</label><br>
+                        <input class="form-control" type="text" name="footer_kontak" id="footer_kontak" value="<?= $footerInfo["kontak"] ?>" required placeholder="cth: 0821..."><br>
+                        <p class="text-danger" id="footer_kontak_error"></p>
+                        <label class="form-label" for="footer_email">Footer email</label><br>
+                        <input class="form-control" type="text" name="footer_email" id="footer_email" value="<?= $footerInfo["email"] ?>" required placeholder="cth: example@gmail.com"><br>
+                        <p class="text-danger" id="footer_email_error"></p>
+                        <label class="form-label" for="footer_hari">Footer Hari</label><br>
+                        <input class="form-control" type="text" name="footer_hari" id="footer_hari" value="<?= $footerInfo["hari"] ?>" required placeholder="cth: Senin - Sabtu"><br>
+                        <p class="text-danger" id="footer_hari_error"></p>
+                        <label class="form-label" for="footer_jam">Footer Jam</label><br>
+                        <input class="form-control" type="text" name="footer_jam" id="footer_jam" value="<?= $footerInfo["jam"] ?>" required placeholder="cth: 08:00 - 17:00"><br>
+                        <p class="text-danger" id="footer_jam_error"></p>
+                        <label class="form-label" for="footer_lokasi">Footer lokasi</label><br>
+                        <textarea class="form-control" rows="4" cols="50" name="footer_lokasi" id="footer_lokasi" required placeholder="cth: Jl. Sukamakan No 1..."><?= $footerInfo["lokasi"] ?></textarea><br>
+                        <p class="text-danger" id="footer_lokasi_error"></p>
+                        <button class="btn btn-primary w-100" type="submit">Simpan</button>
                     </form>
                 </div>
             </div>
@@ -116,6 +132,16 @@ if (isset($_SESSION["is_login"]) == false) {
         $(document).ready(function(){
             $('#form_hero').submit(function(e){
                 e.preventDefault();
+                const home_hero = document.forms["form_hero"]["hero_title"].value.trim();
+                const hero_error = document.getElementById("hero_error");
+
+                if(!home_hero || home_hero.length < 30 || home_hero.length > 200){
+                    hero_error.textContent = "Deskripsi harus lebih dari 30 karakter dan kurang dari 200 karakter";
+                    return;
+                } else {
+                    hero_error.textContent = "";
+                }
+
                 let form = $(this);
                 let url = form.attr('action');
                 let method = form.attr('method');
@@ -154,6 +180,16 @@ if (isset($_SESSION["is_login"]) == false) {
         $(document).ready(function(){
             $('#form_click').submit(function(e){
                 e.preventDefault();
+                const clickEdit = document.forms["form_click"]["edit_click"].value.trim();
+                const click_error = document.getElementById("click_error");
+
+                if(!clickEdit || clickEdit <= 0){
+                    click_error.textContent = "Klik harus lebih dari 0";
+                    return;
+                } else {
+                    click_error.textContent = "";
+                }
+
                 let form = $(this);
                 let url = form.attr('action');
                 let method = form.attr('method');
@@ -192,6 +228,104 @@ if (isset($_SESSION["is_login"]) == false) {
         $(document).ready(function(){
             $('#form_footer').submit(function(e){
                 e.preventDefault();
+
+                const phoneRegex = /^[0-9]+$/;
+                const form_footer = document.forms["form_footer"]["footer_text"].value.trim();
+                const footer_kontak = document.forms["form_footer"]["footer_kontak"].value.trim();
+                const footer_email = document.forms["form_footer"]["footer_email"].value.trim();
+                const footer_hari = document.forms["form_footer"]["footer_hari"].value.trim();
+                const footer_jam = document.forms["form_footer"]["footer_jam"].value.trim();
+                const footer_lokasi = document.forms["form_footer"]["footer_lokasi"].value.trim();
+
+                const footer_text_error = document.getElementById("footer_text_error");
+                const footer_kontak_error = document.getElementById("footer_kontak_error");
+                const footer_email_error = document.getElementById("footer_email_error");
+                const footer_hari_error = document.getElementById("footer_hari_error");
+                const footer_jam_error = document.getElementById("footer_jam_error");
+                const footer_lokasi_error = document.getElementById("footer_lokasi_error");
+
+                if(!form_footer || form_footer.length < 30 || form_footer.length > 350){
+                    footer_text_error.textContent = "Deskripsi harus lebih dari 30 karakter dan kurang dari 350 karakter";
+                    return;
+                } else {
+                    footer_text_error.textContent = "";
+                }
+                if (!footer_kontak) {
+                    footer_kontak_error.textContent = "Nomor telepon tidak boleh kosong";
+                    return;
+                } else if (!phoneRegex.test(footer_kontak)) {
+                    footer_kontak_error.textContent = "Nomor telepon harus berupa angka";
+                    return;
+                } else if (footer_kontak.length < 10 || footer_kontak.length > 15) {
+                    footer_kontak_error.textContent = "Nomor telepon harus terdiri dari 10–15 digit";
+                    return;
+                } else {
+                    footer_kontak_error.textContent = "";
+                }
+                if(!footer_email || footer_email.length < 5 || footer_email.length > 50){
+                    footer_email_error.textContent = "Email harus lebih dari 5 karakter dan kurang dari 50 karakter";
+                    return;
+                } else {
+                    footer_email_error.textContent = "";
+                }
+                if(!footer_hari || footer_hari.length < 5 || footer_hari.length > 45){
+                    footer_hari_error.textContent = "Isi hari harus lebih dari 5 karakter dan kurang dari 45 karakter";
+                    return;
+                } else {
+                    footer_hari_error.textContent = "";
+                }
+                if(!footer_jam || footer_jam.length < 5 || footer_jam.length > 45){
+                    footer_jam_error.textContent = "Jam harus lebih dari 5 karakter dan kurang dari 45 karakter";
+                    return;
+                } else {
+                    footer_jam_error.textContent = "";
+                }
+                if(!footer_lokasi || footer_lokasi.length < 30 || footer_lokasi.length > 200){
+                    footer_lokasi_error.textContent = "Lokasi harus lebih dari 30 karakter dan kurang dari 200 karakter";
+                    return;
+                } else {
+                    footer_lokasi_error.textContent = "";
+                }
+
+                let form = $(this);
+                let url = form.attr('action');
+                let method = form.attr('method');
+                let data = new FormData(form[0]);
+                console.log("Coba")
+                $.ajax({
+                    url: url,
+                    type: method,
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    dataType: 'JSON',
+                    success: function(response){
+                        if(response.status == "success"){
+                            toastr.success(response.message, "Success !",{
+                                closeButton: true,
+                                progressBar: true,
+                                timeOut: 1500
+                            });
+                            setTimeout(function(){
+                                if (response.redirect != "") {
+                                    location.href = response.redirect
+                                }
+                            }, 1800);
+                        } else{
+                            toastr.error(response.message, "Error !",{
+                                closeButton: true,
+                                progressBar: true,
+                                timeOut: 1500
+                            });
+                        }
+                    }
+                })
+            })
+        })
+        $(document).ready(function(){
+            $('#form_logout').submit(function(e){
+                e.preventDefault();
+
                 let form = $(this);
                 let url = form.attr('action');
                 let method = form.attr('method');

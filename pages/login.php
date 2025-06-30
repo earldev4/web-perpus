@@ -12,6 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 }
+
+if (isset($_SESSION["is_login"]) == true) {
+    header("location: ../admin/home.php");
+    exit();}
 ?>
 
 <!DOCTYPE html>
