@@ -38,6 +38,8 @@ $clicks = intval($result['clicks']['clicks']);
 $result = $perpustakaan->displayFooter();
 $footerInfo = $result['footer'];
 
+$navlogout = "home.php";
+
 if (isset($_SESSION["is_login"]) == false) {
     header("location: ../pages/login.php");
     exit();
@@ -69,8 +71,9 @@ if (isset($_SESSION["is_login"]) == false) {
                         <div class="page-profile"><a href="" class="text-light">Profile</a></div>
                         <div class="page-profile"><a href="" class="text-light">Catalog</a></div>
                         <div class="page-socialmedia"><a href="" class="text-light">Social Media</a></div>
+                        <div class="page-backweb"><a href="../index.php" class="text-light">Back To Web</a></div>
                         <div class="page-logout p-3">
-                            <form action="home.php" method="POST" id="form_logout" name="form_logout">
+                            <form action=<?= $navlogout ?> method="POST" id="form_logout" name="form_logout">
                                 <input type="hidden" name="logout" class="btn btn-danger w-100" value="">
                                 <button type="submit" class="btn btn-danger w-100">Logout</button>
                             </form>

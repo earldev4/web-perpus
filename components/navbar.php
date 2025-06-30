@@ -36,9 +36,15 @@
                             <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCZMZAzUJh0EDYEU5FfV64eg" target="_blank" rel="noopener noreferrer">YouTube</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="/pages/login.php">Login</a>
-                    </li>
+                    <?php if(isset($_SESSION["is_login"]) == true){?>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/admin/home.php">Admin</a>
+                        </li>
+                    <?php } else {?>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/pages/login.php">Login</a>
+                        </li>
+                    <?php } ?>
                 </ul>
                 <a class="borrow-book p-2">
                     <button class="btn btn-primary p-0 px-3 py-2 rounded w-lg-50 w-100">
