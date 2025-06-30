@@ -6,6 +6,9 @@ $conn = getConnection();
 $perpustakaan = new Perpustakaan($conn);
 
 $book_collections = $perpustakaan->displayCatalogBook();
+
+$footer = $perpustakaan->displayFooter();
+$footerResult = $footer['footer'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
