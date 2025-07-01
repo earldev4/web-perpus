@@ -43,13 +43,13 @@ class Perpustakaan{
             ];
         }
     }
-    public function handleLogout(): array {
+    public function handleLogout($logout): array {
         session_unset();
         session_destroy();
         return [
             "status" => "success",
             "message" => "Logout Berhasil",
-            "redirect" => "../pages/login.php"
+            "redirect" => $logout
         ];
     }
     public function displayCatalogBook(): array{

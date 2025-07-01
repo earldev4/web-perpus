@@ -147,6 +147,16 @@ body {
     text-align: center;
 }
 
+.page-catalogue a::before {
+    content: '\f007';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 12px;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
 .kumpulanLink .page-profile:nth-child(3) a::before {
     content: '\f02d';
     font-family: 'Font Awesome 6 Free';

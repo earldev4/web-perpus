@@ -1,13 +1,14 @@
 <?php
 require_once __DIR__ . "/../config/db.php";
 require_once __DIR__ . "/../config/class.php";
+require_once __DIR__ . "/config/class.php";
 
 $conn = getConnection();
 $perpustakaan = new Perpustakaan($conn);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['logout'])) {
-        $response = $perpustakaan->handleLogout();
+        $response = $perpustakaan->handleLogout("../pages/login.php");
         echo json_encode($response);
         exit();
     }
@@ -38,13 +39,14 @@ $clicks = intval($result['clicks']['clicks']);
 $result = $perpustakaan->displayFooter();
 $footerInfo = $result['footer'];
 
-$navlogout = "home.php";
+$routing = new Routing("home.php", "./pages/profile.php", "/pages/add_book.php", "/pages/social_media.php", "../index.php", "home.php");
 
 if (isset($_SESSION["is_login"]) == false) {
     header("location: ../pages/login.php");
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,43 +67,43 @@ if (isset($_SESSION["is_login"]) == false) {
             </div>
             <div class="col-md-10 col-12 bg-success">
                 <div>
-                    <h1>Ubah teks hero home</h1>
+                    <h1>EDIT TEKS BANNER HOMEPAGE</h1>
                     <form action="home.php" method="POST" id="form_hero" name="form_hero" >
                         <label for="hero_title" class="form-label">Deskripsi Hero</label><br>
-                        <textarea class="form-control" name="hero_title" id="hero_title" rows="4" cols="50" required placeholder="cth: Selamat Datang di Perpustakaan..."><?= $heroText["hero_desc"] ?></textarea><br>
+                        <textarea class="form-control" name="hero_title" id="hero_title" rows="4" cols="50" required placeholder="cth: Selamat Datang di Perpustakaan..."><?= htmlspecialchars($heroText["hero_desc"]) ?></textarea><br>
                         <p class="text-danger" id="hero_error"></p>
                         <button class="btn btn-primary w-100" type="submit">Simpan</button>
                     </form>
                 </div>
                 <div>
-                    <h1>Ubah jumlah click</h1>
+                    <h1>EDIT TEKS JUMLAH CLICK</h1>
                     <form action="home.php" method="POST" id="form_click" name="form_click">
                         <label for="clicks" class="form-label">Deskripsi Hero</label><br>
-                        <input class="form-control" type="text" name="edit_click" id="clicks" value="<?= $clicks ?>" required placeholder="Masukan jumlah pengunjung">
+                        <input class="form-control" type="text" name="edit_click" id="clicks" value="<?= htmlspecialchars($clicks)?>" required placeholder="Masukan jumlah pengunjung">
                         <p class="text-danger" id="click_error"></p>
                         <button class="btn btn-primary w-100" type="submit">Simpan</button>
                     </form>
                 </div>
                 <div class="p-3">
-                    <h1>Ubah informasi footer</h1>
+                    <h1>EDIT INFORMASI FOOTER</h1>
                     <form action="home.php" method="POST" id="form_footer" name="form_footer">
                         <label for="footer_text" class="form-label" >Deskripsi footer</label><br>
-                        <textarea  class="form-control" name="footer_text" id="footer_text" rows="4" cols="50" required placeholder="cth: Bandar Lampung merupakan..."><?= $footerInfo["footer_text"] ?></textarea><br>
+                        <textarea  class="form-control" name="footer_text" id="footer_text" rows="4" cols="50" required placeholder="cth: Bandar Lampung merupakan..."><?= htmlspecialchars($footerInfo["footer_text"]) ?></textarea><br>
                         <p class="text-danger" id="footer_text_error"></p>
                         <label for="footer_kontak" class="form-label">Footer kontak</label><br>
-                        <input class="form-control" type="text" name="footer_kontak" id="footer_kontak" value="<?= $footerInfo["kontak"] ?>" required placeholder="cth: 0821..."><br>
+                        <input class="form-control" type="text" name="footer_kontak" id="footer_kontak" value="<?= htmlspecialchars($footerInfo["kontak"]) ?>" required placeholder="cth: 0821..."><br>
                         <p class="text-danger" id="footer_kontak_error"></p>
                         <label class="form-label" for="footer_email">Footer email</label><br>
-                        <input class="form-control" type="text" name="footer_email" id="footer_email" value="<?= $footerInfo["email"] ?>" required placeholder="cth: example@gmail.com"><br>
+                        <input class="form-control" type="text" name="footer_email" id="footer_email" value="<?= htmlspecialchars($footerInfo["email"]) ?>" required placeholder="cth: example@gmail.com"><br>
                         <p class="text-danger" id="footer_email_error"></p>
                         <label class="form-label" for="footer_hari">Footer Hari</label><br>
-                        <input class="form-control" type="text" name="footer_hari" id="footer_hari" value="<?= $footerInfo["hari"] ?>" required placeholder="cth: Senin - Sabtu"><br>
+                        <input class="form-control" type="text" name="footer_hari" id="footer_hari" value="<?= htmlspecialchars($footerInfo["hari"]) ?>" required placeholder="cth: Senin - Sabtu"><br>
                         <p class="text-danger" id="footer_hari_error"></p>
                         <label class="form-label" for="footer_jam">Footer Jam</label><br>
-                        <input class="form-control" type="text" name="footer_jam" id="footer_jam" value="<?= $footerInfo["jam"] ?>" required placeholder="cth: 08:00 - 17:00"><br>
+                        <input class="form-control" type="text" name="footer_jam" id="footer_jam" value="<?= htmlspecialchars($footerInfo["jam"]) ?>" required placeholder="cth: 08:00 - 17:00"><br>
                         <p class="text-danger" id="footer_jam_error"></p>
                         <label class="form-label" for="footer_lokasi">Footer lokasi</label><br>
-                        <textarea class="form-control" rows="4" cols="50" name="footer_lokasi" id="footer_lokasi" required placeholder="cth: Jl. Sukamakan No 1..."><?= $footerInfo["lokasi"] ?></textarea><br>
+                        <textarea class="form-control" rows="4" cols="50" name="footer_lokasi" id="footer_lokasi" required placeholder="cth: Jl. Sukamakan No 1..."><?= htmlspecialchars($footerInfo["lokasi"]) ?></textarea><br>
                         <p class="text-danger" id="footer_lokasi_error"></p>
                         <button class="btn btn-primary w-100" type="submit">Simpan</button>
                     </form>
@@ -111,7 +113,7 @@ if (isset($_SESSION["is_login"]) == false) {
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function(){
