@@ -46,7 +46,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Container Fluid Override */
+/* Container Fluid Override */  
 .container-fluid {
     padding: 0;
 }
@@ -355,12 +355,8 @@ form > *:last-child {
         width: 100%;
         height: auto;
         position: relative;
-        transform: translateX(-100%);
-        transition: var(--transition);
-    }
-    
-    .col-md-2.bg-primary.show {
-        transform: translateX(0);
+        transform: none;
+        transition: none;
     }
     
     .col-md-10.bg-success {
@@ -375,12 +371,8 @@ form > *:last-child {
         right: auto;
         margin-top: 20px;
     }
-    
-    .kumpulanLink > div a {
-        margin-right: 0;
-        border-radius: var(--border-radius);
-    }
 }
+
 
 /* Mobile Navigation Toggle */
 @media (max-width: 768px) {
