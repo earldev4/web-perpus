@@ -47,7 +47,7 @@ if (isset($_SESSION["is_login"]) == false) {
                     <h1>Ubah Profile</h1>
                     <form action="home.php" method="POST" id="form_hero" name="form_hero" >
                         <label for="hero_title" class="form-label">Deskripsi Hero</label><br>
-                        <textarea class="form-control" name="hero_title" id="hero_title" rows="4" cols="50" required placeholder="cth: Selamat Datang di Perpustakaan..."><?= $heroText["hero_desc"] ?></textarea><br>
+                        <textarea class="form-control" autocomplete="off" name="hero_title" id="hero_title" rows="4" cols="50" required placeholder="cth: Selamat Datang di Perpustakaan..."><?= $heroText["hero_desc"] ?></textarea><br>
                         <p class="text-danger" id="hero_error"></p>
                         <button class="btn btn-primary w-100" type="submit">Simpan</button>
                     </form>

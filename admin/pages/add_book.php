@@ -101,31 +101,31 @@ if (isset($_SESSION["is_login"]) == false) {
                     <form action="add_book.php" method="POST" enctype="multipart/form-data">
                         <h3>Data Buku</h3>
                         <label class="form-label" for="judul_buku">Judul Buku:</label><br>
-                        <input class="form-control" type="text" name="judul_buku" id="judul_buku" required><br>
+                        <input class="form-control" type="text" name="judul_buku" id="judul_buku" autocomplete="off" required><br>
                         
                         <label class="form-label" for="gambar_buku">Gambar Buku:</label><br>
-                        <input class="form-control" type="file" name="gambar_buku" id="gambar_buku"><br>
+                        <input class="form-control" type="file" name="gambar_buku" id="gambar_buku" autocomplete="off"><br>
                         
                         <label class="form-label" for="kategori_buku">Kategori Buku:</label><br>
-                        <input class="form-control" type="text" name="kategori_buku" id="kategori_buku"><br>
+                        <input class="form-control" type="text" name="kategori_buku" id="kategori_buku" autocomplete="off"><br>
                         
                         <label class="form-label" for="penerbit_buku">Penerbit Buku:</label><br>
-                        <input class="form-control" type="text" name="penerbit_buku" id="penerbit_buku"><br>
+                        <input class="form-control" type="text" name="penerbit_buku" id="penerbit_buku" autocomplete="off"><br>
 
                         <label class="form-label" for="jumlah_buku">Jumlah Buku:</label><br>
-                        <input class="form-control" type="number" name="jumlah_buku" id="jumlah_buku" required><br>
+                        <input class="form-control" type="number" name="jumlah_buku" id="jumlah_buku" autocomplete="off" required><br>
 
                         <label class="form-label" for="jumlah_halaman">Jumlah Halaman:</label><br>
-                        <input class="form-control" type="number" name="jumlah_halaman" id="jumlah_halaman" required><br>
+                        <input class="form-control" type="number" name="jumlah_halaman" id="jumlah_halaman" autocomplete="off" required><br>
                         
                         <label class="form-label" for="bahasa_buku">Bahasa Buku:</label><br>
-                        <input class="form-control" type="text" name="bahasa_buku" id="bahasa_buku" required><br>
+                        <input class="form-control" type="text" name="bahasa_buku" id="bahasa_buku" autocomplete="off" required><br>
                         
                         <label class="form-label" for="isbn_buku">ISBN Buku:</label><br>
-                        <input class="form-control" type="text" name="isbn_buku" id="isbn_buku" required><br>
+                        <input class="form-control" type="text" name="isbn_buku" id="isbn_buku" autocomplete="off" required><br>
 
                         <label class="form-label" for="deskripsi_buku">Deskripsi Buku:</label><br>
-                        <textarea name="deskripsi_buku" id="deskripsi_buku" class="form-control" rows="4" cols="50"></textarea><br>
+                        <textarea name="deskripsi_buku" id="deskripsi_buku" class="form-control" rows="4" cols="50" autocomplete="off"></textarea><br>
                             
                         <button class="btn btn-primary w-100" type="submit" name="submit">Simpan</button>
                     </form>

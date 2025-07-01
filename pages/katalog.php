@@ -5,7 +5,14 @@ require_once __DIR__ . "/../config/class.php";
 $conn = getConnection();
 $perpustakaan = new Perpustakaan($conn);
 
-$book_collections = $perpustakaan->displayCatalogBook();
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    if (isset($_POST["search_book"])){
+        $book_collections = $perpustakaan->searchBook($_POST);
+    } else {
+        $book_collections = $perpustakaan->displayCatalogBook();
+    }
+}
+
 
 $footer = $perpustakaan->displayFooter();
 $footerResult = $footer['footer'];
@@ -30,8 +37,8 @@ $footerResult = $footer['footer'];
         <div class="container">
             <h1 class="hero-title">Katalog Buku</h1>
             <div class="pb-3">
-                <form action="" method="" class="d-flex justify-content-center gap-1">
-                    <input type="text" class="form-control w-50" placeholder="Cari buku">
+                <form action="katalog.php" method="POST" class="d-flex justify-content-center gap-1">
+                    <input type="text" class="form-control w-50" placeholder="Cari buku berdasarkan judul, kategori, pengarang atau penerbit" autocomplete="off" name="search_book">
                     <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </form>
             </div>

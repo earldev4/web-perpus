@@ -36,9 +36,12 @@ $footerResult = $footer['footer'];
 
     
     <div class="container">
-        <header class="book-header d-flex">
-            <h1 class="book-title"><?= htmlspecialchars($book['judul_buku']) ?></h1>
-            <p class="text-muted fs-4 px-2"> - <?= htmlspecialchars($book['kategori_buku']);?>
+        <header class="book-header d-flex justify-content-between">
+            <div class="d-flex">
+                <h1 class="book-title"><?= htmlspecialchars($book['judul_buku']) ?></h1>
+                <p class="fw-bold fs-5 px-2 pt-1"> - <?= htmlspecialchars($book['pengarang_buku']);?>
+            </div>
+            <p class="text-muted fs-5 px-2 pt-1"><?= htmlspecialchars($book['kategori_buku']);?>
         </header>
 
         <div class="book-image">

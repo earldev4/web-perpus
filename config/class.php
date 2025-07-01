@@ -60,6 +60,23 @@ class Perpustakaan{
             "books" => $books,
         ];
     }
+    public function searchBook($data): array {
+        $trim = trim($data["search_book"]);
+        $book = "%$trim%";
+        $sql = <<<SQL
+            SELECT * FROM buku WHERE judul_buku LIKE ? OR pengarang_buku LIKE ? OR penerbit_buku LIKE ? OR kategori_buku LIKE ?
+        SQL;
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $book);
+        $stmt->bindParam(2, $book);
+        $stmt->bindParam(3, $book);
+        $stmt->bindParam(4, $book);
+        $stmt->execute();
+        $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return [
+            "books" => $books
+        ];
+    }
     public function viewBookDetail($id_berita): array{
         $id = $id_berita;
         $sql = <<<SQL

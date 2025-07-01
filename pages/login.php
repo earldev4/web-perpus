@@ -52,12 +52,12 @@ if (isset($_SESSION["is_login"]) == true) {
                 <form action="login.php" method="POST" class="login-form" id="form_login">
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" id="username" name="username" placeholder="Masukan Username" required>
+                        <input type="text" id="username" name="username" placeholder="Masukan Username" required autocomplete="off">
                     </div>
                     
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Masukan Password" required>
+                        <input type="password" id="password" name="password" placeholder="Masukan Password" required autocomplete="off">
                     </div>
                     
                     <button type="submit" class="login-btn">Masuk</button>
