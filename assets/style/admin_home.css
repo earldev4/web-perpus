@@ -120,10 +120,16 @@ body {
     transform: translateX(5px);
 }
 
-.page-home a {
-    background-color: rgba(255, 255, 255, 0.15);
+.kumpulanLink > div a.active {
+    background-color: rgba(255, 255, 255, 0.15) !important;
     color: var(--white) !important;
-    border-left-color: var(--white);
+    border-left-color: var(--white) !important;
+    transform: translateX(5px);
+}
+
+/* Optional: Add a subtle animation for the active state */
+.kumpulanLink > div a.active {
+    animation: activePulse 2s infinite;
 }
 
 /* Add icons to navigation links */

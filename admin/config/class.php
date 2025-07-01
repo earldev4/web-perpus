@@ -35,6 +35,30 @@ class Routing {
     public function getLogout() {
         return $this->logout;
     }
+    // NEW METHOD: Check if current page matches home
+    public function isHomeActive() {
+        return basename($_SERVER['PHP_SELF']) === basename($this->homePage);
+    }
+
+    // NEW METHOD: Check if current page matches profile
+    public function isProfileActive() {
+        return basename($_SERVER['PHP_SELF']) === basename($this->profilePage);
+    }
+
+    // NEW METHOD: Check if current page matches catalogue
+    public function isCatalogueActive() {
+        return basename($_SERVER['PHP_SELF']) === basename($this->cataloguePage);
+    }
+
+    // NEW METHOD: Check if current page matches social media
+    public function isSocialActive() {
+        return basename($_SERVER['PHP_SELF']) === basename($this->socialPage);
+    }
+
+    // NEW METHOD: Check if current page matches back to web
+    public function isBackWebActive() {
+        return basename($_SERVER['PHP_SELF']) === basename($this->backToWebPage);
+    }
 }
 
 ?>
