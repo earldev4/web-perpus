@@ -63,7 +63,7 @@ if (isset($_SESSION["is_login"]) == false) {
     <div class="container-fluid">
         <div class="row min-vh-100">
             <div class="col-md-2 col-12 bg-primary">
-            <?php include 'pages/nav.php'; ?>
+                <?php include 'pages/nav.php'; ?>
             </div>
             <div class="col-md-10 col-12 bg-success">
                 <div>
