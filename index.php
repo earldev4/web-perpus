@@ -43,7 +43,7 @@
                 <?php echo htmlspecialchars($heroText["hero_desc"]); ?>
             </p>
         </div>
-        <a href="./admin/pages/link_click.php?id_link=1" class="borrow-book p-5 mt-3">
+        <a href="./admin/pages/link_click.php?id_link=1" class="borrow-book p-5 mt-3" target="_blank">
             <button class="btn btn-primary px-3 py-2 rounded mt-3 w-50" id="daftar">
                 Daftar Sekarang!
             </button>
