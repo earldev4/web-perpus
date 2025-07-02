@@ -51,16 +51,15 @@ if (isset($_SESSION["is_login"]) == false) {
                 <div class="px-lg-5 px-2">
                     <h1>EDIT PROFILE</h1>
                     <form action="profile.php" method="POST" id="form_profile" name="form_profile" enctype="multipart/form-data" >
-                        <label for="profile" class="form-label">Deskripsi Profile</label><br>
-                        <textarea class="form-control" autocomplete="off" name="profile" id="profile" rows="25" cols="50" required placeholder="cth: Bappeda Provinsi Lampung pada awalnya..."><?= htmlspecialchars($profile['profile_desk']) ?></textarea><br>
+                        <label for="profile" class="form-label fs-4">Deskripsi Profile</label><br>
                         <p class="text-danger" id="profile_error"></p>
-                        <label class="form-label" for="profile_picture">Pilih Gambar Struktur Organisasi</label>
+                        <textarea class="form-control" autocomplete="off" name="profile" id="profile" rows="25" cols="50" required placeholder="cth: Bappeda Provinsi Lampung pada awalnya..."><?= htmlspecialchars($profile['profile_desk']) ?></textarea><br>
+                        <label class="form-label fs-4" for="profile_picture">Pilih Gambar Struktur Organisasi</label>
                         <div class="">
                             <img src="../../assets/img/<?= htmlspecialchars($profile['profile_picture'])?>" alt="" class="img-fluid">
                         </div>
                         <p class="text-muted">Gambar harus berukuran 1600 x 700 atau rasio 16:7</p>
                         <input type="file" name="profile_picture" id="profile_picture" class="form-control">
-                        <p class="text-danger" id="profile_error"></p>
                         <button class="btn btn-primary w-100" type="submit">Simpan</button>
                     </form>
                 </div>
@@ -113,6 +112,17 @@ if (isset($_SESSION["is_login"]) == false) {
         $(document).ready(function(){
             $('#form_profile').submit(function(e){
                 e.preventDefault();
+
+                const profile_text = document.forms["form_profile"]["profile"].value.trim();
+
+                let profile_error = document.getElementById("profile_error");
+
+                if(!profile_text || profile_text.length < 500 ){
+                    profile_error.textContent = "Deskripsi harus lebih dari 500 karakter";
+                    return;
+                } else {
+                    profile_error.textContent = "";
+                }
                 let form = $(this);
                 let url = form.attr('action');
                 let method = form.attr('method');

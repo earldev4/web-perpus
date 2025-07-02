@@ -268,7 +268,7 @@ class Perpustakaan{
         if($profile_desk != ""){
             if(!empty($profile_picture_name)){
                 if(in_array($fileExtActual, array('jpg', 'jpeg', 'png'))){
-                    if($profile_picture_size < 15000000){
+                    if($profile_picture_size < 5000000){
                         $sql = <<<SQL
                             SELECT * FROM profile WHERE id_profile = ?
                         SQL;
@@ -299,7 +299,7 @@ class Perpustakaan{
                     } else {
                         return [
                             "status" => "error",
-                            "message" => "Ukuran gambar terlalu besar, maksimal 15MB",
+                            "message" => "Ukuran gambar terlalu besar, maksimal 5MB",
                             "redirect" => ""
                         ];
                     }  

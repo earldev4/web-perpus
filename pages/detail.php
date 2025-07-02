@@ -28,7 +28,7 @@ $footerResult = $footer['footer'];
     <link rel="stylesheet" href="../assets/style/style.css">
     <link rel="stylesheet" href="../assets/style/detail.css">
     <script src="../assets/script/script.js"></script>   
-    <title>Perpustakaan - Detail<?php echo $judul_buku; ?></title>
+    <title>Perpustakaan - Detail <?= htmlspecialchars($book['judul_buku']) ?></title>
 </head>
 <body>
     
@@ -61,7 +61,7 @@ $footerResult = $footer['footer'];
                 <div><strong>Jumlah Halaman:</strong> <?= htmlspecialchars($book['jumlah_halaman']); ?></div>
                 <div><strong>Deskripsi Buku:</strong> <?= htmlspecialchars($book['deskripsi_buku']); ?></div>
                 <div><strong>Bahasa:</strong> <?= htmlspecialchars($book['bahasa_buku']); ?></div>
-                <div><strong>ISBN/ISSN:</strong><?= htmlspecialchars($book['isbn_buku']); ?></div>
+                <div><strong>ISBN/ISSN:</strong> <?= htmlspecialchars($book['isbn_buku']); ?></div>
             </div>
         </section>
     </div>

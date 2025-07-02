@@ -11,6 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     } else {
         $book_collections = $perpustakaan->displayCatalogBook();
     }
+} else {
+    $book_collections = $perpustakaan->displayCatalogBook();
 }
 
 
