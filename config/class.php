@@ -243,5 +243,93 @@ class Perpustakaan{
             "footer" => $footer
         ];
     }
-    
+    public function getProfile (): array {
+        $id = 1;
+        $sql = <<<SQL
+            SELECT * FROM profile WHERE id_profile = ?
+        SQL;
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $profile = $stmt->fetch(PDO::FETCH_ASSOC);
+        return [
+            "profile" => $profile
+        ];
+    }
+    public function editProfile($data): array {
+        $id_profile = 1;
+        $profile_desk = $data["profile"];
+        $profile_picture = $_FILES["profile_picture"];
+        $profile_picture_name = $_FILES["profile_picture"]["name"];
+        $profile_picture_temp = $_FILES["profile_picture"]["tmp_name"];
+        $profile_picture_size = $_FILES["profile_picture"]["size"];
+        $fileExt = explode('.', $profile_picture_name);
+        $fileExtActual = strtolower(end($fileExt));
+        if($profile_desk != ""){
+            if(!empty($profile_picture_name)){
+                if(in_array($fileExtActual, array('jpg', 'jpeg', 'png'))){
+                    if($profile_picture_size < 15000000){
+                        $sql = <<<SQL
+                            SELECT * FROM profile WHERE id_profile = ?
+                        SQL;
+                        $stmt = $this->conn->prepare($sql);
+                        $stmt->bindParam(1, $id_profile);
+                        $stmt->execute();
+                        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                        $pictureName = $result["profile_picture"];
+                        unlink("../../assets/img/$pictureName");
+
+                        $profile_picture_name_new = "struktur" . "." . $fileExtActual;
+                        $profile_picture_folder = "../../assets/img/" . $profile_picture_name_new;
+                        move_uploaded_file($profile_picture_temp, $profile_picture_folder);
+
+                        $sql = <<<SQL
+                            UPDATE profile SET profile_desk = ?, profile_picture = ? WHERE id_profile = ?
+                        SQL;
+                        $stmt = $this->conn->prepare($sql);
+                        $stmt->bindParam(1, $profile_desk);
+                        $stmt->bindParam(2, $profile_picture_name_new);
+                        $stmt->bindParam(3, $id_profile);
+                        $stmt->execute();
+                        return [
+                            "status" => "success",
+                            "message" => "Profile Berhasil Diubah",
+                            "redirect" => "profile.php"
+                        ];
+                    } else {
+                        return [
+                            "status" => "error",
+                            "message" => "Ukuran gambar terlalu besar, maksimal 15MB",
+                            "redirect" => ""
+                        ];
+                    }  
+                } else {
+                    return [
+                            "status" => "error",
+                            "message" => "Ekstensi gambar harus jpg, jpeg, atau png",
+                            "redirect" => ""
+                        ];
+                }
+            } else {
+                $sql = <<<SQL
+                    UPDATE profile SET profile_desk = ? WHERE id_profile = ?
+                SQL;
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(1, $profile_desk);
+                $stmt->bindParam(2, $id_profile);
+                $stmt->execute();
+                return [
+                    "status" => "success",
+                    "message" => "Profile Berhasil Diubah",
+                    "redirect" => ""
+                ];
+            }
+        } else {
+            return [
+                "status" => "error",
+                "message" => "Input tidak lengkap",
+                "redirect" => ""
+            ];
+        }
+    }  
 }

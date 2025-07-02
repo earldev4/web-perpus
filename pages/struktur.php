@@ -5,6 +5,9 @@ require_once __DIR__ . "/../config/class.php";
 $conn = getConnection();
 $perpustakaan = new Perpustakaan($conn);
 
+$result = $perpustakaan->getProfile();
+$profile = $result['profile'];
+
 $footer = $perpustakaan->displayFooter();
 $footerResult = $footer['footer'];
 ?>
@@ -28,8 +31,8 @@ $footerResult = $footer['footer'];
     <div class="container profile-container">
         <h1>Struktur Organisasi</h1>
         <div class="org-image-wrapper mt-4 text-center">
-        <img src="../assets/img/struktur.jpg" alt="Struktur Organisasi Bappeda" class="img-fluid org-image">
-    </div>
+            <img src="../assets/img/<?= $profile['profile_picture'] ?>" alt="Struktur Organisasi Bappeda" class="img-fluid org-image">
+        </div>
     </div>
 
     <?php include '../components/footer.php'; ?>

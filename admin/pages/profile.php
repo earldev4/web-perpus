@@ -12,10 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($response);
         exit();
     }
+    if (isset($_POST['profile'])) {
+        $response = $perpustakaan->editProfile($_POST);
+        echo json_encode($response);
+        exit();
+    }
 }
 
-$result = $perpustakaan->getHomeHero();
-$heroText = $result['hero'];
+$result = $perpustakaan->getProfile();
+$profile = $result['profile'];
 
 $routing = new Routing("../home.php", "profile.php", "add_book.php", "social_media.php", "../../index.php", "profile.php");
 
@@ -43,12 +48,19 @@ if (isset($_SESSION["is_login"]) == false) {
             <?php include 'nav.php'; ?>
             </div>
             <div class="col-md-10 col-12 bg-success">
-                <div>
-                    <h1>Ubah Profile</h1>
-                    <form action="home.php" method="POST" id="form_hero" name="form_hero" >
-                        <label for="hero_title" class="form-label">Deskripsi Hero</label><br>
-                        <textarea class="form-control" autocomplete="off" name="hero_title" id="hero_title" rows="4" cols="50" required placeholder="cth: Selamat Datang di Perpustakaan..."><?= $heroText["hero_desc"] ?></textarea><br>
-                        <p class="text-danger" id="hero_error"></p>
+                <div class="px-lg-5 px-2">
+                    <h1>EDIT PROFILE</h1>
+                    <form action="profile.php" method="POST" id="form_profile" name="form_profile" enctype="multipart/form-data" >
+                        <label for="profile" class="form-label">Deskripsi Profile</label><br>
+                        <textarea class="form-control" autocomplete="off" name="profile" id="profile" rows="25" cols="50" required placeholder="cth: Bappeda Provinsi Lampung pada awalnya..."><?= htmlspecialchars($profile['profile_desk']) ?></textarea><br>
+                        <p class="text-danger" id="profile_error"></p>
+                        <label class="form-label" for="profile_picture">Pilih Gambar Struktur Organisasi</label>
+                        <div class="">
+                            <img src="../../assets/img/<?= htmlspecialchars($profile['profile_picture'])?>" alt="" class="img-fluid">
+                        </div>
+                        <p class="text-muted">Gambar harus berukuran 1600 x 700 atau rasio 16:7</p>
+                        <input type="file" name="profile_picture" id="profile_picture" class="form-control">
+                        <p class="text-danger" id="profile_error"></p>
                         <button class="btn btn-primary w-100" type="submit">Simpan</button>
                     </form>
                 </div>
@@ -62,6 +74,44 @@ if (isset($_SESSION["is_login"]) == false) {
     <script>
         $(document).ready(function(){
             $('#form_logout').submit(function(e){
+                e.preventDefault();
+                let form = $(this);
+                let url = form.attr('action');
+                let method = form.attr('method');
+                let data = new FormData(form[0]);
+                console.log("Coba")
+                $.ajax({
+                    url: url,
+                    type: method,
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    dataType: 'JSON',
+                    success: function(response){
+                        if(response.status == "success"){
+                            toastr.success(response.message, "Success !",{
+                                closeButton: true,
+                                progressBar: true,
+                                timeOut: 1500
+                            });
+                            setTimeout(function(){
+                                if (response.redirect != "") {
+                                    location.href = response.redirect
+                                }
+                            }, 1800);
+                        } else{
+                            toastr.error(response.message, "Error !",{
+                                closeButton: true,
+                                progressBar: true,
+                                timeOut: 1500
+                            });
+                        }
+                    }
+                })
+            })
+        })
+        $(document).ready(function(){
+            $('#form_profile').submit(function(e){
                 e.preventDefault();
                 let form = $(this);
                 let url = form.attr('action');
