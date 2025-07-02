@@ -69,7 +69,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         }
     }
 }
-$routing = new Routing("../home.php", "profile.php", "add_book.php", "social_media.php", "../../index.php", "add_book.php");
+$book_collections = $perpustakaan->displayCatalogBook();
+
+
+$routing = new Routing("../home.php", "profile.php", "add_book.php", "social_media.php", "lend_page.php",  "../../index.php", "add_book.php");
 
 if (isset($_SESSION["is_login"]) == false) {
     header("location: ../../pages/login.php");
@@ -99,7 +102,6 @@ if (isset($_SESSION["is_login"]) == false) {
                 <div>
                     <h1>TAMBAH DATA BUKU</h1>
                     <form action="add_book.php" method="POST" enctype="multipart/form-data">
-                        <h3>Data Buku</h3>
                         <label class="form-label" for="judul_buku">Judul Buku:</label><br>
                         <input class="form-control" type="text" name="judul_buku" id="judul_buku" autocomplete="off" required><br>
                         
@@ -127,8 +129,16 @@ if (isset($_SESSION["is_login"]) == false) {
                         <label class="form-label" for="deskripsi_buku">Deskripsi Buku:</label><br>
                         <textarea name="deskripsi_buku" id="deskripsi_buku" class="form-control" rows="4" cols="50" autocomplete="off"></textarea><br>
                             
-                        <button class="btn btn-primary w-100" type="submit" name="submit">Simpan</button>
+                        <button class="btn btn-save w-100" type="submit" name="submit">Simpan</button>
                     </form>
+                </div>
+                <div>
+                    <h1>DAFTAR BUKU</h1>
+                    <form action="add_book.php" method="POST" class="d-flex gap-1">
+                        <input type="text" class="form-control w-50" placeholder="Cari buku berdasarkan judul, kategori, pengarang atau penerbit" autocomplete="off" name="search_book">
+                        <button type="submit" class="btn-search p-3"><i class="bi bi-search"></i></button>
+                    </form>
+                    <?php include 'table.php'; ?>
                 </div>
             </div>
         </div>

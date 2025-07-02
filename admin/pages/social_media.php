@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $result = $perpustakaan->getHomeHero();
 $heroText = $result['hero'];
 
-$routing = new Routing("../home.php", "profile.php", "add_book.php", "social_media.php", "../../index.php", "social_media.php");
+$routing = new Routing("../home.php", "profile.php", "add_book.php", "social_media.php", "lend_page.php", "../../index.php", "social_media.php");
 
 if (isset($_SESSION["is_login"]) == false) {
     header("location: ../../pages/login.php");

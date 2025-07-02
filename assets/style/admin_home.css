@@ -5,6 +5,8 @@
     --primary-blue: #2563eb;
     --primary-blue-dark: #1d4ed8;
     --primary-blue-light: #3b82f6;
+    --danger-red: #dc2626;
+    --danger-red-light: #f87171;
     --secondary-blue: #1e40af;
     --light-blue: #dbeafe;
     --very-light-blue: #eff6ff;
@@ -154,7 +156,7 @@ body {
 }
 
 .page-catalogue a::before {
-    content: '\f007';
+    content: '\f07c';
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     margin-right: 12px;
@@ -183,6 +185,15 @@ body {
     text-align: center;
 }
 
+.page-lend a::before {
+    content: '\f03a';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 12px;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
 .page-backweb a::before {
     content: '\f08e';
     font-family: 'Font Awesome 6 Free';
@@ -311,7 +322,20 @@ textarea.form-control {
     background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light)) !important;
     border: none !important;
     border-radius: var(--border-radius) !important;
-    padding: 14px 24px !important;
+    padding: 7px 15px !important;
+    font-weight: 600 !important;
+    font-size: 0.75rem;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.btn-save {
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light)) !important;
+    border: none !important;
+    color: var(--white) !important;
+    border-radius: var(--border-radius) !important;
+    padding: 15px 25px !important;
     font-weight: 600 !important;
     font-size: 1rem;
     transition: var(--transition);
@@ -319,9 +343,46 @@ textarea.form-control {
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
+.btn-danger {
+    background: linear-gradient(135deg, var(--danger-red), var(--danger-red-light)) !important;
+    border: none !important;
+    border-radius: var(--border-radius) !important;
+    padding: 7px 15px !important;
+    font-weight: 600 !important;
+    font-size: 0.75rem;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.btn-search {
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light)) !important;
+    border: none !important;
+    border-radius: var(--border-radius) !important;
+    color: var(--white) !important;
+    font-weight: 600 !important;
+    font-size: 0.75rem;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+.btn-search:hover {
+    background: linear-gradient(135deg, var(--primary-blue-dark), var(--primary-blue)) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+}
 
 .btn-primary:hover {
     background: linear-gradient(135deg, var(--primary-blue-dark), var(--primary-blue)) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+}
+.btn-save:hover {
+    background: linear-gradient(135deg, var(--primary-blue-dark), var(--primary-blue)) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+}
+.btn-danger:hover {
+    background: linear-gradient(135deg, var(--danger-red), var(--danger-red-light)) !important;
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
 }

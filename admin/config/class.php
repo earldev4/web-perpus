@@ -5,14 +5,16 @@ class Routing {
     private $profilePage;
     private $cataloguePage;
     private $socialPage;
+    private $lendPage;
     private $backToWebPage;
     private $logout;
 
-    public function __construct($homePage, $profilePage, $cataloguePage, $socialPage, $backToWebPage, $logout) {
+    public function __construct($homePage, $profilePage, $cataloguePage, $socialPage, $lendPage, $backToWebPage, $logout) {
         $this->homePage = $homePage;
         $this->profilePage = $profilePage;
         $this->cataloguePage = $cataloguePage;
         $this->socialPage = $socialPage;
+        $this->lendPage = $lendPage;
         $this->backToWebPage = $backToWebPage;
         $this->logout = $logout;
     }
@@ -28,6 +30,9 @@ class Routing {
     }
     public function getSocialPage() {
         return $this->socialPage;
+    }
+    public function getLendPage() {
+        return $this->lendPage;
     }
     public function getBackToWebPage() {
         return $this->backToWebPage;
@@ -49,6 +54,10 @@ class Routing {
 
     public function isSocialActive() {
         return basename($_SERVER['PHP_SELF']) === basename($this->socialPage);
+    }
+
+    public function isLendActive() {
+        return basename($_SERVER['PHP_SELF']) === basename($this->lendPage);
     }
 
     public function isBackWebActive() {

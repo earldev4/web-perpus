@@ -16,6 +16,9 @@
         <div class="page-socialmedia">
             <a href="<?= $routing->getSocialPage() ?>" class="text-light <?= $routing->isSocialActive() ? 'active' : '' ?>">Social Media</a>
         </div>
+        <div class="page-lend">
+            <a href="<?= $routing->getLendPage() ?>" class="text-light <?= $routing->isLendActive() ? 'active' : '' ?>">Data Peminjaman</a>
+        </div>
         <div class="page-backweb">
             <a href="<?= $routing->getBackToWebPage() ?>" class="text-light <?= $routing->isBackWebActive() ? 'active' : '' ?>">Back To Web</a>
         </div>

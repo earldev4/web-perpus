@@ -39,7 +39,7 @@ $clicks = intval($result['clicks']['clicks']);
 $result = $perpustakaan->displayFooter();
 $footerInfo = $result['footer'];
 
-$routing = new Routing("home.php", "./pages/profile.php", "./pages/add_book.php", "./pages/social_media.php", "../index.php", "home.php");
+$routing = new Routing("home.php", "./pages/profile.php", "./pages/add_book.php", "./pages/social_media.php", "./pages/lend_page.php", "../index.php", "home.php");
 
 if (isset($_SESSION["is_login"]) == false) {
     header("location: ../pages/login.php");
