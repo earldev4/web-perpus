@@ -11,7 +11,7 @@
                         <div class="swiper-slide">
                             <a href="./pages/detail.php?id=<?= htmlspecialchars($book['id_buku']) ?>" class="text-decoration-none">
                                 <div class="card" style="width: 18rem;">
-                                    <img src="/assets/img/buku/<?= htmlspecialchars($book["gambar_buku"])?>" alt="<?= htmlspecialchars($book["judul_buku"])?>" class="card-img-top img-fluid" alt="...">
+                                    <img src="https://asset.kompas.com/crops/MDKtGB-Qbs2L0FBC7bOlWcb5VeY=/65x65:865x599/1200x800/data/photo/2017/06/28/1265845835.jpg" alt="<?= htmlspecialchars($book["judul_buku"])?>" class="card-img-top img-fluid">
                                     <div class="card-body">
                                         <h5 class="card-title"><?= htmlspecialchars($book["judul_buku"])?></h5>
                                         <p class="card-text text-muted"><?= htmlspecialchars($book["kategori_buku"])?></p>
