@@ -12,6 +12,13 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
         $book = $result['book'];
     }
 }
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    if(isset($_POST["id_buku"])){
+        $perpustakaan->downloadBook($_POST);
+        exit();
+    }
+}
+
 
 $footer = $perpustakaan->displayFooter();
 $footerResult = $footer['footer'];
@@ -45,7 +52,7 @@ $footerResult = $footer['footer'];
         <div class="row">
             <img src="https://asset.kompas.com/crops/MDKtGB-Qbs2L0FBC7bOlWcb5VeY=/65x65:865x599/1200x800/data/photo/2017/06/28/1265845835.jpg" alt="Book in a library">
         </div>
-        <div class="row">
+        <div class="row pt-2">
             <div class="col-md-5 col-12">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
@@ -69,10 +76,16 @@ $footerResult = $footer['footer'];
                     <li class="list-group-item">
                         <span class="fw-bold">ISBN Buku: </span> <?= htmlspecialchars($book['isbn_buku']); ?>
                     </li>
+                    <li class="list-group-item">
+                        <form action="detail.php" method="POST">
+                            <input type="hidden" name="id_buku" value="<?= $book['id_buku']; ?>">
+                            <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-book"></i> Download Buku</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
             <div class="col-md-7 col-12">
-                <p style="text-align: justify"><?=  htmlspecialchars($book['deskripsi_buku']); ?></p>
+                <p style="text-align: justify"><?= htmlspecialchars($book['deskripsi_buku']); ?></p>
             </div>
         </div>
     </div>
