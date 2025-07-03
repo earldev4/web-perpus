@@ -12,62 +12,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         echo json_encode($response);
         exit();
     }
-    if($_POST["judul_buku"] && $_FILES["gambar_buku"] && $_POST["kategori_buku"] && $_POST["penerbit_buku"] && $_POST["jumlah_buku"] && $_POST["jumlah_halaman"] && $_POST["deskripsi_buku"] && $_POST["bahasa_buku"] && $_POST["isbn_buku"]){
-        $judul_buku = $_POST["judul_buku"];
-        $gambar_buku = $_FILES["gambar_buku"];
-        $gambar_buku_name = $_FILES["gambar_buku"]["name"];
-        $gambar_buku_temp = $_FILES["gambar_buku"]["tmp_name"];
-        $gambar_buku_size = $_FILES["gambar_buku"]["size"];
-        $gambar_buku_type = $_FILES["gambar_buku"]["type"];
-        $kategori_buku = $_POST["kategori_buku"];
-        $penerbit_buku = $_POST["penerbit_buku"];
-        $jumlah_buku = $_POST["jumlah_buku"];
-        $jumlah_halaman = $_POST["jumlah_halaman"];
-        $deskripsi_buku = $_POST["deskripsi_buku"];
-        $bahasa_buku = $_POST["bahasa_buku"];
-        $isbn_buku = $_POST["isbn_buku"];
-        $file_ext = explode('.', $gambar_buku_name);
-        $file_ext_actual = strtolower(end($file_ext));
-        $allowed = array('jpg', 'jpeg', 'png');
-
-        if($judul_buku && $gambar_buku && $kategori_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $bahasa_buku && $isbn_buku){
-            if (in_array($file_ext_actual, $allowed)) {
-                if($gambar_buku_size < 5000000){
-                    $sql = <<<SQL
-                        INSERT INTO informasi (jumlah_halaman, bahasa_buku, isbn_buku) VALUES (?, ?, ?);
-                    SQL;
-                    $sql = $conn->prepare($sql);
-                    $sql->bindParam(1, $jumlah_halaman);
-                    $sql->bindParam(2, $bahasa_buku);
-                    $sql->bindParam(3, $isbn_buku);
-                    $sql->execute();
-                    $id_informasi = $conn->lastInsertId();
-
-                    $gambar_name_new = uniqid('', true) . "." . $file_ext_actual;
-                    $gambar_folder = __DIR__ . '/../assets/img/buku/' . $gambar_name_new;
-                    move_uploaded_file($gambar_buku_temp, $gambar_folder);
-                    $sql = <<<SQL
-                        INSERT INTO buku (judul_buku, gambar_buku, kategori_buku, penerbit_buku, jumlah_buku, id_informasi, deskripsi_buku) VALUES (?, ?, ?, ?, ?, ?, ?);
-                    SQL;
-                    $sql = $conn->prepare($sql);
-                    $sql->bindParam(1, $judul_buku);
-                    $sql->bindParam(2, $gambar_name_new);
-                    $sql->bindParam(3, $kategori_buku);
-                    $sql->bindParam(4, $penerbit_buku);
-                    $sql->bindParam(5, $jumlah_buku);
-                    $sql->bindParam(6, $id_informasi);
-                    $sql->bindParam(7, $deskripsi_buku);
-                    $sql->execute();
-
-                    echo "<script>alert('Buku berhasil ditambahkan!'); window.location.href='../pages/katalog.php';</script>";
-                    exit();
-                } else {
-                    echo "<script>alert('Gambar buku terlalu besar! Maksimal 5MB');</script>";
-                    exit();
-                }
-            }
-        }
+    if (isset($_POST["judul_buku"])){
+        $response = $perpustakaan->addBook($_POST);
+        echo json_encode($response);
+        exit();
     }
+    
 }
 $book_collections = $perpustakaan->displayCatalogBook();
 
@@ -101,7 +51,7 @@ if (isset($_SESSION["is_login"]) == false) {
             <div class="col-md-10 col-12 bg-success">
                 <div>
                     <h1>TAMBAH DATA BUKU</h1>
-                    <form action="add_book.php" method="POST" enctype="multipart/form-data">
+                    <form action="add_book.php" id="add_book" method="POST" enctype="multipart/form-data">
                         <label class="form-label" for="judul_buku">Judul Buku:</label><br>
                         <input class="form-control" type="text" name="judul_buku" id="judul_buku" autocomplete="off" required><br>
                         
@@ -111,6 +61,9 @@ if (isset($_SESSION["is_login"]) == false) {
                         <label class="form-label" for="kategori_buku">Kategori Buku:</label><br>
                         <input class="form-control" type="text" name="kategori_buku" id="kategori_buku" autocomplete="off"><br>
                         
+                        <label class="form-label" for="pengarang_buku">Pengarang Buku:</label><br>
+                        <input class="form-control" type="text" name="pengarang_buku" id="pengarang_buku" autocomplete="off"><br>
+
                         <label class="form-label" for="penerbit_buku">Penerbit Buku:</label><br>
                         <input class="form-control" type="text" name="penerbit_buku" id="penerbit_buku" autocomplete="off"><br>
 
@@ -150,6 +103,44 @@ if (isset($_SESSION["is_login"]) == false) {
     <script>
         $(document).ready(function(){
             $('#form_logout').submit(function(e){
+                e.preventDefault();
+                let form = $(this);
+                let url = form.attr('action');
+                let method = form.attr('method');
+                let data = new FormData(form[0]);
+                console.log("Coba")
+                $.ajax({
+                    url: url,
+                    type: method,
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    dataType: 'JSON',
+                    success: function(response){
+                        if(response.status == "success"){
+                            toastr.success(response.message, "Success !",{
+                                closeButton: true,
+                                progressBar: true,
+                                timeOut: 1500
+                            });
+                            setTimeout(function(){
+                                if (response.redirect != "") {
+                                    location.href = response.redirect
+                                }
+                            }, 1800);
+                        } else{
+                            toastr.error(response.message, "Error !",{
+                                closeButton: true,
+                                progressBar: true,
+                                timeOut: 1500
+                            });
+                        }
+                    }
+                })
+            })
+        })
+        $(document).ready(function(){
+            $('#add_book').submit(function(e){
                 e.preventDefault();
                 let form = $(this);
                 let url = form.attr('action');

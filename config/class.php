@@ -77,6 +77,81 @@ class Perpustakaan{
             "books" => $books
         ];
     }
+    public function addBook($data): array {        
+        $judul_buku = $data["judul_buku"];
+        $gambar_buku = $_FILES["gambar_buku"];
+        $gambar_buku_name = $_FILES["gambar_buku"]["name"];
+        $gambar_buku_temp = $_FILES["gambar_buku"]["tmp_name"];
+        $gambar_buku_size = $_FILES["gambar_buku"]["size"];
+        $gambar_buku_type = $_FILES["gambar_buku"]["type"];
+        $kategori_buku = $data["kategori_buku"];
+        $pengarang_buku = $data["pengarang_buku"];
+        $penerbit_buku = $data["penerbit_buku"];
+        $jumlah_buku = $data["jumlah_buku"];
+        $jumlah_halaman = $data["jumlah_halaman"];
+        $deskripsi_buku = $data["deskripsi_buku"];
+        $bahasa_buku = $data["bahasa_buku"];
+        $isbn_buku = $data["isbn_buku"];
+        $file_ext = explode('.', $gambar_buku_name);
+        $file_ext_actual = strtolower(end($file_ext));
+        $allowed = array('jpg', 'jpeg', 'png');
+
+        if($judul_buku && $gambar_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $bahasa_buku && $isbn_buku){
+            if (in_array($file_ext_actual, $allowed)) {
+                if($gambar_buku_size < 15000000){
+                    $sql = <<<SQL
+                        INSERT INTO informasi (jumlah_halaman, bahasa_buku, isbn_buku) VALUES (?, ?, ?);
+                    SQL;
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bindParam(1, $jumlah_halaman);
+                    $stmt->bindParam(2, $bahasa_buku);
+                    $stmt->bindParam(3, $isbn_buku);
+                    $stmt->execute();
+                    $id_informasi = $this->conn->lastInsertId();
+
+                    $gambar_name_new = uniqid('', true) . "." . $file_ext_actual;
+                    $gambar_folder = __DIR__ . '/../assets/img/buku/' . $gambar_name_new;
+                    move_uploaded_file($gambar_buku_temp, $gambar_folder);
+                    $sql = <<<SQL
+                        INSERT INTO buku (judul_buku, gambar_buku, kategori_buku, pengarang_buku,  penerbit_buku, jumlah_buku, id_informasi, deskripsi_buku) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+                    SQL;
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bindParam(1, $judul_buku);
+                    $stmt->bindParam(2, $gambar_name_new);
+                    $stmt->bindParam(3, $kategori_buku);
+                    $stmt->bindParam(4, $pengarang_buku);
+                    $stmt->bindParam(5, $penerbit_buku);
+                    $stmt->bindParam(6, $jumlah_buku);
+                    $stmt->bindParam(7, $id_informasi);
+                    $stmt->bindParam(8, $deskripsi_buku);
+                    $stmt->execute();
+                    return [
+                        "status" => "success",
+                        "message" => "Buku Berhasil Ditambahkan",
+                        "redirect" => "add_book.php"
+                    ];
+                } else {
+                    return [
+                        "status" => "success",
+                        "message" => "Ukuran Gambar Terlalu Besar",
+                        "redirect" => ""
+                    ];
+                }
+            } else {
+                return [
+                        "status" => "success",
+                        "message" => "Format Gambar Tidak Sesuai",
+                        "redirect" => ""
+                    ];
+            }
+        } else {
+            return [
+                "status" => "error",
+                "message" => "Data Tidak Boleh Kosong", 
+                "redirect" => ""
+            ];
+        }
+    }
     public function viewBookDetail($id_berita): array{
         $id = $id_berita;
         $sql = <<<SQL

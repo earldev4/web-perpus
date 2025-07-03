@@ -36,34 +36,45 @@ $footerResult = $footer['footer'];
 
     
     <div class="container">
-        <header class="book-header d-flex justify-content-between">
-            <div class="d-flex">
+        <div class="row">
+            <header class="book-header d-flex justify-content-between">
                 <h1 class="book-title"><?= htmlspecialchars($book['judul_buku']) ?></h1>
-                <p class="fw-bold fs-5 px-2 pt-1"> - <?= htmlspecialchars($book['pengarang_buku']);?>
-            </div>
-            <p class="text-muted fs-5 px-2 pt-1"><?= htmlspecialchars($book['kategori_buku']);?>
-        </header>
-
-        <div class="book-image">
+                <hr>
+            </header>
+        </div>
+        <div class="row">
             <img src="/assets/img/buku/<?= htmlspecialchars($book['gambar_buku']); ?>" alt="<?= htmlspecialchars($book['judul_buku']); ?>" class="img-fluid rounded"></p>
         </div>
-
-        <h2>Deskripsi Singkat</h2>
-        <section class="book-description">
-            <p><?= htmlspecialchars($book['deskripsi_buku']); ?></p>
-        </section>
-
-        <section class="detail-section">
-            <h2>Informasi Detail</h2>
-            <div class="detail-list">
-                <div><strong>Penerbit:</strong> <?= htmlspecialchars($book['penerbit_buku']); ?></div>
-                <div><strong>Jumlah Buku:</strong> <?= htmlspecialchars($book['jumlah_buku']); ?></div>
-                <div><strong>Jumlah Halaman:</strong> <?= htmlspecialchars($book['jumlah_halaman']); ?></div>
-                <div><strong>Deskripsi Buku:</strong> <?= htmlspecialchars($book['deskripsi_buku']); ?></div>
-                <div><strong>Bahasa:</strong> <?= htmlspecialchars($book['bahasa_buku']); ?></div>
-                <div><strong>ISBN/ISSN:</strong> <?= htmlspecialchars($book['isbn_buku']); ?></div>
+        <div class="row">
+            <div class="col-md-5 col-12">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <span class="fw-bold">Kategori: </span><?= htmlspecialchars($book['kategori_buku']); ?>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="fw-bold">Pengarang: </span><?= htmlspecialchars($book['pengarang_buku']); ?>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="fw-bold">Penerbit: </span><?= htmlspecialchars($book['penerbit_buku']); ?>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="fw-bold">Jumlah Buku: </span> <?= htmlspecialchars($book['jumlah_buku']); ?>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="fw-bold">Jumlah Halaman: </span> <?= htmlspecialchars($book['jumlah_halaman']); ?>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="fw-bold">Bahasa: </span> <?= htmlspecialchars($book['bahasa_buku']); ?>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="fw-bold">ISBN Buku: </span> <?= htmlspecialchars($book['isbn_buku']); ?>
+                    </li>
+                </ul>
             </div>
-        </section>
+            <div class="col-md-7 col-12">
+                <p style="text-align: justify"><?=  htmlspecialchars($book['deskripsi_buku']); ?></p>
+            </div>
+        </div>
     </div>
 
     <?php include '../components/footer.php'; ?>
