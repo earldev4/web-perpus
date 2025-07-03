@@ -152,6 +152,155 @@ class Perpustakaan{
             ];
         }
     }
+    public function editBook($data): array {
+        $id_informasi = $data["id_informasi"];        
+        $id_buku = $data["id_buku"];        
+        $judul_buku = $data["judul_buku"];
+        $lampiran_buku = $_FILES["lampiran_buku"];
+        $lampiran_buku_name = $_FILES["lampiran_buku"]["name"];
+        $lampiran_buku_temp = $_FILES["lampiran_buku"]["tmp_name"];
+        $lampiran_buku_size = $_FILES["lampiran_buku"]["size"];
+        $lampiran_buku_type = $_FILES["lampiran_buku"]["type"];
+        $kategori_buku = $data["kategori_buku"];
+        $pengarang_buku = $data["pengarang_buku"];
+        $penerbit_buku = $data["penerbit_buku"];
+        $jumlah_buku = $data["jumlah_buku"];
+        $jumlah_halaman = $data["jumlah_halaman"];
+        $deskripsi_buku = $data["deskripsi_buku"];
+        $bahasa_buku = $data["bahasa_buku"];
+        $isbn_buku = $data["isbn_buku"];
+        $file_ext = explode('.', $lampiran_buku_name);
+        $file_ext_actual = strtolower(end($file_ext));
+        $allowed = array('pdf', 'doc', 'docx');
+
+        if($id_buku && $id_informasi && $judul_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $bahasa_buku && $isbn_buku){
+            if (!empty($lampiran_buku_name)) {
+                if (in_array($file_ext_actual, $allowed)) {
+                    if($lampiran_buku_size < 15000000){
+                        $sql = <<<SQL
+                            UPDATE informasi SET jumlah_halaman = ?, bahasa_buku = ?, isbn_buku = ? WHERE id_informasi = ?;
+                        SQL;
+                        $stmt = $this->conn->prepare($sql);
+                        $stmt->bindParam(1, $jumlah_halaman);
+                        $stmt->bindParam(2, $bahasa_buku);
+                        $stmt->bindParam(3, $isbn_buku);
+                        $stmt->bindParam(4, $id_informasi);
+                        $stmt->execute();
+
+                        $sql = <<<SQL
+                            SELECT lampiran_buku FROM buku WHERE id_buku = ?
+                        SQL;
+                        $stmt = $this->conn->prepare($sql);
+                        $stmt->bindParam(1, $id_buku);
+                        $stmt->execute();
+                        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                        $fileName = $result["lampiran_buku"];
+                        unlink(__DIR__ . '/../assets/img/buku/' . $fileName);
+
+                        $lampiran_name_new = uniqid('', true) . "." . $file_ext_actual;
+                        $lampiran_folder = __DIR__ . '/../assets/img/buku/' . $lampiran_name_new;
+                        move_uploaded_file($lampiran_buku_temp, $lampiran_folder);
+                        $sql = <<<SQL
+                            UPDATE buku SET judul_buku = ?, lampiran_buku = ?, kategori_buku = ?, pengarang_buku = ?,  penerbit_buku = ?, jumlah_buku = ?, deskripsi_buku = ? WHERE id_buku = ?;
+                        SQL;
+                        $stmt = $this->conn->prepare($sql);
+                        $stmt->bindParam(1, $judul_buku);
+                        $stmt->bindParam(2, $lampiran_name_new);
+                        $stmt->bindParam(3, $kategori_buku);
+                        $stmt->bindParam(4, $pengarang_buku);
+                        $stmt->bindParam(5, $penerbit_buku);
+                        $stmt->bindParam(6, $jumlah_buku);
+                        $stmt->bindParam(7, $deskripsi_buku);
+                        $stmt->bindParam(8, $id_buku);
+                        $stmt->execute();
+                        return [
+                            "status" => "success",
+                            "message" => "Buku Berhasil Diedit",
+                            "redirect" => "add_book.php"
+                        ];
+                    } else {
+                        return [
+                            "status" => "error",
+                            "message" => "Ukuran File Terlalu Besar, Maksimal 15 MB",
+                            "redirect" => ""
+                        ];
+                    }
+                } else {
+                    return [
+                        "status" => "error",
+                        "message" => "Format File Tidak Sesuai, Format Yang Diperbolehkan .pdf, .doc, .docx",
+                        "redirect" => ""
+                    ];
+                }
+            } else {
+                $sql = <<<SQL
+                    UPDATE informasi SET jumlah_halaman = ?, bahasa_buku = ?, isbn_buku = ? WHERE id_informasi = ?;
+                SQL;
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(1, $jumlah_halaman);
+                $stmt->bindParam(2, $bahasa_buku);
+                $stmt->bindParam(3, $isbn_buku);
+                $stmt->bindParam(4, $id_informasi);
+                $stmt->execute();
+
+                $sql = <<<SQL
+                    UPDATE buku SET judul_buku = ?, kategori_buku = ?, pengarang_buku = ?,  penerbit_buku = ?, jumlah_buku = ?, deskripsi_buku = ? WHERE id_informasi = ?;
+                SQL;
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(1, $judul_buku);
+                $stmt->bindParam(2, $kategori_buku);
+                $stmt->bindParam(3, $pengarang_buku);
+                $stmt->bindParam(4, $penerbit_buku);
+                $stmt->bindParam(5, $jumlah_buku);
+                $stmt->bindParam(6, $deskripsi_buku);
+                $stmt->bindParam(7, $id_informasi);
+                $stmt->execute();
+                return [
+                    "status" => "success",
+                    "message" => "Buku Berhasil Diedit",
+                    "redirect" => "add_book.php"
+                ];
+            }
+        } else {
+            return [
+                "status" => "error",
+                "message" => "Data Tidak Boleh Kosong", 
+                "redirect" => ""
+            ];
+        }
+    }
+    public function deleteBook($data): array {
+        $id_buku = $data["hapus_buku"];
+        $id_informasi = $data["hapus_informasi"];
+        $sql = <<<SQL
+            SELECT  lampiran_buku FROM buku WHERE id_buku = ?
+        SQL;
+        $stmt= $this->conn->prepare($sql);
+        $stmt->bindParam(1, $id_buku);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $fileName = $result["lampiran_buku"];
+        unlink(__DIR__ . '/../assets/img/buku/' . $fileName);
+
+        $sql = <<<SQL
+            DELETE FROM informasi WHERE id_informasi = ?;
+        SQL;
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $id_informasi);
+        $stmt->execute();
+        
+        $sql = <<<SQL
+            DELETE FROM buku WHERE id_buku = ?;
+        SQL;
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $id_buku);
+        $stmt->execute();
+        return [
+            "status" => "success",
+            "message" => "Buku Berhasil Dihapus",
+            "redirect" => "add_book.php"
+        ];
+    }
     public function viewBookDetail($id_berita): array{
         $id = $id_berita;
         $sql = <<<SQL

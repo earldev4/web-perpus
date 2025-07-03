@@ -22,11 +22,12 @@
                         <td class="fs-sm-5"><?= htmlspecialchars($book["pengarang_buku"]) ?></td>
                         <td class="fs-sm-5"><?= htmlspecialchars($book["penerbit_buku"]) ?></td>
                         <td class="d-flex gap-1">
-                            <button class="btn btn-primary" onclick="window.location.href='./edit_buku.php?id=<?= htmlspecialchars($book['id_buku']) ?>'">
+                            <button class="btn btn-primary" onclick="window.location.href='./edit_book.php?id=<?= htmlspecialchars($book['id_buku']) ?>'">
                                 Edit Buku
                             </button>
-                            <form action="table.php" method="POST" class="">
+                            <form action="add_book.php" class="delete_book_form" method="POST" class="">
                                 <input type="hidden" name="hapus_buku" value="<?= htmlspecialchars($book['id_buku']) ?>">
+                                <input type="hidden" name="hapus_informasi" value="<?= htmlspecialchars($book['id_informasi']) ?>">
                                 <button class="btn btn-danger">
                                     Hapus Buku
                                 </button>
