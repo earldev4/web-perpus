@@ -79,11 +79,11 @@ class Perpustakaan{
     }
     public function addBook($data): array {        
         $judul_buku = $data["judul_buku"];
-        $gambar_buku = $_FILES["gambar_buku"];
-        $gambar_buku_name = $_FILES["gambar_buku"]["name"];
-        $gambar_buku_temp = $_FILES["gambar_buku"]["tmp_name"];
-        $gambar_buku_size = $_FILES["gambar_buku"]["size"];
-        $gambar_buku_type = $_FILES["gambar_buku"]["type"];
+        $lampiran_buku = $_FILES["lampiran_buku"];
+        $lampiran_buku_name = $_FILES["lampiran_buku"]["name"];
+        $lampiran_buku_temp = $_FILES["lampiran_buku"]["tmp_name"];
+        $lampiran_buku_size = $_FILES["lampiran_buku"]["size"];
+        $lampiran_buku_type = $_FILES["lampiran_buku"]["type"];
         $kategori_buku = $data["kategori_buku"];
         $pengarang_buku = $data["pengarang_buku"];
         $penerbit_buku = $data["penerbit_buku"];
@@ -92,13 +92,13 @@ class Perpustakaan{
         $deskripsi_buku = $data["deskripsi_buku"];
         $bahasa_buku = $data["bahasa_buku"];
         $isbn_buku = $data["isbn_buku"];
-        $file_ext = explode('.', $gambar_buku_name);
+        $file_ext = explode('.', $lampiran_buku_name);
         $file_ext_actual = strtolower(end($file_ext));
-        $allowed = array('jpg', 'jpeg', 'png');
+        $allowed = array('pdf', 'doc', 'docx');
 
-        if($judul_buku && $gambar_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $bahasa_buku && $isbn_buku){
+        if($judul_buku && $lampiran_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $bahasa_buku && $isbn_buku){
             if (in_array($file_ext_actual, $allowed)) {
-                if($gambar_buku_size < 15000000){
+                if($lampiran_buku_size < 15000000){
                     $sql = <<<SQL
                         INSERT INTO informasi (jumlah_halaman, bahasa_buku, isbn_buku) VALUES (?, ?, ?);
                     SQL;
@@ -109,15 +109,15 @@ class Perpustakaan{
                     $stmt->execute();
                     $id_informasi = $this->conn->lastInsertId();
 
-                    $gambar_name_new = uniqid('', true) . "." . $file_ext_actual;
-                    $gambar_folder = __DIR__ . '/../assets/img/buku/' . $gambar_name_new;
-                    move_uploaded_file($gambar_buku_temp, $gambar_folder);
+                    $lampiran_name_new = uniqid('', true) . "." . $file_ext_actual;
+                    $lampiran_folder = __DIR__ . '/../assets/img/buku/' . $lampiran_name_new;
+                    move_uploaded_file($lampiran_buku_temp, $lampiran_folder);
                     $sql = <<<SQL
-                        INSERT INTO buku (judul_buku, gambar_buku, kategori_buku, pengarang_buku,  penerbit_buku, jumlah_buku, id_informasi, deskripsi_buku) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+                        INSERT INTO buku (judul_buku, lampiran_buku, kategori_buku, pengarang_buku,  penerbit_buku, jumlah_buku, id_informasi, deskripsi_buku) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
                     SQL;
                     $stmt = $this->conn->prepare($sql);
                     $stmt->bindParam(1, $judul_buku);
-                    $stmt->bindParam(2, $gambar_name_new);
+                    $stmt->bindParam(2, $lampiran_name_new);
                     $stmt->bindParam(3, $kategori_buku);
                     $stmt->bindParam(4, $pengarang_buku);
                     $stmt->bindParam(5, $penerbit_buku);
@@ -132,17 +132,17 @@ class Perpustakaan{
                     ];
                 } else {
                     return [
-                        "status" => "success",
-                        "message" => "Ukuran Gambar Terlalu Besar",
+                        "status" => "error",
+                        "message" => "Ukuran File Terlalu Besar, Maksimal 15 MB",
                         "redirect" => ""
                     ];
                 }
             } else {
                 return [
-                        "status" => "success",
-                        "message" => "Format Gambar Tidak Sesuai",
-                        "redirect" => ""
-                    ];
+                    "status" => "error",
+                    "message" => "Format File Tidak Sesuai, Format Yang Diperbolehkan .pdf, .doc, .docx",
+                    "redirect" => ""
+                ];
             }
         } else {
             return [

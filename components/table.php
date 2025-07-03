@@ -12,7 +12,7 @@
         <tbody>
             <?php 
             $id_buku = 1;
-            if(isset($book_collections)){ 
+            if(!empty($book_collections["books"])){
                 foreach ($book_collections["books"] as $book){ ?>
                     <tr>
                         <th scope="row" class="fs-sm-5"><?= htmlspecialchars($id_buku++) ?></th>
@@ -29,11 +29,7 @@
                 } 
             } else { ?>
                 <tr>
-                    <th scope="row" class="fs-sm-5"></th>
-                    <td class="fs-sm-5"></td>
-                    <td class="fs-sm-5"></td>
-                    <td class="fs-sm-5"></td>
-                    <td class="fs-sm-5">Tidak ada buku</td>
+                    <td scope="row" class="fs-sm-5 text-center" colspan="5">Tidak ada buku</td>
                 </tr>
             <?php } ?>
         </tbody>

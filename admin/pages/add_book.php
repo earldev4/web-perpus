@@ -17,10 +17,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         echo json_encode($response);
         exit();
     }
-    
-}
-$book_collections = $perpustakaan->displayCatalogBook();
-
+    if (isset($_POST["search_book"])){
+        $book_collections = $perpustakaan->searchBook($_POST);
+    } else {
+        $book_collections = $perpustakaan->displayCatalogBook();
+    }    
+} else {
+    $book_collections = $perpustakaan->displayCatalogBook();
+} 
 
 $routing = new Routing("../home.php", "profile.php", "add_book.php", "social_media.php", "lend_page.php",  "../../index.php", "add_book.php");
 
@@ -55,8 +59,8 @@ if (isset($_SESSION["is_login"]) == false) {
                         <label class="form-label" for="judul_buku">Judul Buku:</label><br>
                         <input class="form-control" type="text" name="judul_buku" id="judul_buku" autocomplete="off" required><br>
                         
-                        <label class="form-label" for="gambar_buku">Gambar Buku:</label><br>
-                        <input class="form-control" type="file" name="gambar_buku" id="gambar_buku" autocomplete="off"><br>
+                        <label class="form-label" for="lampiran_buku">Lampirkan Buku (pdf, doc, docx):</label><br>
+                        <input class="form-control" type="file" name="lampiran_buku" accept=".pdf,.doc,.docx" id="lampiran_buku" autocomplete="off" placeholder="Lampirkan file pdf, doc, docx"><br>
                         
                         <label class="form-label" for="kategori_buku">Kategori Buku:</label><br>
                         <input class="form-control" type="text" name="kategori_buku" id="kategori_buku" autocomplete="off"><br>

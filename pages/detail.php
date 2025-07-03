@@ -43,7 +43,7 @@ $footerResult = $footer['footer'];
             </header>
         </div>
         <div class="row">
-            <img src="/assets/img/buku/<?= htmlspecialchars($book['gambar_buku']); ?>" alt="<?= htmlspecialchars($book['judul_buku']); ?>" class="img-fluid rounded"></p>
+            <i class="fa-solid fa-file"></i>
         </div>
         <div class="row">
             <div class="col-md-5 col-12">
