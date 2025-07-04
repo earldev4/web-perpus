@@ -12,9 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($response);
         exit();
     }
+    if (isset($_POST["old_password"])){
+        $redirect = "lend_page.php";
+        $response = $perpustakaan->changePassword($_POST, $redirect);
+        echo json_encode($response);
+        exit();
+    }
 }
 
-$routing = new Routing("../home.php", "profile.php", "add_book.php", "social_media.php", "lend_page.php", "../../index.php", "lend_page.php");
+$routing = new Routing("../home.php", "profile.php", "add_book.php", "social_media.php", "lend_page.php", "../../index.php", "lend_page.php", "lend_page.php");
 
 if (isset($_SESSION["is_login"]) == false) {
     header("location: ../../pages/login.php");
@@ -46,6 +52,7 @@ if (isset($_SESSION["is_login"]) == false) {
             </div>
         </div>
     </div>
+    <?php include 'modal_changepw.php'; ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
@@ -87,6 +94,42 @@ if (isset($_SESSION["is_login"]) == false) {
                         }
                     }
                 })
+            })
+        })
+        $('.passwordMenu').on('submit', '#changePassword', function(e){
+            e.preventDefault();
+            let form = $(this);
+            let url = form.attr('action');
+            let method = form.attr('method');
+            let data = new FormData(form[0]);
+            console.log("Coba")
+            $.ajax({
+                url: url,
+                type: method,
+                processData: false,
+                contentType: false,
+                data: data,
+                dataType: 'JSON',
+                success: function(response){
+                    if(response.status == "success"){
+                        toastr.success(response.message, "Success !",{
+                            closeButton: true,
+                            progressBar: true,
+                            timeOut: 1500
+                        });
+                        setTimeout(function(){
+                            if (response.redirect != "") {
+                                location.href = response.redirect
+                            }
+                        }, 1800);
+                    } else{
+                        toastr.error(response.message, "Error !",{
+                            closeButton: true,
+                            progressBar: true,
+                            timeOut: 1500
+                        });
+                    }
+                }
             })
         })
     </script>

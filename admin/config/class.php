@@ -8,8 +8,9 @@ class Routing {
     private $lendPage;
     private $backToWebPage;
     private $logout;
+    private $navSubmit;
 
-    public function __construct($homePage, $profilePage, $cataloguePage, $socialPage, $lendPage, $backToWebPage, $logout) {
+    public function __construct($homePage, $profilePage, $cataloguePage, $socialPage, $lendPage, $backToWebPage, $logout, $navSubmit) {
         $this->homePage = $homePage;
         $this->profilePage = $profilePage;
         $this->cataloguePage = $cataloguePage;
@@ -17,6 +18,7 @@ class Routing {
         $this->lendPage = $lendPage;
         $this->backToWebPage = $backToWebPage;
         $this->logout = $logout;
+        $this->navSubmit = $navSubmit;
     }
 
     public function getHomePage() {
@@ -39,6 +41,9 @@ class Routing {
     }
     public function getLogout() {
         return $this->logout;
+    }
+    public function navSubmit() {
+        return $this->navSubmit;
     }
     public function isHomeActive() {
         return basename($_SERVER['PHP_SELF']) === basename($this->homePage);

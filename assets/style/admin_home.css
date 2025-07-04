@@ -5,6 +5,8 @@
     --primary-blue: #2563eb;
     --primary-blue-dark: #1d4ed8;
     --primary-blue-light: #3b82f6;
+    --primary-grey: #374151;
+    --primary-grey-light: #4b5563;
     --danger-red: #dc2626;
     --danger-red-light: #f87171;
     --secondary-blue: #1e40af;
@@ -330,6 +332,18 @@ textarea.form-control {
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
+.btn-secondary {
+    background: linear-gradient(135deg, var(--primary-grey), var(--primary-grey-light)) !important;
+    border: none !important;
+    border-radius: var(--border-radius) !important;
+    padding: 7px 15px !important;
+    font-weight: 600 !important;
+    font-size: 0.75rem;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
 .btn-save {
     background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light)) !important;
     border: none !important;
@@ -376,6 +390,11 @@ textarea.form-control {
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
 }
+.btn-secondary:hover {
+    background: linear-gradient(135deg, var(--primary-grey), var(--primary-grey-light)) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+}
 .btn-save:hover {
     background: linear-gradient(135deg, var(--primary-blue-dark), var(--primary-blue)) !important;
     transform: translateY(-2px);
@@ -389,6 +408,20 @@ textarea.form-control {
 
 .btn-primary:active {
     transform: translateY(0);
+}
+.container-fluid {
+  position: relative; /* Hindari absolute atau fixed kalau tidak perlu */
+  z-index: auto; /* Jangan terlalu tinggi */
+}
+.modal {
+    pointer-events: auto !important;
+    opacity: 1 !important;
+    z-index: 1055 !important;
+}
+
+.modal-backdrop {
+    display: block !important;
+    z-index: 1050 !important;
 }
 
 /* Form Groups Spacing */

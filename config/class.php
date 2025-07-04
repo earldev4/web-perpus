@@ -52,6 +52,46 @@ class Perpustakaan{
             "redirect" => $logout
         ];
     }
+    public function changePassword($data, $redirect): array {
+        $id = 1;
+        $old_password = $data["old_password"];
+        $new_password = $data["new_password"];
+        if($old_password && $new_password != ""){
+            $sql = <<<SQL
+                SELECT password_user FROM user WHERE id_user = ?;
+            SQL;
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+            $result =  $stmt->fetch(PDO::FETCH_ASSOC);
+            if($old_password == $result["password_user"]){
+                $sql = <<<SQL
+                    UPDATE user SET password_user = ? WHERE id_user = ?;
+                SQL;
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(1, $new_password);
+                $stmt->bindParam(2, $id);
+                $stmt->execute();
+                return [
+                    "status" => "success",
+                    "message" => "Password Berhasil Diubah",
+                    "redirect" => $redirect
+                ];
+            } else {
+                return [
+                    "status" => "error",
+                    "message" => "Password Lama Salah",
+                    "redirect" => ""
+                ];
+            }
+        } else {
+            return [
+                "status" => "error",
+                "message" => "Data tidak lengkap",
+                "redirect" => ""
+            ];
+        }
+    }
     public function displayCatalogBook(): array{
         $stmt = $this->conn->prepare("SELECT * FROM buku");
         $stmt->execute();
