@@ -51,5 +51,42 @@ $footerResult = $footer['footer'];
     <?php include '../components/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+    const previews = document.querySelectorAll('.pdf-preview');
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    previews.forEach(canvas => {
+        const url = canvas.getAttribute('data-pdf');
+        const context = canvas.getContext('2d');
+
+        pdfjsLib.getDocument(url).promise.then(pdf => {
+            return pdf.getPage(1);
+        }).then(page => {
+            const viewport = page.getViewport({ scale: 0.3 });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            return page.render(renderContext).promise;
+        }).catch(error => {
+            console.error("PDF.js error:", error);
+            canvas.width = 120;
+            canvas.height = 150;
+            context.fillStyle = "#f8f9fa";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.fillStyle = "#6c757d";
+            context.font = "12px Arial";
+            context.textAlign = "center";
+            context.fillText("Preview", canvas.width/2, canvas.height/2 - 10);
+            context.fillText("Unavailable", canvas.width/2, canvas.height/2 + 10);
+        });
+    });
+</script>
+
 </body>
 </html>
