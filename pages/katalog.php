@@ -6,11 +6,17 @@ $conn = getConnection();
 $perpustakaan = new Perpustakaan($conn);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    if (isset($_POST["search_book"])){
-        $book_collections = $perpustakaan->searchBook($_POST);
-    } else {
-        $book_collections = $perpustakaan->displayCatalogBook();
+    if (isset($_POST["search_book"])) {
+        $_SESSION["search_keyword"] = $_POST["search_book"];
+        header("Location: katalog.php"); 
+        exit();
     }
+}
+$searchKeyword = $_SESSION["search_keyword"] ?? null;
+
+if ($searchKeyword) {
+    $book_collections = $perpustakaan->searchBook(["search_book" => $searchKeyword]);
+    unset($_SESSION["search_keyword"]); 
 } else {
     $book_collections = $perpustakaan->displayCatalogBook();
 }
@@ -44,6 +50,7 @@ $footerResult = $footer['footer'];
                     <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </form>
             </div>
+            <br>
             <?php include '../components/table.php'; ?>
         </div>
     </div>
