@@ -66,34 +66,34 @@ if (isset($_SESSION["is_login"]) == false) {
                         <input type="hidden" name="id_informasi" value="<?= $book['id_informasi']?>">
 
                         <label class="form-label" for="judul_buku">Judul Buku:</label><br>
-                        <input class="form-control" type="text" name="judul_buku" id="judul_buku" autocomplete="off" required value="<?= $book['judul_buku'] ?>"><br>
+                        <input class="form-control" type="text" name="judul_buku" id="judul_buku" autocomplete="off" required value="<?= isset($book['judul_buku']) ? htmlspecialchars($book['judul_buku']) : "Tidak Ada Judul Buku" ?>"><br>
                         
                         <label class="form-label" for="lampiran_buku">Lampirkan Buku (pdf, doc, docx):</label><br>
-                        <input class="form-control" type="file" name="lampiran_buku" accept=".pdf,.doc,.docx" id="lampiran_buku" value="<?= $book['lampiran_buku'] ?>" autocomplete="off" placeholder="Lampirkan file pdf, doc, docx"><br>
+                        <input class="form-control" type="file" name="lampiran_buku" accept=".pdf,.doc,.docx" id="lampiran_buku" value="<?= isset($book['lampiran_buku']) ? htmlspecialchars($book['lampiran_buku']) : "Tidak Ada Lampiran" ?>" autocomplete="off" placeholder="Lampirkan file pdf, doc, docx"><br>
                         
                         <label class="form-label" for="kategori_buku">Kategori Buku:</label><br>
-                        <input class="form-control" type="text" name="kategori_buku" id="kategori_buku" value="<?= $book['kategori_buku'] ?>" autocomplete="off"><br>
+                        <input class="form-control" type="text" name="kategori_buku" id="kategori_buku" value="<?= isset($book['kategori_buku']) ? htmlspecialchars($book['kategori_buku']) : "Tidak Ada Kategori Buku"  ?>" autocomplete="off"><br>
                         
                         <label class="form-label" for="pengarang_buku">Pengarang Buku:</label><br>
-                        <input class="form-control" type="text" name="pengarang_buku" id="pengarang_buku" value="<?= $book['pengarang_buku'] ?>" autocomplete="off"><br>
+                        <input class="form-control" type="text" name="pengarang_buku" id="pengarang_buku" value="<?= isset($book['pengarang_buku']) ? htmlspecialchars($book['pengarang_buku']) : "Tidak Ada Pengarang Buku" ?>" autocomplete="off"><br>
 
                         <label class="form-label" for="penerbit_buku">Penerbit Buku:</label><br>
-                        <input class="form-control" type="text" name="penerbit_buku" id="penerbit_buku" value="<?= $book['penerbit_buku'] ?>" autocomplete="off"><br>
+                        <input class="form-control" type="text" name="penerbit_buku" id="penerbit_buku" value="<?= isset($book['penerbit_buku'])? htmlspecialchars($book['penerbit_buku']) : "Tidak Ada Penerbit Buku" ?>" autocomplete="off"><br>
 
                         <label class="form-label" for="jumlah_buku">Jumlah Buku:</label><br>
-                        <input class="form-control" type="number" name="jumlah_buku" id="jumlah_buku" value="<?= $book['jumlah_buku'] ?>" autocomplete="off" required><br>
+                        <input class="form-control" type="number" name="jumlah_buku" id="jumlah_buku" value="<?= isset($book['jumlah_buku'])? htmlspecialchars($book['jumlah_buku']) : "Tidak Ada Jumlah Buku"  ?>" autocomplete="off" required><br>
 
                         <label class="form-label" for="jumlah_halaman">Jumlah Halaman:</label><br>
-                        <input class="form-control" type="number" name="jumlah_halaman" id="jumlah_halaman" value="<?= $book['jumlah_halaman'] ?>" autocomplete="off" required><br>
+                        <input class="form-control" type="number" name="jumlah_halaman" id="jumlah_halaman" value="<?= isset($book['jumlah_halaman']) ? htmlspecialchars($book['jumlah_halaman']) : "Tidak Ada Jumlah Halaman"  ?>" autocomplete="off" required><br>
                         
                         <label class="form-label" for="bahasa_buku">Bahasa Buku:</label><br>
-                        <input class="form-control" type="text" name="bahasa_buku" id="bahasa_buku" value="<?= $book['bahasa_buku'] ?>" autocomplete="off" required><br>
+                        <input class="form-control" type="text" name="bahasa_buku" id="bahasa_buku" value="<?= isset($book['bahasa_buku']) ? htmlspecialchars($book['bahasa_buku']) : "Tidak Ada Bahasa Buku"?>" autocomplete="off" required><br>
                         
                         <label class="form-label" for="isbn_buku">ISBN Buku:</label><br>
-                        <input class="form-control" type="text" name="isbn_buku" id="isbn_buku" value="<?= $book['isbn_buku'] ?>" autocomplete="off" required><br>
+                        <input class="form-control" type="text" name="isbn_buku" id="isbn_buku" value="<?= isset($book['isbn_buku']) ? htmlspecialchars($book['isbn_buku']) : "Tidak Ada ISBN Buku" ?>" autocomplete="off" required><br>
 
                         <label class="form-label" for="deskripsi_buku">Deskripsi Buku:</label><br>
-                        <textarea name="deskripsi_buku" id="deskripsi_buku" class="form-control" rows="4" cols="50" autocomplete="off" ><?= $book['deskripsi_buku'] ?></textarea><br>
+                        <textarea name="deskripsi_buku" id="deskripsi_buku" class="form-control" rows="4" cols="50" autocomplete="off" ><?= isset($book['deskripsi_buku']) ? htmlspecialchars($book['deskripsi_buku']) : "Tidak Ada Deskripsi Buku"  ?></textarea><br>
                             
                         <button class="btn btn-save w-100" type="submit" name="submit">Simpan</button>
                     </form>

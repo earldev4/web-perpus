@@ -59,7 +59,7 @@ if (isset($_SESSION["is_login"]) == false) {
                     <form action="profile.php" method="POST" id="form_profile" name="form_profile" enctype="multipart/form-data" >
                         <label for="profile" class="form-label fs-4">Deskripsi Profile</label><br>
                         <p class="text-danger" id="profile_error"></p>
-                        <textarea class="form-control" autocomplete="off" name="profile" id="profile" rows="25" cols="50" required placeholder="cth: Bappeda Provinsi Lampung pada awalnya..."><?= htmlspecialchars($profile['profile_desk']) ?></textarea><br>
+                        <textarea class="form-control" autocomplete="off" name="profile" id="profile" rows="25" cols="50" required placeholder="cth: Bappeda Provinsi Lampung pada awalnya..."><?= isset($profile["profile_desk"]) ? htmlspecialchars($profile['profile_desk']) : "Tidak ada deskripsi" ?></textarea><br>
                         <label class="form-label fs-4" for="profile_picture">Pilih Gambar Struktur Organisasi</label>
                         <div class="">
                             <img src="../../assets/img/<?= htmlspecialchars($profile['profile_picture'])?>" alt="" class="img-fluid">

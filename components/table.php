@@ -15,10 +15,10 @@
             if(!empty($book_collections["books"])){
                 foreach ($book_collections["books"] as $book){ ?>
                     <tr>
-                        <th scope="row" class="fs-sm-5"><?= htmlspecialchars($id_buku++) ?></th>
-                        <td class="fs-sm-5"><?= htmlspecialchars($book["judul_buku"]) ?></td>
-                        <td class="fs-sm-5"><?= htmlspecialchars($book["pengarang_buku"]) ?></td>
-                        <td class="fs-sm-5"><?= htmlspecialchars($book["penerbit_buku"]) ?></td>
+                        <th scope="row" class="fs-sm-5"><?= $id_buku++  ?></th>
+                        <td class="fs-sm-5"><?= isset($book["judul_buku"]) ? htmlspecialchars($book["judul_buku"]): "Tidak ada judul buku" ?></td>
+                        <td class="fs-sm-5"><?= isset($book["pengarang_buku"]) ? htmlspecialchars($book["pengarang_buku"]): "Tidak ada pengarang buku" ?></td>
+                        <td class="fs-sm-5"><?= isset($book["penerbit_buku"]) ? htmlspecialchars($book["penerbit_buku"]) : "Tidak ada penerbit buku" ?></td>
                         <td>
                             <button class="btn btn-primary" onclick="window.location.href='./detail.php?id=<?= htmlspecialchars($book['id_buku']) ?>'">
                                 Lihat Selengkapnya

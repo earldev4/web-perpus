@@ -17,10 +17,10 @@
                 foreach ($book_collections["books"] as $book){ ?>
                     <tr>
                         <th scope="row" class="fs-sm-5"><?= htmlspecialchars($id_buku++) ?></th>
-                        <td class="fs-sm-5"><?= htmlspecialchars($book["judul_buku"]) ?></td>
-                        <td class="fs-sm-5"><?= htmlspecialchars($book["kategori_buku"]) ?></td>
-                        <td class="fs-sm-5"><?= htmlspecialchars($book["pengarang_buku"]) ?></td>
-                        <td class="fs-sm-5"><?= htmlspecialchars($book["penerbit_buku"]) ?></td>
+                        <td class="fs-sm-5"><?= isset($book["judul_buku"]) ? htmlspecialchars($book["judul_buku"]) : "Tidak ada judul buku" ?></td>
+                        <td class="fs-sm-5"><?= isset($book["kategori_buku"]) ? htmlspecialchars($book["kategori_buku"]) : "Tidak ada kategori buku" ?></td>
+                        <td class="fs-sm-5"><?= isset($book["pengarang_buku"]) ? htmlspecialchars($book["pengarang_buku"]) : "Tidak ada pengarang buku" ?></td>
+                        <td class="fs-sm-5"><?= isset($book["penerbit_buku"]) ? htmlspecialchars($book["penerbit_buku"]) : "Tidak ada penerbit buku" ?></td>
                         <td class="d-flex gap-1">
                             <button class="btn btn-primary" onclick="window.location.href='./edit_book.php?id=<?= htmlspecialchars($book['id_buku']) ?>'">
                                 Edit Buku

@@ -31,7 +31,7 @@ $footerResult = $footer['footer'];
     <div class="container profile-container p-sm-3 p-4">
         <h1>Tentang Bappeda Provinsi Lampung</h1>
         <p class="pt-3">
-            <?= htmlspecialchars($profile['profile_desk']) ?>
+            <?= isset($profile["profile_desk"]) ? htmlspecialchars($profile['profile_desk']) : "Tidak ada deskripsi" ?>
         </p>
     </div>
 

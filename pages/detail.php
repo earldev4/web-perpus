@@ -35,7 +35,7 @@ $footerResult = $footer['footer'];
     <link rel="stylesheet" href="../assets/style/style.css">
     <link rel="stylesheet" href="../assets/style/detail.css">
     <script src="../assets/script/script.js"></script>   
-    <title>Perpustakaan - Detail <?= htmlspecialchars($book['judul_buku']) ?></title>
+    <title>Perpustakaan - Detail <?= isset($book['judul_buku']) ? htmlspecialchars($book['judul_buku']) : "Title" ?></title>
 </head>
 <body>
     
@@ -45,7 +45,7 @@ $footerResult = $footer['footer'];
     <div class="container">
         <div class="row">
             <header class="book-header d-flex justify-content-between">
-                <h1 class="book-title"><?= htmlspecialchars($book['judul_buku']) ?></h1>
+                <h1 class="book-title"><?= isset($book['judul_buku']) ? htmlspecialchars($book['judul_buku']) : "Tidak ada judul buku"  ?></h1>
                 <hr>
             </header>
         </div>
@@ -56,25 +56,25 @@ $footerResult = $footer['footer'];
             <div class="col-md-5 col-12">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <span class="fw-bold">Kategori: </span><?= htmlspecialchars($book['kategori_buku']); ?>
+                        <span class="fw-bold">Kategori: </span><?= isset($book['kategori_buku']) ? htmlspecialchars($book['kategori_buku']) : "Tidak ada kategori buku" ?>
                     </li>
                     <li class="list-group-item">
-                        <span class="fw-bold">Pengarang: </span><?= htmlspecialchars($book['pengarang_buku']); ?>
+                        <span class="fw-bold">Pengarang: </span><?= isset($book['pengarang_buku']) ? htmlspecialchars($book['pengarang_buku']) : "Tidak ada pengarang buku"; ?>
                     </li>
                     <li class="list-group-item">
-                        <span class="fw-bold">Penerbit: </span><?= htmlspecialchars($book['penerbit_buku']); ?>
+                        <span class="fw-bold">Penerbit: </span><?= isset($book['penerbit_buku']) ? htmlspecialchars($book['penerbit_buku']) : "Tidak ada penerbit buku"; ?>
                     </li>
                     <li class="list-group-item">
-                        <span class="fw-bold">Jumlah Buku: </span> <?= htmlspecialchars($book['jumlah_buku']); ?>
+                        <span class="fw-bold">Jumlah Buku: </span> <?= isset($book['jumlah_buku']) ? htmlspecialchars($book['jumlah_buku']) : "Tidak ada jumlah buku"; ?>
                     </li>
                     <li class="list-group-item">
-                        <span class="fw-bold">Jumlah Halaman: </span> <?= htmlspecialchars($book['jumlah_halaman']); ?>
+                        <span class="fw-bold">Jumlah Halaman: </span> <?= isset($book['jumlah_halaman']) ? htmlspecialchars($book['jumlah_halaman']) : "Tidak ada jumlah halaman"; ?>
                     </li>
                     <li class="list-group-item">
-                        <span class="fw-bold">Bahasa: </span> <?= htmlspecialchars($book['bahasa_buku']); ?>
+                        <span class="fw-bold">Bahasa: </span> <?= isset($book['bahasa_buku']) ? htmlspecialchars($book['bahasa_buku']) : "Tidak ada bahasa buku";  ?>
                     </li>
                     <li class="list-group-item">
-                        <span class="fw-bold">ISBN Buku: </span> <?= htmlspecialchars($book['isbn_buku']); ?>
+                        <span class="fw-bold">ISBN Buku: </span> <?= isset($book['isbn_buku']) ? htmlspecialchars($book['isbn_buku']) : "Tidak ada ISBN buku"; ?>
                     </li>
                     <li class="list-group-item">
                         <form action="detail.php" method="POST">
@@ -85,7 +85,7 @@ $footerResult = $footer['footer'];
                 </ul>
             </div>
             <div class="col-md-7 col-12">
-                <p style="text-align: justify"><?= htmlspecialchars($book['deskripsi_buku']); ?></p>
+                <p style="text-align: justify"><?= isset($book['deskripsi_buku']) ? htmlspecialchars($book['deskripsi_buku']) : "Tidak ada deskripsi buku"; ?></p>
             </div>
         </div>
     </div>
