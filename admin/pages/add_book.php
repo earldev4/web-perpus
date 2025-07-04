@@ -12,6 +12,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         echo json_encode($response);
         exit();
     }
+    if (isset($_POST["search_book"])) {
+        $_SESSION["search_keyword"] = $_POST["search_book"];
+        header("Location: add_book.php"); 
+        exit();
+    }
     if (isset($_POST["old_password"])){
         $redirect = "add_book.php";
         $response = $perpustakaan->changePassword($_POST, $redirect);
@@ -28,14 +33,17 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         echo json_encode($response);
         exit();
     }
-    if (isset($_POST["search_book"])){
-        $book_collections = $perpustakaan->searchBook($_POST);
-    } else {
-        $book_collections = $perpustakaan->displayCatalogBook();
-    }    
+       
+}  
+
+$searchKeyword = $_SESSION["search_keyword"] ?? null;
+
+if ($searchKeyword) {
+    $book_collections = $perpustakaan->searchBook(["search_book" => $searchKeyword]);
+    unset($_SESSION["search_keyword"]); 
 } else {
     $book_collections = $perpustakaan->displayCatalogBook();
-} 
+}
 
 $routing = new Routing("../home.php", "profile.php", "add_book.php", "social_media.php", "lend_page.php",  "../../index.php", "add_book.php", "add_book.php");
 

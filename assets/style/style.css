@@ -138,7 +138,6 @@ button.btn.btn-primary:hover {
 }
 .hero-section::before {
     content: '';
-    pointer-events: none;
     position: absolute;
     top: 0;
     left: 0;
