@@ -46,9 +46,7 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination d-flex justify-content-center gap-1">
             <li class="page-item"><a class="page-link fw-bold" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link fw-bold" href="#">1</a></li>
-            <li class="page-item"><a class="page-link fw-bold" href="#">2</a></li>
-            <li class="page-item"><a class="page-link fw-bold" href="#">3</a></li>
+            <li class="page-item px-1"><span class="page-link fw-bold" href="#">1</span></li>
             <li class="page-item"><a class="page-link fw-bold" href="#">Next</a></li>
         </ul>
     </nav>
