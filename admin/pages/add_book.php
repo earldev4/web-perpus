@@ -120,7 +120,7 @@ if (isset($_SESSION["is_login"]) == false) {
                 <div>
                     <h1>DAFTAR BUKU</h1>
                     <form action="add_book.php" method="POST" class="d-flex gap-1">
-                        <input type="text" class="form-control w-50" placeholder="Cari buku berdasarkan judul, kategori, pengarang atau penerbit" autocomplete="off" name="search_book">
+                        <input type="text" class="form-control w-100" placeholder="Cari buku berdasarkan judul, kategori, pengarang atau penerbit" autocomplete="off" name="search_book">
                         <button type="submit" class="btn-search p-3"><i class="bi bi-search"></i></button>
                     </form>
                     <?php include 'table.php'; ?>
@@ -196,7 +196,7 @@ if (isset($_SESSION["is_login"]) == false) {
                 const isbn_buku_error = document.getElementById("isbn_buku_error");
                 const deskripsi_buku_error = document.getElementById("deskripsi_buku_error");
 
-                if(!judul_buku || judul_buku.length < 20 || judul_buku.length > 100){
+                if(!judul_buku || judul_buku.length < 5 || judul_buku.length > 100){
                     judul_buku_error.textContent = "Judul buku harus lebih dari 20 karakter dan kurang dari 100 karakter";
                     return;
                 } else {

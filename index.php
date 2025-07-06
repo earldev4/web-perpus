@@ -5,9 +5,9 @@
     $conn = getConnection();
     $perpustakaan = new Perpustakaan($conn);
 
-    $stmt = $conn->prepare("SELECT * FROM buku");
-    $stmt->execute();
-    $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $result = $perpustakaan->displayCatalogBook();
+    $books = $result['books'];
+    $books_top = $result['books_top'];
 
     $result = $perpustakaan->getHomeHero();
     $heroText = $result['hero'];
@@ -49,8 +49,11 @@
             </button>
         </a>
     </div>
-    <div class="bg-light p-5">
+    <div class="bg-light px-5 py-1">
         <?php include 'components/carousel.php'; ?>
+    </div>
+    <div class="bg-light px-5 pt-1 pb-5">
+        <?php include 'components/carousel_topdownload.php'; ?>
     </div>
     <?php include 'components/stats.php'; ?>
 

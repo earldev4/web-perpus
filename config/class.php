@@ -92,12 +92,17 @@ class Perpustakaan{
             ];
         }
     }
-    public function displayCatalogBook(): array{
-        $stmt = $this->conn->prepare("SELECT * FROM buku");
+    public function displayCatalogBook($num1 = 10, $num2 = 6): array{
+        $stmt = $this->conn->prepare("SELECT * FROM buku ORDER BY id_buku DESC LIMIT $num1");
         $stmt->execute();
         $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt = $this->conn->prepare("SELECT * FROM buku ORDER BY download DESC LIMIT $num2");
+        $stmt->execute();
+        $books_top = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return [
             "books" => $books,
+            "books_top" => $books_top
         ];
     }
     public function searchBook($data): array {
@@ -207,13 +212,14 @@ class Perpustakaan{
         $jumlah_buku = $data["jumlah_buku"];
         $jumlah_halaman = $data["jumlah_halaman"];
         $deskripsi_buku = $data["deskripsi_buku"];
+        $download_buku = $data["download_buku"];
         $bahasa_buku = $data["bahasa_buku"];
         $isbn_buku = $data["isbn_buku"];
         $file_ext = explode('.', $lampiran_buku_name);
         $file_ext_actual = strtolower(end($file_ext));
         $allowed = array('pdf', 'doc', 'docx');
 
-        if($id_buku && $id_informasi && $judul_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $bahasa_buku && $isbn_buku){
+        if($id_buku && $id_informasi && $judul_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $download_buku && $bahasa_buku && $isbn_buku){
             if (!empty($lampiran_buku_name)) {
                 if (in_array($file_ext_actual, $allowed)) {
                     if($lampiran_buku_size < 15000000){
@@ -241,7 +247,7 @@ class Perpustakaan{
                         $lampiran_folder = __DIR__ . '/../assets/img/buku/' . $lampiran_name_new;
                         move_uploaded_file($lampiran_buku_temp, $lampiran_folder);
                         $sql = <<<SQL
-                            UPDATE buku SET judul_buku = ?, lampiran_buku = ?, kategori_buku = ?, pengarang_buku = ?,  penerbit_buku = ?, jumlah_buku = ?, deskripsi_buku = ? WHERE id_buku = ?;
+                            UPDATE buku SET judul_buku = ?, lampiran_buku = ?, kategori_buku = ?, pengarang_buku = ?,  penerbit_buku = ?, jumlah_buku = ?, download = ?, deskripsi_buku = ? WHERE id_buku = ?;
                         SQL;
                         $stmt = $this->conn->prepare($sql);
                         $stmt->bindParam(1, $judul_buku);
@@ -249,9 +255,10 @@ class Perpustakaan{
                         $stmt->bindParam(3, $kategori_buku);
                         $stmt->bindParam(4, $pengarang_buku);
                         $stmt->bindParam(5, $penerbit_buku);
-                        $stmt->bindParam(6, $jumlah_buku);
-                        $stmt->bindParam(7, $deskripsi_buku);
-                        $stmt->bindParam(8, $id_buku);
+                        $stmt->bindParam(6, $download_buku);
+                        $stmt->bindParam(7, $jumlah_buku);
+                        $stmt->bindParam(8, $deskripsi_buku);
+                        $stmt->bindParam(9, $id_buku);
                         $stmt->execute();
                         return [
                             "status" => "success",
@@ -284,7 +291,7 @@ class Perpustakaan{
                 $stmt->execute();
 
                 $sql = <<<SQL
-                    UPDATE buku SET judul_buku = ?, kategori_buku = ?, pengarang_buku = ?,  penerbit_buku = ?, jumlah_buku = ?, deskripsi_buku = ? WHERE id_informasi = ?;
+                    UPDATE buku SET judul_buku = ?, kategori_buku = ?, pengarang_buku = ?,  penerbit_buku = ?, jumlah_buku = ?, download = ?, deskripsi_buku = ? WHERE id_informasi = ?;
                 SQL;
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bindParam(1, $judul_buku);
@@ -292,8 +299,9 @@ class Perpustakaan{
                 $stmt->bindParam(3, $pengarang_buku);
                 $stmt->bindParam(4, $penerbit_buku);
                 $stmt->bindParam(5, $jumlah_buku);
-                $stmt->bindParam(6, $deskripsi_buku);
-                $stmt->bindParam(7, $id_informasi);
+                $stmt->bindParam(6, $download_buku);
+                $stmt->bindParam(7, $deskripsi_buku);
+                $stmt->bindParam(8, $id_informasi);
                 $stmt->execute();
                 return [
                     "status" => "success",

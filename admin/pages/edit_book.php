@@ -67,34 +67,47 @@ if (isset($_SESSION["is_login"]) == false) {
 
                         <label class="form-label" for="judul_buku">Judul Buku:</label><br>
                         <input class="form-control" type="text" name="judul_buku" id="judul_buku" autocomplete="off" required value="<?= isset($book['judul_buku']) ? htmlspecialchars($book['judul_buku']) : "Tidak Ada Judul Buku" ?>"><br>
-                        
+                        <p class="text-danger" id="judul_buku_error"></p>
+
                         <label class="form-label" for="lampiran_buku">Lampirkan Buku (pdf, doc, docx):</label><br>
                         <input class="form-control" type="file" name="lampiran_buku" accept=".pdf,.doc,.docx" id="lampiran_buku" value="<?= isset($book['lampiran_buku']) ? htmlspecialchars($book['lampiran_buku']) : "Tidak Ada Lampiran" ?>" autocomplete="off" placeholder="Lampirkan file pdf, doc, docx"><br>
                         
                         <label class="form-label" for="kategori_buku">Kategori Buku:</label><br>
                         <input class="form-control" type="text" name="kategori_buku" id="kategori_buku" value="<?= isset($book['kategori_buku']) ? htmlspecialchars($book['kategori_buku']) : "Tidak Ada Kategori Buku"  ?>" autocomplete="off"><br>
-                        
+                        <p class="text-danger" id="kategori_buku_error"></p>
+
                         <label class="form-label" for="pengarang_buku">Pengarang Buku:</label><br>
                         <input class="form-control" type="text" name="pengarang_buku" id="pengarang_buku" value="<?= isset($book['pengarang_buku']) ? htmlspecialchars($book['pengarang_buku']) : "Tidak Ada Pengarang Buku" ?>" autocomplete="off"><br>
+                        <p class="text-danger" id="pengarang_buku_error"></p>
 
                         <label class="form-label" for="penerbit_buku">Penerbit Buku:</label><br>
                         <input class="form-control" type="text" name="penerbit_buku" id="penerbit_buku" value="<?= isset($book['penerbit_buku'])? htmlspecialchars($book['penerbit_buku']) : "Tidak Ada Penerbit Buku" ?>" autocomplete="off"><br>
+                        <p class="text-danger" id="penerbit_buku_error"></p>
 
                         <label class="form-label" for="jumlah_buku">Jumlah Buku:</label><br>
                         <input class="form-control" type="number" name="jumlah_buku" id="jumlah_buku" value="<?= isset($book['jumlah_buku'])? htmlspecialchars($book['jumlah_buku']) : "Tidak Ada Jumlah Buku"  ?>" autocomplete="off" required><br>
+                        <p class="text-danger" id="jumlah_buku_error"></p>
 
                         <label class="form-label" for="jumlah_halaman">Jumlah Halaman:</label><br>
                         <input class="form-control" type="number" name="jumlah_halaman" id="jumlah_halaman" value="<?= isset($book['jumlah_halaman']) ? htmlspecialchars($book['jumlah_halaman']) : "Tidak Ada Jumlah Halaman"  ?>" autocomplete="off" required><br>
-                        
+                        <p class="text-danger" id="jumlah_halaman_error"></p>
+
                         <label class="form-label" for="bahasa_buku">Bahasa Buku:</label><br>
                         <input class="form-control" type="text" name="bahasa_buku" id="bahasa_buku" value="<?= isset($book['bahasa_buku']) ? htmlspecialchars($book['bahasa_buku']) : "Tidak Ada Bahasa Buku"?>" autocomplete="off" required><br>
-                        
+                        <p class="text-danger" id="bahasa_buku_error"></p>
+
                         <label class="form-label" for="isbn_buku">ISBN Buku:</label><br>
                         <input class="form-control" type="text" name="isbn_buku" id="isbn_buku" value="<?= isset($book['isbn_buku']) ? htmlspecialchars($book['isbn_buku']) : "Tidak Ada ISBN Buku" ?>" autocomplete="off" required><br>
+                        <p class="text-danger" id="isbn_buku_error"></p>
+
+                        <label class="form-label" for="download_buku">Jumlah Download:</label><br>
+                        <input class="form-control" type="text" name="download_buku" id="download_buku" value="<?= isset($book['download']) ? htmlspecialchars($book['download']) : "Tidak Ada Jumlah Download" ?>" autocomplete="off" required><br>
+                        <p class="text-danger" id="download_buku_error"></p>
 
                         <label class="form-label" for="deskripsi_buku">Deskripsi Buku:</label><br>
                         <textarea name="deskripsi_buku" id="deskripsi_buku" class="form-control" rows="4" cols="50" autocomplete="off" ><?= isset($book['deskripsi_buku']) ? htmlspecialchars($book['deskripsi_buku']) : "Tidak Ada Deskripsi Buku"  ?></textarea><br>
-                            
+                        <p class="text-danger" id="deskripsi_buku_error"></p>
+
                         <button class="btn btn-save w-100" type="submit" name="submit">Simpan</button>
                     </form>
                 </div>
@@ -148,6 +161,90 @@ if (isset($_SESSION["is_login"]) == false) {
         $(document).ready(function(){
             $('#edit_book').submit(function(e){
                 e.preventDefault();
+                
+                const judul_buku = document.forms["edit_book"]["judul_buku"].value.trim();
+                const kategori_buku = document.forms["edit_book"]["kategori_buku"].value.trim();
+                const pengarang_buku = document.forms["edit_book"]["pengarang_buku"].value.trim();
+                const penerbit_buku = document.forms["edit_book"]["penerbit_buku"].value.trim();
+                const jumlah_buku = document.forms["edit_book"]["jumlah_buku"].value.trim();
+                const jumlah_halaman = document.forms["edit_book"]["jumlah_halaman"].value.trim();
+                const bahasa_buku = document.forms["edit_book"]["bahasa_buku"].value.trim();
+                const isbn_buku = document.forms["edit_book"]["isbn_buku"].value.trim();
+                const download_buku = document.forms["edit_book"]["download_buku"].value.trim();
+                const deskripsi_buku = document.forms["edit_book"]["deskripsi_buku"].value.trim();
+
+                const judul_buku_error = document.getElementById("judul_buku_error");
+                const kategori_buku_error = document.getElementById("kategori_buku_error");
+                const pengarang_buku_error = document.getElementById("pengarang_buku_error");
+                const penerbit_buku_error = document.getElementById("penerbit_buku_error");
+                const jumlah_buku_error = document.getElementById("jumlah_buku_error");
+                const jumlah_halaman_error = document.getElementById("jumlah_halaman_error");
+                const bahasa_buku_error = document.getElementById("bahasa_buku_error");
+                const isbn_buku_error = document.getElementById("isbn_buku_error");
+                const download_buku_error = document.getElementById("download_buku_error");
+                const deskripsi_buku_error = document.getElementById("deskripsi_buku_error");
+
+                if(!judul_buku || judul_buku.length < 5 || judul_buku.length > 100){
+                    judul_buku_error.textContent = "Judul buku harus lebih dari 20 karakter dan kurang dari 100 karakter";
+                    return;
+                } else {
+                    judul_buku_error.textContent = "";
+                }
+                if(!kategori_buku || kategori_buku.length < 5 || kategori_buku.length > 100){
+                    kategori_buku_error.textContent = "Kategori buku harus lebih dari 5 karakter dan kurang dari 100 karakter";
+                    return;
+                } else {
+                    kategori_buku_error.textContent = "";
+                }
+                if(!pengarang_buku || pengarang_buku.length < 5 || pengarang_buku.length > 100){
+                    pengarang_buku_error.textContent = "Pengarang buku harus lebih dari 5 karakter dan kurang dari 100 karakter";
+                    return;
+                } else {
+                    pengarang_buku_error.textContent = "";
+                }
+                if(!penerbit_buku || penerbit_buku.length < 5 || penerbit_buku.length > 100){
+                    penerbit_buku_error.textContent = "Penerbit buku harus lebih dari 5 karakter dan kurang dari 100 karakter";
+                    return;
+                } else {
+                    penerbit_buku_error.textContent = "";
+                }
+                if(!jumlah_halaman || jumlah_halaman <= 5 ){
+                    jumlah_halaman_error.textContent = "Jumlah halaman harus lebih dari 5 halaman";
+                    return;
+                } else {
+                    jumlah_halaman_error.textContent = "";
+                }
+                if(!jumlah_buku || jumlah_buku <= 0){
+                    jumlah_buku_error.textContent = "Jumlah buku harus lebih dari 0 buku";
+                    return;
+                } else {
+                    jumlah_buku_error.textContent = "";
+                }
+                if(!bahasa_buku || bahasa_buku.length < 5 || bahasa_buku.length > 100){
+                    bahasa_buku_error.textContent = "Bahasa buku harus lebih dari 5 karakter dan kurang dari 100 karakter";
+                    return;
+                } else {
+                    bahasa_buku_error.textContent = "";
+                }
+                if(!isbn_buku || isbn_buku.length < 5 || isbn_buku.length > 100){
+                    isbn_buku_error.textContent = "ISBN buku harus lebih dari 5 karakter dan kurang dari 100 karakter";
+                    return;
+                } else {
+                    isbn_buku_error.textContent = "";
+                }
+                if(download_buku < 0){
+                    download_buku_error.textContent = "Download buku harus lebih dari 0";
+                    return;
+                } else {
+                    download_buku_error.textContent = "";
+                }
+                if(!deskripsi_buku || deskripsi_buku.length < 20 || deskripsi_buku.length > 500){
+                    deskripsi_buku_error.textContent = "Deskripsi buku harus lebih dari 20 karakter dan kurang dari 500 karakter";
+                    return;
+                } else {
+                    deskripsi_buku_error.textContent = "";
+                }
+
                 let form = $(this);
                 let url = form.attr('action');
                 let method = form.attr('method');
