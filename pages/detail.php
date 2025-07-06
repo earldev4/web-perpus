@@ -74,6 +74,9 @@ $footerResult = $footer['footer'];
                         <span class="fw-bold">Bahasa: </span> <?= isset($book['bahasa_buku']) ? htmlspecialchars($book['bahasa_buku']) : "Tidak ada bahasa buku";  ?>
                     </li>
                     <li class="list-group-item">
+                        <span class="fw-bold">Download: </span> <?= isset($book['bahasa_buku']) ? htmlspecialchars($book['download']) : "Tidak ada download";  ?>x
+                    </li>
+                    <li class="list-group-item">
                         <span class="fw-bold">ISBN Buku: </span> <?= isset($book['isbn_buku']) ? htmlspecialchars($book['isbn_buku']) : "Tidak ada ISBN buku"; ?>
                     </li>
                     <li class="list-group-item">
