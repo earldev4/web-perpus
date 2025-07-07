@@ -12,7 +12,8 @@
         </thead>
         <tbody>
             <?php 
-            $id_buku = 1;
+            $news_per_page = 10;
+            $id_buku = ($page - 1) * $news_per_page + 1;
             if(!empty($book_collections["books"])){ 
                 foreach ($book_collections["books"] as $book){ ?>
                     <tr>
@@ -45,9 +46,9 @@
     </table>
     <nav aria-label="Page navigation example">
         <ul class="pagination d-flex justify-content-center gap-1">
-            <li class="page-item"><a class="page-link fw-bold" href="#">Previous</a></li>
-            <li class="page-item px-1"><span class="page-link fw-bold" href="#">1</span></li>
-            <li class="page-item"><a class="page-link fw-bold" href="#">Next</a></li>
+            <?php if ($page > 1): ?> <li class="page-item"><a class="page-link fw-bold" href="add_book.php?page=<?= $page - 1 ?>">Previous</a></li><?php endif; ?>
+            <li class="page-item px-1"><span class="page-link fw-bold" href="#"><?= $page."/".$total_page?></span></li>
+            <?php if ($page < $total_page): ?> <li class="page-item"><a class="page-link fw-bold" href="add_book.php?page=<?= $page + 1 ?>">Next</a></li><?php endif; ?>
         </ul>
     </nav>
 </div>

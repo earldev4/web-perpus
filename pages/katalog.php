@@ -12,14 +12,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         exit();
     }
 }
+if ($_SERVER["REQUEST_METHOD"] == "GET"){
+    if (isset($_GET["page"])){
+        $page = $_GET["page"];
+    } else {
+        $page = 1;
+    }
+}
 $searchKeyword = $_SESSION["search_keyword"] ?? null;
 
 if ($searchKeyword) {
     $book_collections = $perpustakaan->searchBook(["search_book" => $searchKeyword]);
     unset($_SESSION["search_keyword"]); 
 } else {
-    $book_collections = $perpustakaan->displayCatalogBook();
+    $book_collections = $perpustakaan->displayCatalogBook($page);
 }
+
+$total_page = $perpustakaan->displayCatalogBook()["total_pages"];
 
 $footer = $perpustakaan->displayFooter();
 $footerResult = $footer['footer'];

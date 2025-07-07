@@ -92,17 +92,24 @@ class Perpustakaan{
             ];
         }
     }
-    public function displayCatalogBook($num1 = 10, $num2 = 6): array{
-        $stmt = $this->conn->prepare("SELECT * FROM buku ORDER BY id_buku DESC LIMIT $num1");
+    public function displayCatalogBook($page = 1, $news_per_page = 10, $topbooks = 6): array{
+        $start_from = ($page - 1) * $news_per_page;
+        $stmt = $this->conn->prepare("SELECT * FROM buku ORDER BY id_buku DESC LIMIT $start_from, $news_per_page");
         $stmt->execute();
         $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $stmt = $this->conn->prepare("SELECT * FROM buku ORDER BY download DESC LIMIT $num2");
+        $total_news = $this->conn->prepare("SELECT COUNT(*) AS TOTAL FROM buku");
+        $total_news->execute();
+        $total_news = $total_news->fetch(PDO::FETCH_ASSOC);
+        $total_pages = ceil($total_news["TOTAL"] / $news_per_page);
+
+        $stmt = $this->conn->prepare("SELECT * FROM buku ORDER BY download DESC LIMIT $topbooks");
         $stmt->execute();
         $books_top = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return [
             "books" => $books,
-            "books_top" => $books_top
+            "books_top" => $books_top,
+            "total_pages" => $total_pages
         ];
     }
     public function searchBook($data): array {

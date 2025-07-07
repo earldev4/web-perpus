@@ -36,14 +36,24 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
        
 }  
 
+if ($_SERVER["REQUEST_METHOD"] == "GET"){
+    if (isset($_GET["page"])){
+        $page = $_GET["page"];
+    } else {
+        $page = 1;
+    }
+}
+
 $searchKeyword = $_SESSION["search_keyword"] ?? null;
 
 if ($searchKeyword) {
     $book_collections = $perpustakaan->searchBook(["search_book" => $searchKeyword]);
     unset($_SESSION["search_keyword"]); 
 } else {
-    $book_collections = $perpustakaan->displayCatalogBook();
+    $book_collections = $perpustakaan->displayCatalogBook($page);
 }
+
+$total_page = $perpustakaan->displayCatalogBook()["total_pages"];
 
 $routing = new Routing("../home.php", "profile.php", "add_book.php", "social_media.php", "lend_page.php",  "../../index.php", "add_book.php", "add_book.php");
 
