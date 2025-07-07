@@ -120,9 +120,35 @@ if (isset($_SESSION["is_login"]) == false) {
     <?php include 'pages/modal_changepw.php'; ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.3.0/classic/ckeditor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script>
+        ClassicEditor
+        .create(document.querySelector('#hero_title'))
+        .then(newEditor => {
+            editor = newEditor;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        ClassicEditor
+        .create(document.querySelector('#footer_text'))
+        .then(newEditor => {
+            editor = newEditor;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        ClassicEditor
+        .create(document.querySelector('#footer_lokasi'))
+        .then(newEditor => {
+            editor = newEditor;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    </script>
     <script>
         $(document).ready(function(){
             $('#form_hero').submit(function(e){
@@ -130,8 +156,8 @@ if (isset($_SESSION["is_login"]) == false) {
                 const home_hero = document.forms["form_hero"]["hero_title"].value.trim();
                 const hero_error = document.getElementById("hero_error");
 
-                if(!home_hero || home_hero.length < 30 || home_hero.length > 200){
-                    hero_error.textContent = "Deskripsi harus lebih dari 30 karakter dan kurang dari 200 karakter";
+                if(!home_hero || home_hero.length < 50 ){
+                    hero_error.textContent = "Deskripsi harus lebih dari 50";
                     return;
                 } else {
                     hero_error.textContent = "";
@@ -239,7 +265,7 @@ if (isset($_SESSION["is_login"]) == false) {
                 const footer_jam_error = document.getElementById("footer_jam_error");
                 const footer_lokasi_error = document.getElementById("footer_lokasi_error");
 
-                if(!form_footer || form_footer.length < 30 || form_footer.length > 350){
+                if(!form_footer || form_footer.length < 30 || form_footer.length > 500){
                     footer_text_error.textContent = "Deskripsi harus lebih dari 30 karakter dan kurang dari 350 karakter";
                     return;
                 } else {
@@ -275,7 +301,7 @@ if (isset($_SESSION["is_login"]) == false) {
                 } else {
                     footer_jam_error.textContent = "";
                 }
-                if(!footer_lokasi || footer_lokasi.length < 30 || footer_lokasi.length > 200){
+                if(!footer_lokasi || footer_lokasi.length < 30 || footer_lokasi.length > 500){
                     footer_lokasi_error.textContent = "Lokasi harus lebih dari 30 karakter dan kurang dari 200 karakter";
                     return;
                 } else {

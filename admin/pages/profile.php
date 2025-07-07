@@ -59,7 +59,7 @@ if (isset($_SESSION["is_login"]) == false) {
                     <form action="profile.php" method="POST" id="form_profile" name="form_profile" enctype="multipart/form-data" >
                         <label for="profile" class="form-label fs-4">Deskripsi Profile</label><br>
                         <p class="text-danger" id="profile_error"></p>
-                        <textarea class="form-control" autocomplete="off" name="profile" id="profile" rows="25" cols="50" required placeholder="cth: Bappeda Provinsi Lampung pada awalnya..."><?= isset($profile["profile_desk"]) ? htmlspecialchars($profile['profile_desk']) : "Tidak ada deskripsi" ?></textarea><br>
+                        <textarea class="form-control" autocomplete="off" name="profile" id="profile" rows="15" cols="50" required placeholder="cth: Bappeda Provinsi Lampung pada awalnya..."><?= isset($profile["profile_desk"]) ? htmlspecialchars($profile['profile_desk']) : "Tidak ada deskripsi" ?></textarea><br>
                         <label class="form-label fs-4" for="profile_picture">Pilih Gambar Struktur Organisasi</label>
                         <div class="">
                             <img src="../../assets/img/<?= htmlspecialchars($profile['profile_picture'])?>" alt="" class="img-fluid">
@@ -75,8 +75,19 @@ if (isset($_SESSION["is_login"]) == false) {
     <?php include 'modal_changepw.php'; ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.3.0/classic/ckeditor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script>
+        ClassicEditor
+        .create(document.querySelector('#profile'))
+        .then(newEditor => {
+            editor = newEditor;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    </script>
     <script>
         $(document).ready(function(){
             $('#form_logout').submit(function(e){
@@ -119,17 +130,16 @@ if (isset($_SESSION["is_login"]) == false) {
         $(document).ready(function(){
             $('#form_profile').submit(function(e){
                 e.preventDefault();
-
                 const profile_text = document.forms["form_profile"]["profile"].value.trim();
-
                 let profile_error = document.getElementById("profile_error");
 
-                if(!profile_text || profile_text.length < 500 ){
-                    profile_error.textContent = "Deskripsi harus lebih dari 500 karakter";
+                if(!profile_text || profile_text.length < 300 ){
+                    profile_error.textContent = "Deskripsi harus lebih dari 300 karakter";
                     return;
                 } else {
                     profile_error.textContent = "";
                 }
+
                 let form = $(this);
                 let url = form.attr('action');
                 let method = form.attr('method');

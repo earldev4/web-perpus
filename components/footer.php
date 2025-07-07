@@ -7,7 +7,7 @@
                         <img src="/assets/img/Lampung_coa.png" alt="Logo" class="footer-logo">
                     </div>
                     <div class="footer-text">
-                        <p><?= isset($footerResult["footer_text"]) ? $footerResult["footer_text"] : "" ; ?></p>
+                        <p><?= isset($footerResult["footer_text"]) ? htmlspecialchars_decode($footerResult["footer_text"]): "" ; ?></p>
                     </div>
                     <div class="social-icons">
                         <a href="https://www.instagram.com/bappeda_lampung/?hl=en" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -21,7 +21,7 @@
                             <i class="fas fa-phone-alt contact-icon"></i>
                             <div class="contact-details">
                                 <span class="contact-label">Kontak</span>
-                                <span class="contact-value"><?= isset($footerResult["kontak"]) ? $footerResult["kontak"] : "" ; ?></span>
+                                <span class="contact-value"><?= isset($footerResult["kontak"]) ? htmlspecialchars($footerResult["kontak"]): "" ; ?></span>
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                             <i class="fas fa-envelope contact-icon"></i>
                             <div class="contact-details">
                                 <span class="contact-label">E-Mail</span>
-                                <span class="contact-value"><?= isset($footerResult["email"]) ? $footerResult["email"] : "" ; ?></span>
+                                <span class="contact-value"><?= isset($footerResult["email"]) ? htmlspecialchars($footerResult["email"]): "" ; ?></span>
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                             <i class="fas fa-clock contact-icon"></i>
                             <div class="contact-details">
                                 <span class="contact-label">Jam Kerja</span>
-                                <span class="contact-value"><?= isset($footerResult["hari"]) ? $footerResult["hari"] : "" ; ?>: <?= isset($footerResult["jam"]) ? $footerResult["jam"] : "" ; ?></span>
+                                <span class="contact-value"><?= isset($footerResult["hari"]) ? htmlspecialchars($footerResult["hari"]): "" ; ?>: <?= isset($footerResult["jam"]) ? htmlspecialchars($footerResult["jam"])  : "" ; ?></span>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                             <i class="fas fa-map-marker-alt contact-icon"></i>
                             <div class="contact-details">
                                 <span class="contact-label">Lokasi</span>
-                                <span class="contact-value"><?= isset($footerResult["lokasi"]) ? $footerResult["lokasi"] : "" ; ?></span>
+                                <span class="contact-value"><?= isset($footerResult["lokasi"]) ? htmlspecialchars_decode($footerResult["lokasi"]) : "" ; ?></span>
                             </div>
                         </div>
                     </div>
