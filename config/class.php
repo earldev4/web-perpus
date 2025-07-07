@@ -112,6 +112,47 @@ class Perpustakaan{
             "total_pages" => $total_pages
         ];
     }
+    public function displaySocialMedia():array {
+        $stmt = $this->conn->prepare("SELECT * FROM social");
+        $stmt->execute();
+        $social = $stmt->fetch(PDO::FETCH_ASSOC);
+        return [
+            "social" => $social
+        ];
+    }
+    public function editSocialMedia($data): array {
+        $id = 1;
+        $instagram = $data["instagram"];
+        $youtube = $data["youtube"];
+        $facebook = $data["facebook"];
+        $tiktok = $data["tiktok"];
+        $x = $data["x"];
+        
+        if ($instagram && $youtube && $facebook && $tiktok && $x != "") {
+            $sql = <<<SQL
+                UPDATE social SET instagram = ?, youtube = ?, facebook = ?, tiktok = ?, x = ? WHERE id_social = ?;
+            SQL;
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(1, $instagram);
+            $stmt->bindParam(2, $youtube);
+            $stmt->bindParam(3, $facebook);
+            $stmt->bindParam(4, $tiktok);
+            $stmt->bindParam(5, $x);
+            $stmt->bindParam(6, $id);
+            $stmt->execute();
+            return [
+                "status" => "success",
+                "message" => "Social Media Berhasil Diubah",
+                "redirect" => "social_media.php"
+            ]; 
+        } else {
+            return [
+                "status" => "error",
+                "message" => "Data tidak lengkap",
+                "redirect" => ""
+            ];
+        }
+    }
     public function searchBook($data): array {
         $trim = trim($data["search_book"]);
         $book = "%$trim%";

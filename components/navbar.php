@@ -1,4 +1,9 @@
 <!-- navbar.php -->
+<?php 
+
+$socialMedia = $perpustakaan->displaySocialMedia()["social"];
+
+?>
 <nav class="navbar navbar-expand-lg bg-light p-3" id="mainNavbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="#" >
@@ -31,9 +36,15 @@
                             Social Media <i class="bi bi-chevron-down" style="text-shadow: 0 0 1px currentColor;"></i>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="https://www.instagram.com/bappeda_lampung/?hl=en" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                            <li><a class="dropdown-item" href="<?= $socialMedia["instagram"] ?>" target="_blank" rel="noopener noreferrer">Instagram</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCZMZAzUJh0EDYEU5FfV64eg" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+                            <li><a class="dropdown-item" href="<?= $socialMedia["youtube"] ?>" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="<?= $socialMedia["x"] ?>" target="_blank" rel="noopener noreferrer">X</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="<?= $socialMedia["tiktok"] ?>" target="_blank" rel="noopener noreferrer">Tiktok</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="<?= $socialMedia["facebook"] ?>" target="_blank" rel="noopener noreferrer">Facebook</a></li>
                         </ul>
                     </li>
                     <?php if(isset($_SESSION["is_login"]) == true){?>
