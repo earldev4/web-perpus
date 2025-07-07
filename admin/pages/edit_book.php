@@ -86,8 +86,8 @@ if (isset($_SESSION["is_login"]) == false) {
                             "Filsafat" => "Filsafat",
                             "Biografi" => "Biografi",
                             "Sosiologi" => "Sosiologi",
-                            "Politik Pemerintahan" => "Politik & Pemerintahan",
-                            "Ekonomi Bisnis" => "Ekonomi & Bisnis",
+                            "Politik & Pemerintahan" => "Politik & Pemerintahan",
+                            "Ekonomi & Bisnis" => "Ekonomi & Bisnis",
                             "Agama" => "Agama",
                             "Pendidikan" => "Pendidikan",
                             "Pengembangan Diri" => "Pengembangan Diri"
