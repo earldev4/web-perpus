@@ -372,38 +372,6 @@ class Perpustakaan{
             "book" => $book
         ];
     }
-    public function downloadBook($data): void {
-        $id_buku = $data["id_buku"];
-        $sql = <<<SQL
-            SELECT judul_buku, lampiran_buku FROM buku WHERE id_buku = ?
-        SQL;
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1, $id_buku);
-        $stmt->execute();
-        $book = $stmt->fetch(PDO::FETCH_ASSOC);
-        if(isset($book["lampiran_buku"])) {
-            $fileName = $book["lampiran_buku"];
-            $filePath = __DIR__ . '/../assets/img/buku/' . $fileName;
-            if (file_exists($filePath)) {
-                $judul = preg_replace('/[^a-zA-Z0-9-_\.]/', '_', $book["judul_buku"]);
-                $ext = pathinfo($filePath, PATHINFO_EXTENSION);
-                $downloadName = $judul . '.' . $ext;
-
-                header('Content-Description: File Transfer');
-                header('Content-Type: application/octet-stream');
-                header('Content-Disposition: attachment; filename="' . $downloadName . '"');
-                header('Expires: 0');
-                header('Cache-Control: must-revalidate');
-                header('Pragma: public');
-                header('Content-Length: ' . filesize($filePath));
-                flush(); 
-                readfile($filePath); 
-            } else {
-                echo "File tidak ditemukan.";
-            }
-        }
-
-    }
     public function getHomeHero(): array {
         $id = 1;
         $stmt = $this->conn->prepare("SELECT * FROM home_hero WHERE id_hero = ?"); 

@@ -12,12 +12,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
         $book = $result['book'];
     }
 }
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-    if(isset($_POST["id_buku"])){
-        $perpustakaan->downloadBook($_POST);
-        exit();
-    }
-}
+
 
 
 $footer = $perpustakaan->displayFooter();
@@ -80,10 +75,9 @@ $footerResult = $footer['footer'];
                         <span class="fw-bold">ISBN Buku: </span> <?= isset($book['isbn_buku']) ? htmlspecialchars($book['isbn_buku']) : "Tidak ada ISBN buku"; ?>
                     </li>
                     <li class="list-group-item">
-                        <form action="detail.php" method="POST">
-                            <input type="hidden" name="id_buku" value="<?= $book['id_buku']; ?>">
-                            <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-book"></i> Download Buku</button>
-                        </form>
+                        <a href="download.php?id_buku=<?= $book['id_buku'] ?>" class="btn btn-primary w-100">
+                            <i class="fa-solid fa-book"></i> Download Buku
+                        </a>
                     </li>
                 </ul>
             </div>

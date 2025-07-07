@@ -117,6 +117,14 @@ button.btn.btn-primary:hover {
     background-color: #036280;
 }
 
+a.btn.btn-primary {
+    background-color: #012e4a;
+    transition: all 0.3s ease;
+}
+
+a.btn.btn-primary:hover {
+    background-color: #036280;
+}
 /* Hero Section */
 .hero-section {
     background: linear-gradient(135deg, #012e4a 0%, #036280 100%);
