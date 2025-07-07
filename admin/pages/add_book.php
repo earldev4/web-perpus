@@ -92,9 +92,34 @@ if (isset($_SESSION["is_login"]) == false) {
                         <label class="form-label" for="lampiran_buku">Lampirkan Buku (pdf, doc, docx):</label><br>
                         <input class="form-control" type="file" name="lampiran_buku" accept=".pdf,.doc,.docx" id="lampiran_buku" autocomplete="off" placeholder="Lampirkan file pdf, doc, docx"><br>
                         
-                        <label class="form-label" for="kategori_buku">Kategori Buku:</label><br>
-                        <input class="form-control" type="text" name="kategori_buku" id="kategori_buku" autocomplete="off"><br>
-                        <p class="text-danger" id="kategori_buku_error"></p>
+                        <?php
+                        $kategoriList = [
+                            "Romansa" => "Romansa",
+                            "Petualangan" => "Petualangan",
+                            "Fantasi" => "Fantasi",
+                            "Misteri" => "Misteri",
+                            "Teknologi" => "Teknologi",
+                            "Kesehatan" => "Kesehatan",
+                            "Sejarah" => "Sejarah",
+                            "Psikologi" => "Psikologi",
+                            "Filsafat" => "Filsafat",
+                            "Biografi" => "Biografi",
+                            "Sosiologi" => "Sosiologi",
+                            "Politik & Pemerintahan" => "Politik & Pemerintahan",
+                            "Ekonomi & Bisnis" => "Ekonomi & Bisnis",
+                            "Agama" => "Agama",
+                            "Pendidikan" => "Pendidikan",
+                            "Pengembangan Diri" => "Pengembangan Diri"
+                        ];
+                        ?>
+                        <select class="form-select" name="kategori_buku" id="kategori_buku" required>
+                            <option value="">-- Pilih Kategori --</option>
+                            <?php foreach ($kategoriList as $value => $label): ?>
+                                <option value="<?= $value ?>">
+                                    <?= $label ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                         
                         <label class="form-label" for="pengarang_buku">Pengarang Buku:</label><br>
                         <input class="form-control" type="text" name="pengarang_buku" id="pengarang_buku" autocomplete="off"><br>
@@ -188,7 +213,6 @@ if (isset($_SESSION["is_login"]) == false) {
                 e.preventDefault();
 
                 const judul_buku = document.forms["add_book"]["judul_buku"].value.trim();
-                const kategori_buku = document.forms["add_book"]["kategori_buku"].value.trim();
                 const pengarang_buku = document.forms["add_book"]["pengarang_buku"].value.trim();
                 const penerbit_buku = document.forms["add_book"]["penerbit_buku"].value.trim();
                 const jumlah_buku = document.forms["add_book"]["jumlah_buku"].value.trim();
@@ -198,7 +222,6 @@ if (isset($_SESSION["is_login"]) == false) {
                 const deskripsi_buku = document.forms["add_book"]["deskripsi_buku"].value.trim();
 
                 const judul_buku_error = document.getElementById("judul_buku_error");
-                const kategori_buku_error = document.getElementById("kategori_buku_error");
                 const pengarang_buku_error = document.getElementById("pengarang_buku_error");
                 const penerbit_buku_error = document.getElementById("penerbit_buku_error");
                 const jumlah_buku_error = document.getElementById("jumlah_buku_error");
@@ -212,12 +235,6 @@ if (isset($_SESSION["is_login"]) == false) {
                     return;
                 } else {
                     judul_buku_error.textContent = "";
-                }
-                if(!kategori_buku || kategori_buku.length < 5 || kategori_buku.length > 100){
-                    kategori_buku_error.textContent = "Kategori buku harus lebih dari 5 karakter dan kurang dari 100 karakter";
-                    return;
-                } else {
-                    kategori_buku_error.textContent = "";
                 }
                 if(!pengarang_buku || pengarang_buku.length < 5 || pengarang_buku.length > 100){
                     pengarang_buku_error.textContent = "Pengarang buku harus lebih dari 5 karakter dan kurang dari 100 karakter";
