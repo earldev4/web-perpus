@@ -79,6 +79,11 @@ $footerResult = $footer['footer'];
                             <i class="fa-solid fa-book"></i> Download Buku
                         </a>
                     </li>
+                    <li class="list-group-item">
+                        <a href="form_peminjaman.php?id=<?= $book['id_buku'] ?>" class="btn btn-primary w-100">
+                            <i class="fa-solid fa-book"></i> Pinjam Buku
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="col-md-7 col-12">

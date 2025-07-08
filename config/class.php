@@ -138,6 +138,51 @@ class Perpustakaan{
             "peminjam" => $user,
         ];
     }
+    function lenderRegistration($data): array {
+        $nama_peminjam = $data["nama_peminjam"];
+        $nip_peminjam = $data["nip_peminjam"];
+        $jabatan_peminjam = $data["jabatan_peminjam"];
+        $bidang_peminjam = $data["bidang_peminjam"];
+        $judul_buku = $data["judul_buku"];
+        $tanggal_pengembalian = $data["tanggal_pengembalian"];
+        $no_telp = $data["no_telp"];
+
+        if($nama_peminjam && $nip_peminjam && $jabatan_peminjam && $bidang_peminjam && $judul_buku && $tanggal_pengembalian && $no_telp != "") {
+            $tanggal_sekarang = date("Y-m-d");
+            if ($tanggal_pengembalian < $tanggal_sekarang) {
+                return [
+                    "status" => "error",
+                    "message" => "Tanggal Pengembalian Harus Melebihi Tanggal Peminjaman",
+                    "redirect" => ""
+                ];
+            } else {
+                $sql = <<<SQL
+                    INSERT INTO peminjaman (nama_peminjam, nip_peminjam, jabatan_peminjam, bidang_peminjam, judul_buku, tanggal_pengembalian, no_telp) VALUES (?, ?, ?, ?, ?, ?, ?);
+                SQL;
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(1, $nama_peminjam);
+                $stmt->bindParam(2, $nip_peminjam);
+                $stmt->bindParam(3, $jabatan_peminjam);
+                $stmt->bindParam(4, $bidang_peminjam);
+                $stmt->bindParam(5, $judul_buku);
+                $stmt->bindParam(6, $tanggal_pengembalian);
+                $stmt->bindParam(7, $no_telp);
+                $stmt->execute();
+                return [
+                    "status" => "success",
+                    "message" => "Peminjaman Buku Berhasil",
+                    "redirect" => "../index.php"
+                ];
+            }
+        } else {
+            return [
+                "status" => "error",
+                "message" => "Data Tidak Boleh Kosong",
+                "redirect" => ""
+            ];
+        }
+
+    }
     public function deleteUser($data): array {
         $id = $data["id_peminjaman"];
         $stmt = $this->conn->prepare("DELETE FROM peminjaman WHERE id_peminjaman = ?");

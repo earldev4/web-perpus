@@ -115,11 +115,11 @@ if (isset($_SESSION["is_login"]) == false) {
                         <p class="text-danger" id="jumlah_buku_error"></p>
 
                         <label class="form-label" for="jumlah_halaman">Jumlah Halaman:</label><br>
-                        <input class="form-control" type="number" name="jumlah_halaman" id="jumlah_halaman" value="<?= isset($book['jumlah_halaman']) ? htmlspecialchars($book['jumlah_halaman']) : "Tidak Ada Jumlah Halaman"  ?>" autocomplete="off" required><br>
+                        <input class="form-control" type="number" name="jumlah_halaman" min="5" max="10000" id="jumlah_halaman" value="<?= isset($book['jumlah_halaman']) ? htmlspecialchars($book['jumlah_halaman']) : "Tidak Ada Jumlah Halaman"  ?>" autocomplete="off" required><br>
                         <p class="text-danger" id="jumlah_halaman_error"></p>
 
                         <label class="form-label" for="bahasa_buku">Bahasa Buku:</label><br>
-                        <input class="form-control" type="text" name="bahasa_buku" id="bahasa_buku" value="<?= isset($book['bahasa_buku']) ? htmlspecialchars($book['bahasa_buku']) : "Tidak Ada Bahasa Buku"?>" autocomplete="off" required><br>
+                        <input class="form-control" type="text" name="bahasa_buku" id="bahasa_buku" min="0" max="10000" value="<?= isset($book['bahasa_buku']) ? htmlspecialchars($book['bahasa_buku']) : "Tidak Ada Bahasa Buku"?>" autocomplete="off" required><br>
                         <p class="text-danger" id="bahasa_buku_error"></p>
 
                         <label class="form-label" for="isbn_buku">ISBN Buku:</label><br>
@@ -227,14 +227,14 @@ if (isset($_SESSION["is_login"]) == false) {
                 } else {
                     penerbit_buku_error.textContent = "";
                 }
-                if(!jumlah_halaman || jumlah_halaman <= 5 ){
-                    jumlah_halaman_error.textContent = "Jumlah halaman harus lebih dari 5 halaman";
+                if(!jumlah_halaman || jumlah_halaman <= 5 || jumlah_halaman >= 10000){
+                    jumlah_halaman_error.textContent = "Jumlah halaman harus lebih dari 5 halaman dan kurang dari 10000 halaman";
                     return;
                 } else {
                     jumlah_halaman_error.textContent = "";
                 }
-                if(!jumlah_buku || jumlah_buku <= 0){
-                    jumlah_buku_error.textContent = "Jumlah buku harus lebih dari 0 buku";
+                if(!jumlah_buku || jumlah_buku <= 0 || jumlah_buku >= 10000){
+                    jumlah_buku_error.textContent = "Jumlah buku harus lebih dari 0 buku dan kurang dari 10000 buku";
                     return;
                 } else {
                     jumlah_buku_error.textContent = "";

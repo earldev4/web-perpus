@@ -132,11 +132,11 @@ if (isset($_SESSION["is_login"]) == false) {
                         <p class="text-danger" id="penerbit_buku_error"></p>
 
                         <label class="form-label" for="jumlah_buku">Jumlah Buku:</label><br>
-                        <input class="form-control" type="number" name="jumlah_buku" id="jumlah_buku" autocomplete="off" required><br>
+                        <input class="form-control" type="number" name="jumlah_buku" id="jumlah_buku" autocomplete="off" required min="0" max="10000"><br>
                         <p class="text-danger" id="jumlah_buku_error"></p>
 
                         <label class="form-label" for="jumlah_halaman">Jumlah Halaman:</label><br>
-                        <input class="form-control" type="number" name="jumlah_halaman" id="jumlah_halaman" autocomplete="off" required><br>
+                        <input class="form-control" type="number" name="jumlah_halaman" id="jumlah_halaman" autocomplete="off" min="0" max="10000" required><br>
                         <p class="text-danger" id="jumlah_halaman_error"></p>
                         
                         <label class="form-label" for="bahasa_buku">Bahasa Buku:</label><br>
@@ -250,14 +250,14 @@ if (isset($_SESSION["is_login"]) == false) {
                 } else {
                     penerbit_buku_error.textContent = "";
                 }
-                if(!jumlah_halaman || jumlah_halaman <= 5 ){
-                    jumlah_halaman_error.textContent = "Jumlah halaman harus lebih dari 5 halaman";
+                if(!jumlah_halaman || jumlah_halaman <= 0 || jumlah_halaman >= 10000){
+                    jumlah_halaman_error.textContent = "Jumlah halaman harus lebih dari 5 halaman dan kurang dari 10000 halaman";
                     return;
                 } else {
                     jumlah_halaman_error.textContent = "";
                 }
-                if(!jumlah_buku || jumlah_buku <= 0){
-                    jumlah_buku_error.textContent = "Jumlah buku harus lebih dari 0 buku";
+                if(!jumlah_buku || jumlah_buku <= 0 || jumlah_buku >= 10000){
+                    jumlah_buku_error.textContent = "Jumlah buku harus lebih dari 0 buku dan kurang dari 10000 buku";
                     return;
                 } else {
                     jumlah_buku_error.textContent = "";

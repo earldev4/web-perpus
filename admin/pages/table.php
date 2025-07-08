@@ -26,7 +26,7 @@
                             <button class="btn btn-primary" onclick="window.location.href='./edit_book.php?id=<?= htmlspecialchars($book['id_buku']) ?>'">
                                 Edit Buku
                             </button>
-                            <form action="add_book.php" class="delete_book_form" method="POST" class="">
+                            <form action="add_book.php" class="delete_book_form" method="POST">
                                 <input type="hidden" name="hapus_buku" value="<?= htmlspecialchars($book['id_buku']) ?>">
                                 <input type="hidden" name="hapus_informasi" value="<?= htmlspecialchars($book['id_informasi']) ?>">
                                 <button class="btn btn-danger">
