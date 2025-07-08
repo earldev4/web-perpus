@@ -27,9 +27,9 @@
                         <td class="fs-sm-5"><?= isset($peminjaman["tanggal_pengembalian"]) ? formatTanggalIndonesia(htmlspecialchars($peminjaman["tanggal_pengembalian"])) : "" ?></td>
                         <td class="fs-sm-5"><?= isset($peminjaman["no_telp"]) ? htmlspecialchars($peminjaman["no_telp"]) : "" ?></td>
                         <td class="d-flex gap-1">
-                            <button class="btn btn-primary" onclick="window.location.href='./detail_peminjaman.php?id=<?= htmlspecialchars($peminjaman['id_peminjaman']) ?>'">
+                            <a class="btn btn-primary" href="detail_peminjaman.php?id=<?= htmlspecialchars($peminjaman['id_peminjaman'])?>&&no=<?= $id_peminjam ?>">
                                 Detail Peminjaman
-                            </button>
+                            </a>
                             <form action="lend_page.php" class="lend_book" method="POST">
                                 <input type="hidden" name="id_peminjaman" value="<?= htmlspecialchars($peminjaman['id_peminjaman']) ?>">
                                 <button class="btn btn-danger">

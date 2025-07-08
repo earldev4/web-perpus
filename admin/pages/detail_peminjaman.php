@@ -27,6 +27,7 @@ if($_SERVER['REQUEST_METHOD'] == "GET"){
         $peminjam = $result['peminjam'];
     }
 }
+$no_peminjaman = $_GET["no"];
 
 $routing = new Routing("../home.php", "profile.php", "add_book.php", "social_media.php", "lend_page.php",  "../../index.php", "detail_peminjaman.php", "detail_peminjaman.php");
 
@@ -73,7 +74,7 @@ function formatTanggalIndonesia($tanggal) {
                         <table class="table">
                             <tr>
                                 <th>Nomor Peminjaman</th>
-                                <td><?= isset($peminjam["id_peminjaman"]) ?  htmlspecialchars($peminjam["id_peminjaman"]) : "" ?></td>
+                                <td><?= isset($no_peminjaman) ?  htmlspecialchars($no_peminjaman) : "" ?></td>
                             </tr>
                             <tr>
                                 <th>Nama Peminjam</th>
