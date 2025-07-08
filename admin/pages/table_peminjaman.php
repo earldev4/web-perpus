@@ -14,12 +14,12 @@
         </thead>
         <tbody>
             <?php 
-            $news_per_page = 10;
-            $id_peminjam = ($page - 1) * $news_per_page + 1;
+            $users_per_page = 10;
+            $id_peminjam = ($page - 1) * $users_per_page + 1;
             if(!empty($peminjam["users"])){ 
                 foreach ($peminjam["users"] as $peminjaman){ ?>
                     <tr>
-                        <th scope="row" class="fs-sm-5"><?= htmlspecialchars($id_peminjam++) ?></th>
+                        <th scope="row" class="fs-sm-5"><?= htmlspecialchars($id_peminjam) ?></th>
                         <td class="fs-sm-5"><?= isset($peminjaman["nama_peminjam"]) ? htmlspecialchars($peminjaman["nama_peminjam"]) : "" ?></td>
                         <td class="fs-sm-5"><?= isset($peminjaman["nip_peminjam"]) ? htmlspecialchars($peminjaman["nip_peminjam"]) : "" ?></td>
                         <td class="fs-sm-5"><?= isset($peminjaman["judul_buku"]) ? htmlspecialchars($peminjaman["judul_buku"]) : "" ?></td>
@@ -27,7 +27,7 @@
                         <td class="fs-sm-5"><?= isset($peminjaman["tanggal_pengembalian"]) ? formatTanggalIndonesia(htmlspecialchars($peminjaman["tanggal_pengembalian"])) : "" ?></td>
                         <td class="fs-sm-5"><?= isset($peminjaman["no_telp"]) ? htmlspecialchars($peminjaman["no_telp"]) : "" ?></td>
                         <td class="d-flex gap-1">
-                            <button class="btn btn-primary" onclick="window.location.href='./detail_book.php?id=<?= htmlspecialchars($peminjaman['id_peminjaman']) ?>'">
+                            <button class="btn btn-primary" onclick="window.location.href='./detail_peminjaman.php?id=<?= htmlspecialchars($peminjaman['id_peminjaman']) ?>'">
                                 Detail Peminjaman
                             </button>
                             <form action="lend_page.php" class="lend_book" method="POST">
@@ -39,7 +39,7 @@
                         </td>
                     </tr>
             <?php 
-                } 
+                $id_peminjam++; } 
             } else { ?>
                 <tr>
                     <td scope="row" class="fs-sm-5 text-center" colspan="6">Tidak ada Data Peminjaman</td>

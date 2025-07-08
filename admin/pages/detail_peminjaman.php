@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . "/../../config/db.php";
 require_once __DIR__ . "/../../config/class.php";
 require_once __DIR__ . "/../config/class.php";
@@ -6,56 +7,33 @@ require_once __DIR__ . "/../config/class.php";
 $conn = getConnection();
 $perpustakaan = new Perpustakaan($conn);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if($_SERVER['REQUEST_METHOD'] == "POST"){
     if (isset($_POST['logout'])) {
         $response = $perpustakaan->handleLogout("/../../pages/login.php");
         echo json_encode($response);
         exit();
     }
     if (isset($_POST["old_password"])){
-        $redirect = "lend_page.php";
+        $redirect = "edit_book.php";
         $response = $perpustakaan->changePassword($_POST, $redirect);
         echo json_encode($response);
         exit();
-    }
-    if (isset($_POST["search_lender"])) {
-        $_SESSION["search_keyword"] = $_POST["search_lender"];
-        header("Location: lend_page.php"); 
-        exit();
-    }
-    if (isset($_POST["id_peminjaman"])){
-        $response = $perpustakaan->deleteUser($_POST);
-        echo json_encode($response);
-        exit();
+    }  
+} 
+if($_SERVER['REQUEST_METHOD'] == "GET"){
+    if (isset($_GET['id'])) {
+        $id_peminjaman = $_GET['id'];
+        $result = $perpustakaan->viewLendDetail($id_peminjaman);
+        $peminjam = $result['peminjam'];
     }
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "GET"){
-    if (isset($_GET["page"])){
-        $page = $_GET["page"];
-    } else {
-        $page = 1;
-    }
-}
-
-$searchKeyword = $_SESSION["search_keyword"] ?? null;
-
-if ($searchKeyword) {
-    $peminjam = $perpustakaan->searchLender(["search_lender" => $searchKeyword]);
-    unset($_SESSION["search_keyword"]); 
-} else {
-    $peminjam = $perpustakaan->displayLender($page);
-}
-
-$total_page = $perpustakaan->displayLender()["total_pages"];
-
-$routing = new Routing("../home.php", "profile.php", "add_book.php", "social_media.php", "lend_page.php", "../../index.php", "lend_page.php", "lend_page.php");
+$routing = new Routing("../home.php", "profile.php", "add_book.php", "social_media.php", "lend_page.php",  "../../index.php", "detail_peminjaman.php", "detail_peminjaman.php");
 
 if (isset($_SESSION["is_login"]) == false) {
     header("location: ../../pages/login.php");
     exit();
 }
-
 function formatTanggalIndonesia($tanggal) {
     $bulan = [
         1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
@@ -80,7 +58,7 @@ function formatTanggalIndonesia($tanggal) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="../../assets/style/admin_home.css">
-    <title>Admin - Lending Page</title>
+    <title>Admin - Peminjaman oleh <?= $peminjam['nama_peminjam'] ?></title>
 </head>
 <body>
     <div class="container-fluid">
@@ -90,12 +68,47 @@ function formatTanggalIndonesia($tanggal) {
             </div>
             <div class="col-md-10 col-12 bg-success">
                 <div>
-                    <h1>DAFTAR PEMINJAMAN</h1>
-                    <form action="lend_page.php" method="POST" class="d-flex gap-1">
-                        <input type="text" class="form-control w-100" placeholder="Cari peminjam berdasarkan nama, jabatan, NIP, no-telephone, judul buku" autocomplete="off" name="search_lender">
-                        <button type="submit" class="btn-search p-3"><i class="bi bi-search"></i></button>
-                    </form> 
-                    <?php include 'table_peminjaman.php'; ?>
+                    <h1>DETAIL PEMINJAM BUKU</h1>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th>Nomor Peminjaman</th>
+                                <td><?= isset($peminjam["id_peminjaman"]) ?  htmlspecialchars($peminjam["id_peminjaman"]) : "" ?></td>
+                            </tr>
+                            <tr>
+                                <th>Nama Peminjam</th>
+                                <td><?= isset($peminjam["nama_peminjam"]) ?  htmlspecialchars($peminjam["nama_peminjam"]) : "" ?></td>
+                            </tr>
+                            <tr>
+                                <th>NIP Peminjaman</th>
+                                <td><?= isset($peminjam["nip_peminjam"]) ?  htmlspecialchars($peminjam["nip_peminjam"]) : "" ?></td>
+                            </tr>
+                            <tr>
+                                <th>Jabatan Peminjaman</th>
+                                <td><?= isset($peminjam["jabatan_peminjam"]) ?  htmlspecialchars($peminjam["jabatan_peminjam"]) : "" ?></td>
+                            </tr>
+                            <tr>
+                                <th>Bidang Peminjaman</th>
+                                <td><?= isset($peminjam["bidang_peminjam"]) ?  htmlspecialchars($peminjam["bidang_peminjam"]) : "" ?></td>
+                            </tr>
+                            <tr>
+                                <th>Judul Buku</th>
+                                <td><?= isset($peminjam["judul_buku"]) ?  htmlspecialchars($peminjam["judul_buku"]) : "" ?></td>
+                            </tr>
+                            <tr>
+                                <th>Tanggal Peminjaman</th>
+                                <td><?= isset($peminjam["tanggal_peminjaman"]) ? formatTanggalIndonesia(htmlspecialchars($peminjam["tanggal_peminjaman"])) : "" ?></td>
+                            </tr>
+                            <tr>
+                                <th>Tanggal Pengembalian</th>
+                                <td><?= isset($peminjam["tanggal_pengembalian"]) ? formatTanggalIndonesia(htmlspecialchars($peminjam["tanggal_pengembalian"])) : "" ?></td>
+                            </tr>
+                            <tr>
+                                <th>Nomor Telephone</th>
+                                <td><?= isset($peminjam["no_telp"]) ?  htmlspecialchars($peminjam["no_telp"]) : "" ?></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -103,6 +116,7 @@ function formatTanggalIndonesia($tanggal) {
     <?php include 'modal_changepw.php'; ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.3.0/classic/ckeditor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script>
@@ -145,42 +159,6 @@ function formatTanggalIndonesia($tanggal) {
             })
         })
         $('.passwordMenu').on('submit', '#changePassword', function(e){
-            e.preventDefault();
-            let form = $(this);
-            let url = form.attr('action');
-            let method = form.attr('method');
-            let data = new FormData(form[0]);
-            console.log("Coba")
-            $.ajax({
-                url: url,
-                type: method,
-                processData: false,
-                contentType: false,
-                data: data,
-                dataType: 'JSON',
-                success: function(response){
-                    if(response.status == "success"){
-                        toastr.success(response.message, "Success !",{
-                            closeButton: true,
-                            progressBar: true,
-                            timeOut: 1500
-                        });
-                        setTimeout(function(){
-                            if (response.redirect != "") {
-                                location.href = response.redirect
-                            }
-                        }, 1800);
-                    } else{
-                        toastr.error(response.message, "Error !",{
-                            closeButton: true,
-                            progressBar: true,
-                            timeOut: 1500
-                        });
-                    }
-                }
-            })
-        })
-        $(document).on('submit', '.lend_book', function(e){
             e.preventDefault();
             let form = $(this);
             let url = form.attr('action');

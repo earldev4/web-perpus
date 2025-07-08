@@ -128,6 +128,16 @@ class Perpustakaan{
             "total_pages" => $total_pages
         ];
     }
+    function viewLendDetail($data): array {
+        $id = $data;
+        $stmt = $this->conn->prepare("SELECT * FROM peminjaman WHERE id_peminjaman = ?");
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return [
+            "peminjam" => $user,
+        ];
+    }
     public function deleteUser($data): array {
         $id = $data["id_peminjaman"];
         $stmt = $this->conn->prepare("DELETE FROM peminjaman WHERE id_peminjaman = ?");
