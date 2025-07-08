@@ -18,7 +18,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($response);
         exit();
     }
+    if (isset($_POST["search_lender"])) {
+        $_SESSION["search_keyword"] = $_POST["search_lender"];
+        header("Location: lend_page.php"); 
+        exit();
+    }
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "GET"){
+    if (isset($_GET["page"])){
+        $page = $_GET["page"];
+    } else {
+        $page = 1;
+    }
+}
+
+$searchKeyword = $_SESSION["search_keyword"] ?? null;
+
+if ($searchKeyword) {
+    $peminjam = $perpustakaan->searchLender(["search_lender" => $searchKeyword]);
+    unset($_SESSION["search_keyword"]); 
+} else {
+    $peminjam = $perpustakaan->displayLender($page);
+}
+
+$total_page = $perpustakaan->displayLender()["total_pages"];
 
 $routing = new Routing("../home.php", "profile.php", "add_book.php", "social_media.php", "lend_page.php", "../../index.php", "lend_page.php", "lend_page.php");
 
@@ -46,8 +70,13 @@ if (isset($_SESSION["is_login"]) == false) {
             <?php include 'nav.php'; ?>
             </div>
             <div class="col-md-10 col-12 bg-success">
-                <div class="px-lg-5 px-2">
-                    <h1>HALAMAN PEMINJAMAN</h1>
+                <div>
+                    <h1>DAFTAR BUKU</h1>
+                    <form action="lend_page.php" method="POST" class="d-flex gap-1">
+                        <input type="text" class="form-control w-100" placeholder="Cari peminjam berdasarkan nama, jabatan, NIP, no-telephone, judul buku" autocomplete="off" name="search_lender">
+                        <button type="submit" class="btn-search p-3"><i class="bi bi-search"></i></button>
+                    </form>
+                    <?php include 'table_peminjaman.php'; ?>
                 </div>
             </div>
         </div>

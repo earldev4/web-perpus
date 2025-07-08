@@ -112,6 +112,22 @@ class Perpustakaan{
             "total_pages" => $total_pages
         ];
     }
+    public function displayLender($page = 1, $user_per_page = 10): array{
+        $start_from = ($page - 1) * $user_per_page;
+        $stmt = $this->conn->prepare("SELECT * FROM peminjaman ORDER BY id_peminjaman DESC LIMIT $start_from, $user_per_page");
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $total_users = $this->conn->prepare("SELECT COUNT(*) AS TOTAL FROM peminjaman");
+        $total_users->execute();
+        $total_users = $total_users->fetch(PDO::FETCH_ASSOC);
+        $total_pages = ceil($total_users["TOTAL"] / $user_per_page);
+
+        return [
+            "users" => $users,
+            "total_pages" => $total_pages
+        ];
+    }
     public function displaySocialMedia():array {
         $stmt = $this->conn->prepare("SELECT * FROM social");
         $stmt->execute();
@@ -168,6 +184,25 @@ class Perpustakaan{
         $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return [
             "books" => $books
+        ];
+    }
+    public function searchLender($data): array {
+        $trim = trim($data["search_lender"]);
+        $user = "%$trim%";
+        $sql = <<<SQL
+            SELECT * FROM peminjaman WHERE nama_peminjam LIKE ? OR nip_peminjam LIKE ? OR jabatan_peminjam LIKE ? OR bidang_peminjam LIKE ? OR judul_buku LIKE ? OR no_telp LIKE ?
+        SQL;
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $user);
+        $stmt->bindParam(2, $user);
+        $stmt->bindParam(3, $user);
+        $stmt->bindParam(4, $user);
+        $stmt->bindParam(5, $user);
+        $stmt->bindParam(6, $user);
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return [
+            "users" => $users
         ];
     }
     public function addBook($data): array {        

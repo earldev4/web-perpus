@@ -1,0 +1,57 @@
+<div class="table-responsive rounded overflow-hidden ">
+    <table class="table table-hover mt-3">
+        <thead>
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama</th>
+                <th scope="col">NIP</th>
+                <th scope="col">Buku</th>
+                <th scope="col">Tanggal Peminjaman</th>
+                <th scope="col">Tanggal Pengembalian</th>
+                <th scope="col">No Telephone</th>
+                <th scope="col">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            $news_per_page = 10;
+            $id_peminjam = ($page - 1) * $news_per_page + 1;
+            if(!empty($peminjam["users"])){ 
+                foreach ($peminjam["users"] as $peminjaman){ ?>
+                    <tr>
+                        <th scope="row" class="fs-sm-5"><?= htmlspecialchars($id_peminjam++) ?></th>
+                        <td class="fs-sm-5"><?= isset($peminjaman["nama_peminjam"]) ? htmlspecialchars($peminjaman["nama_peminjam"]) : "" ?></td>
+                        <td class="fs-sm-5"><?= isset($peminjaman["nip_peminjam"]) ? htmlspecialchars($peminjaman["nip_peminjam"]) : "" ?></td>
+                        <td class="fs-sm-5"><?= isset($peminjaman["judul_buku"]) ? htmlspecialchars($peminjaman["judul_buku"]) : "" ?></td>
+                        <td class="fs-sm-5"><?= isset($peminjaman["tanggal_peminjaman"]) ? htmlspecialchars($peminjaman["tanggal_peminjaman"]) : "" ?></td>
+                        <td class="fs-sm-5"><?= isset($peminjaman["tanggal_pengembalian"]) ? htmlspecialchars($peminjaman["tanggal_pengembalian"]) : "" ?></td>
+                        <td class="fs-sm-5"><?= isset($peminjaman["no_telp"]) ? htmlspecialchars($peminjaman["no_telp"]) : "" ?></td>
+                        <td class="d-flex gap-1">
+                            <button class="btn btn-primary" onclick="window.location.href='./detail_book.php?id=<?= htmlspecialchars($peminjaman['id_peminjaman']) ?>'">
+                                Detail Peminjaman
+                            </button>
+                            <form action="lend_book.php" class="lend_book" method="POST">
+                                <input type="hidden" name="id_peminjaman" value="<?= htmlspecialchars($peminjaman['id_peminjaman']) ?>">
+                                <button class="btn btn-danger">
+                                    Hapus Peminjaman
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+            <?php 
+                } 
+            } else { ?>
+                <tr>
+                    <td scope="row" class="fs-sm-5 text-center" colspan="6">Tidak ada Data Peminjaman</td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination d-flex justify-content-center gap-1">
+            <?php if ($page > 1): ?> <li class="page-item"><a class="page-link fw-bold" href="lend_page.php?page=<?= $page - 1 ?>">Previous</a></li><?php endif; ?>
+            <li class="page-item px-1"><span class="page-link fw-bold" href="#"><?= $page."/".$total_page?></span></li>
+            <?php if ($page < $total_page): ?> <li class="page-item"><a class="page-link fw-bold" href="lend_page.php?page=<?= $page + 1 ?>">Next</a></li><?php endif; ?>
+        </ul>
+    </nav>
+</div>
