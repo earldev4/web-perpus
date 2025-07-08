@@ -128,6 +128,17 @@ class Perpustakaan{
             "total_pages" => $total_pages
         ];
     }
+    public function deleteUser($data): array {
+        $id = $data["id_peminjaman"];
+        $stmt = $this->conn->prepare("DELETE FROM peminjaman WHERE id_peminjaman = ?");
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        return [
+            "status" => "success",
+            "message" => "Data User Berhasil Dihapus",
+            "redirect" => "lend_page.php"
+        ];
+    }
     public function displaySocialMedia():array {
         $stmt = $this->conn->prepare("SELECT * FROM social");
         $stmt->execute();

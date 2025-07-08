@@ -23,6 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: lend_page.php"); 
         exit();
     }
+    if (isset($_POST["id_peminjaman"])){
+        $response = $perpustakaan->deleteUser($_POST);
+        echo json_encode($response);
+        exit();
+    }
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "GET"){
@@ -50,6 +55,20 @@ if (isset($_SESSION["is_login"]) == false) {
     header("location: ../../pages/login.php");
     exit();
 }
+
+function formatTanggalIndonesia($tanggal) {
+    $bulan = [
+        1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
+
+    $timestamp = strtotime($tanggal);
+    $tgl = date('j', $timestamp); 
+    $bln = (int)date('n', $timestamp); 
+    $thn = date('Y', $timestamp);
+
+    return "$tgl {$bulan[$bln]} $thn"; 
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +94,7 @@ if (isset($_SESSION["is_login"]) == false) {
                     <form action="lend_page.php" method="POST" class="d-flex gap-1">
                         <input type="text" class="form-control w-100" placeholder="Cari peminjam berdasarkan nama, jabatan, NIP, no-telephone, judul buku" autocomplete="off" name="search_lender">
                         <button type="submit" class="btn-search p-3"><i class="bi bi-search"></i></button>
-                    </form>
+                    </form> 
                     <?php include 'table_peminjaman.php'; ?>
                 </div>
             </div>
@@ -126,6 +145,42 @@ if (isset($_SESSION["is_login"]) == false) {
             })
         })
         $('.passwordMenu').on('submit', '#changePassword', function(e){
+            e.preventDefault();
+            let form = $(this);
+            let url = form.attr('action');
+            let method = form.attr('method');
+            let data = new FormData(form[0]);
+            console.log("Coba")
+            $.ajax({
+                url: url,
+                type: method,
+                processData: false,
+                contentType: false,
+                data: data,
+                dataType: 'JSON',
+                success: function(response){
+                    if(response.status == "success"){
+                        toastr.success(response.message, "Success !",{
+                            closeButton: true,
+                            progressBar: true,
+                            timeOut: 1500
+                        });
+                        setTimeout(function(){
+                            if (response.redirect != "") {
+                                location.href = response.redirect
+                            }
+                        }, 1800);
+                    } else{
+                        toastr.error(response.message, "Error !",{
+                            closeButton: true,
+                            progressBar: true,
+                            timeOut: 1500
+                        });
+                    }
+                }
+            })
+        })
+        $(document).on('submit', '.lend_book', function(e){
             e.preventDefault();
             let form = $(this);
             let url = form.attr('action');
