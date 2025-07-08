@@ -79,6 +79,7 @@ function formatTanggalIndonesia($tanggal) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="../../assets/style/admin_home.css">
     <title>Admin - Lending Page</title>
 </head>
@@ -180,42 +181,59 @@ function formatTanggalIndonesia($tanggal) {
                 }
             })
         })
-        $(document).on('submit', '.lend_book', function(e){
+        $(document).on('submit', '.lend_book', function(e) {
             e.preventDefault();
+
             let form = $(this);
-            let url = form.attr('action');
-            let method = form.attr('method');
-            let data = new FormData(form[0]);
-            console.log("Coba")
-            $.ajax({
-                url: url,
-                type: method,
-                processData: false,
-                contentType: false,
-                data: data,
-                dataType: 'JSON',
-                success: function(response){
-                    if(response.status == "success"){
-                        toastr.success(response.message, "Success !",{
-                            closeButton: true,
-                            progressBar: true,
-                            timeOut: 1500
-                        });
-                        setTimeout(function(){
-                            if (response.redirect != "") {
-                                location.href = response.redirect
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Data peminjaman akan dihapus secara permanen.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let url = form.attr('action');
+                    let method = form.attr('method');
+                    let data = new FormData(form[0]);
+
+                    $.ajax({
+                        url: url,
+                        type: method,
+                        processData: false,
+                        contentType: false,
+                        data: data,
+                        dataType: 'JSON',
+                        success: function(response) {
+                            if(response.status === "success") {
+                                toastr.success(response.message, "Success !", {
+                                    closeButton: true,
+                                    progressBar: true,
+                                    timeOut: 1500
+                                });
+                                setTimeout(function(){
+                                    if (response.redirect !== "") {
+                                        window.location.href = response.redirect;
+                                    } else {
+                                        window.location.reload();
+                                    }
+                                }, 1800);
+                            } else {
+                                toastr.error(response.message, "Error !", {
+                                    closeButton: true,
+                                    progressBar: true,
+                                    timeOut: 1500
+                                });
                             }
-                        }, 1800);
-                    } else{
-                        toastr.error(response.message, "Error !",{
-                            closeButton: true,
-                            progressBar: true,
-                            timeOut: 1500
-                        });
-                    }
+                        }
+                    });
                 }
-            })
-        })
+            });
+        });
     </script>
 </body>
 </html>
