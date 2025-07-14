@@ -9,6 +9,7 @@
                 <th scope="col">Tanggal Peminjaman</th>
                 <th scope="col">Tanggal Pengembalian</th>
                 <th scope="col">No Telephone</th>
+                <th scope="col">Status</th>
                 <th scope="col">Aksi</th>
             </tr>
         </thead>
@@ -26,8 +27,9 @@
                         <td class="fs-sm-5"><?= isset($peminjaman["tanggal_peminjaman"]) ? formatTanggalIndonesia(htmlspecialchars($peminjaman["tanggal_peminjaman"])) : "" ?></td>
                         <td class="fs-sm-5"><?= isset($peminjaman["tanggal_pengembalian"]) ? formatTanggalIndonesia(htmlspecialchars($peminjaman["tanggal_pengembalian"])) : "" ?></td>
                         <td class="fs-sm-5"><?= isset($peminjaman["no_telp"]) ? htmlspecialchars($peminjaman["no_telp"]) : "" ?></td>
-                        <td class="d-flex gap-1">
-                            <a class="btn btn-primary" href="detail_peminjaman.php?id=<?= htmlspecialchars($peminjaman['id_peminjaman'])?>&&no=<?= $id_peminjam ?>">
+                        <td class="fs-sm-5"><?= isset($peminjaman["status_peminjaman"]) ? ($peminjaman["status_peminjaman"] == "DIPINJAM" ? "<span class='badge bg-success p-2'>Dipinjam</span>" : "<span class='badge bg-danger p-2'>Dikembalikan</span>") : "" ?></td>
+                        <td class="gap-1">
+                            <a class="btn btn-primary mb-1" href="detail_peminjaman.php?id=<?= htmlspecialchars($peminjaman['id_peminjaman'])?>&&no=<?= $id_peminjam ?>">
                                 Detail Peminjaman
                             </a>
                             <form action="lend_page.php" class="lend_book" method="POST">

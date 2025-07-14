@@ -14,11 +14,16 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         exit();
     }
     if (isset($_POST["old_password"])){
-        $redirect = "edit_book.php";
+        $redirect = "lend_page.php";
         $response = $perpustakaan->changePassword($_POST, $redirect);
         echo json_encode($response);
         exit();
-    }  
+    } 
+    if (isset($_POST["ubah_status"])){
+        $response = $perpustakaan->updateLendStatus($_POST);
+        echo json_encode($response);
+        exit();
+    }
 } 
 if($_SERVER['REQUEST_METHOD'] == "GET"){
     if (isset($_GET['id'])) {
@@ -58,6 +63,7 @@ function formatTanggalIndonesia($tanggal) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="../../assets/style/admin_home.css">
     <title>Admin - Peminjaman oleh <?= $peminjam['nama_peminjam'] ?></title>
 </head>
@@ -107,6 +113,17 @@ function formatTanggalIndonesia($tanggal) {
                             <tr>
                                 <th>Nomor Telephone</th>
                                 <td><?= isset($peminjam["no_telp"]) ?  htmlspecialchars($peminjam["no_telp"]) : "" ?></td>
+                            </tr>
+                            <tr>
+                                <th>Status Peminjaman</th>
+                                <td class="d-flex"><?= isset($peminjam["status_peminjaman"]) ? ($peminjam["status_peminjaman"] == "DIPINJAM" ? "<span class='badge bg-success p-2 me-2'>Dipinjam</span>" : "<span class='badge bg-danger p-2 me-2'>Dikembalikan</span>") : "" ?>   
+                                    <?php if ($peminjam["status_peminjaman"] == "DIPINJAM") { ?>
+                                        <form action="detail_peminjaman.php" method="POST" id="ubah_status">
+                                            <input type="hidden" name="ubah_status" value="<?= isset($peminjam["id_peminjaman"]) ?  htmlspecialchars($peminjam["id_peminjaman"]) : "" ?>">
+                                            <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        </form>
+                                    <?php } ?>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -194,6 +211,58 @@ function formatTanggalIndonesia($tanggal) {
                     }
                 }
             })
+        })
+        $('#ubah_status').submit(function(e){
+            e.preventDefault();
+            let form = $(this);
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Status Peminjaman Akan Diubah Secara Permanent.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Ubah!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let url = form.attr('action');
+                    let method = form.attr('method');
+                    let data = new FormData(form[0]);
+
+                    $.ajax({
+                        url: url,
+                        type: method,
+                        processData: false,
+                        contentType: false,
+                        data: data,
+                        dataType: 'JSON',
+                        success: function(response) {
+                            if(response.status === "success") {
+                                toastr.success(response.message, "Success !", {
+                                    closeButton: true,
+                                    progressBar: true,
+                                    timeOut: 1500
+                                });
+                                setTimeout(function(){
+                                    if (response.redirect !== "") {
+                                        window.location.href = response.redirect;
+                                    } else {
+                                        window.location.reload();
+                                    }
+                                }, 1800);
+                            } else {
+                                toastr.error(response.message, "Error !", {
+                                    closeButton: true,
+                                    progressBar: true,
+                                    timeOut: 1500
+                                });
+                            }
+                        }
+                    });
+                }
+            });
         })
     </script>
 </body>

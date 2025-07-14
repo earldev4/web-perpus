@@ -235,6 +235,20 @@ class Perpustakaan{
             ];
         }
     }
+    public function updateLendStatus($data): array {
+        $id = $data["ubah_status"];
+        $sql = <<<SQL
+            UPDATE peminjaman SET status_peminjaman = "DIKEMBALIKAN" WHERE id_peminjaman = ?
+        SQL;
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        return [
+            "status" => "success",
+            "message" => "Status Peminjaman Berhasil Diubah",
+            "redirect" => "lend_page.php"
+        ];
+    }
     public function searchBook($data): array {
         $trim = trim($data["search_book"]);
         $book = "%$trim%";
