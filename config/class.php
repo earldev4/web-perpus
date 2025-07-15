@@ -311,7 +311,7 @@ class Perpustakaan{
             $isbn_buku = $data["isbn_buku"];
             $file_ext = explode('.', $lampiran_buku_name);
             $file_ext_actual = strtolower(end($file_ext));
-            $allowed = array('pdf', 'doc', 'docx');
+            $allowed = array('pdf');
             if($judul_buku && $lampiran_buku && $jenis_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $bahasa_buku && $isbn_buku){
                 if (in_array($file_ext_actual, $allowed)) {
                     if($lampiran_buku_size < 15000000){
@@ -436,7 +436,7 @@ class Perpustakaan{
             $isbn_buku = $data["isbn_buku"];
             $file_ext = explode('.', $lampiran_buku_name);
             $file_ext_actual = strtolower(end($file_ext));
-            $allowed = array('pdf', 'doc', 'docx');
+            $allowed = array('pdf');
 
             if($id_buku && $id_informasi && $judul_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $download_buku && $bahasa_buku && $isbn_buku){
                 if (!empty($lampiran_buku_name)) {
