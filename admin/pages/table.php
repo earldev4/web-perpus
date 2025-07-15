@@ -4,6 +4,7 @@
             <tr>
                 <th scope="col">No</th>
                 <th scope="col">Nama Buku</th>
+                <th scope="col">Jenis Buku</th>
                 <th scope="col">Kategori</th>
                 <th scope="col">Pengarang Buku</th>
                 <th scope="col">Penerbit Buku</th>
@@ -19,10 +20,11 @@
                     <tr>
                         <th scope="row" class="fs-sm-5"><?= htmlspecialchars($id_buku++) ?></th>
                         <td class="fs-sm-5"><?= isset($book["judul_buku"]) ? htmlspecialchars($book["judul_buku"]) : "Tidak ada judul buku" ?></td>
+                        <td class="fs-sm-5"><?= isset($book["jenis_buku"]) ? htmlspecialchars($book["jenis_buku"]) : "Tidak ada jenis buku" ?></td>
                         <td class="fs-sm-5"><?= isset($book["kategori_buku"]) ? htmlspecialchars($book["kategori_buku"]) : "Tidak ada kategori buku" ?></td>
                         <td class="fs-sm-5"><?= isset($book["pengarang_buku"]) ? htmlspecialchars($book["pengarang_buku"]) : "Tidak ada pengarang buku" ?></td>
                         <td class="fs-sm-5"><?= isset($book["penerbit_buku"]) ? htmlspecialchars($book["penerbit_buku"]) : "Tidak ada penerbit buku" ?></td>
-                        <td class="d-flex gap-1">
+                        <td class="d-flex flex-column gap-1">
                             <button class="btn btn-primary" onclick="window.location.href='./edit_book.php?id=<?= htmlspecialchars($book['id_buku']) ?>'">
                                 Edit Buku
                             </button>

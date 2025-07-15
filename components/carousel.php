@@ -17,10 +17,13 @@
                                             <h5 class="card-title"><?= isset($book["judul_buku"]) ? htmlspecialchars($book["judul_buku"]) : "Tidak ada judul buku"?></h5>
                                             <div class="d-flex justify-content-between">
                                                 <p class="card-text text-dark fw-bold"><?= isset($book["kategori_buku"]) ? htmlspecialchars($book["kategori_buku"]) : "Tidak ada kategori buku"?></p>
-                                                <p class="card-text text-primary"><i class="bi bi-download"></i> <?= isset($book["download"]) ? htmlspecialchars($book["download"]) : "Tidak ada jumlah download"?></p>
+                                                <?php if($book["jenis_buku"] == "E-Book"){ ?><p class="card-text text-primary"><i class="bi bi-download"></i> <?= isset($book["download"]) ? htmlspecialchars($book["download"]) : "Tidak ada jumlah download"?></p><?php } else { ?>
+                                                <p class="card-text text-primary"><i class="bi bi-person"></i><?= isset($book["pinjam"]) ? htmlspecialchars($book["pinjam"]) : "Tidak ada jumlah pinjam"?></p>
+                                                <?php } ?>
                                             </div>
+                                            <span class="card-text text-muted fw-bold"><?= isset($book["jenis_buku"]) ? htmlspecialchars($book["jenis_buku"]) : "Tidak ada jenis buku"?></span>
                                         </div>
-                                        <p class="card-text"><?= isset($book["deskripsi_buku"]) ? substr(htmlspecialchars($book["deskripsi_buku"]), 0, 75) : "Tidak ada deskripsi buku";?>...<i>Baca Selengkapnya</i></p>
+                                        <span class="card-text"><?= isset($book["deskripsi_buku"]) ? substr(htmlspecialchars_decode($book["deskripsi_buku"]), 0, 75) : "Tidak ada deskripsi buku";?>...<i>Baca Selengkapnya</i></span>
                                     </div>
                                 </div>
                             </a>

@@ -69,9 +69,11 @@ if (isset($_SESSION["is_login"]) == false) {
                         <input class="form-control" type="text" name="judul_buku" id="judul_buku" autocomplete="off" required value="<?= isset($book['judul_buku']) ? htmlspecialchars($book['judul_buku']) : "Tidak Ada Judul Buku" ?>"><br>
                         <p class="text-danger" id="judul_buku_error"></p>
 
-                        <label class="form-label" for="lampiran_buku">Lampirkan Buku (pdf, doc, docx):</label><br>
-                        <input class="form-control" type="file" name="lampiran_buku" accept=".pdf,.doc,.docx" id="lampiran_buku" value="<?= isset($book['lampiran_buku']) ? htmlspecialchars($book['lampiran_buku']) : "Tidak Ada Lampiran" ?>" autocomplete="off" placeholder="Lampirkan file pdf, doc, docx"><br>
-                        
+                        <?php if($book["jenis_buku"] == "E-Book"){ ?>
+                            <label class="form-label" for="lampiran_buku">Lampirkan Buku (pdf, doc, docx):</label><br>
+                            <input class="form-control" type="file" name="lampiran_buku" accept=".pdf,.doc,.docx" id="lampiran_buku" value="<?= isset($book['lampiran_buku']) ? htmlspecialchars($book['lampiran_buku']) : "Tidak Ada Lampiran" ?>" autocomplete="off" placeholder="Lampirkan file pdf, doc, docx"><br>
+                        <?php } ?>
+
                         <label class="form-label" for="kategori_buku">Pilih Kategori Buku:</label><br>
                         <?php
                         $kategoriList = [
@@ -102,6 +104,9 @@ if (isset($_SESSION["is_login"]) == false) {
                             <?php endforeach; ?>
                         </select>
 
+                        <label class="form-label" for="jenis_buku">Jenis Buku</label>
+                        <input type="text" class="form-control" name="jenis_buku" value="<?= isset($book['jenis_buku']) ? htmlspecialchars($book['jenis_buku']) : "Tidak Ada Jenis Buku" ?>" readonly>
+
                         <label class="form-label" for="pengarang_buku">Pengarang Buku:</label><br>
                         <input class="form-control" type="text" name="pengarang_buku" id="pengarang_buku" value="<?= isset($book['pengarang_buku']) ? htmlspecialchars($book['pengarang_buku']) : "Tidak Ada Pengarang Buku" ?>" autocomplete="off"><br>
                         <p class="text-danger" id="pengarang_buku_error"></p>
@@ -126,10 +131,15 @@ if (isset($_SESSION["is_login"]) == false) {
                         <input class="form-control" type="text" name="isbn_buku" id="isbn_buku" value="<?= isset($book['isbn_buku']) ? htmlspecialchars($book['isbn_buku']) : "Tidak Ada ISBN Buku" ?>" autocomplete="off" required><br>
                         <p class="text-danger" id="isbn_buku_error"></p>
 
-                        <label class="form-label" for="download_buku">Jumlah Download:</label><br>
-                        <input class="form-control" type="text" name="download_buku" id="download_buku" value="<?= isset($book['download']) ? htmlspecialchars($book['download']) : "Tidak Ada Jumlah Download" ?>" autocomplete="off" required><br>
-                        <p class="text-danger" id="download_buku_error"></p>
-
+                        <?php if($book["jenis_buku"] == "E-Book") {?>
+                            <label class="form-label" for="download_buku">Jumlah Download:</label><br>
+                            <input class="form-control" type="text" name="download_buku" id="download_buku" value="<?= isset($book['download']) ? htmlspecialchars($book['download']) : "Tidak Ada Jumlah Download" ?>" autocomplete="off" required><br>
+                            <p class="text-danger" id="download_buku_error"></p>
+                        <?php } else { ?>
+                            <label class="form-label" for="pinjam_buku">Jumlah Pinjam:</label><br>
+                            <input class="form-control" type="text" name="pinjam_buku" id="pinjam_buku" value="<?= isset($book['pinjam']) ? htmlspecialchars($book['pinjam']) : "Tidak Ada Jumlah Pinjam" ?>" autocomplete="off" required><br>
+                            <p class="text-danger" id="pinjam_buku_error"></p>
+                        <?php } ?>
                         <label class="form-label" for="deskripsi_buku">Deskripsi Buku:</label><br>
                         <textarea name="deskripsi_buku" id="deskripsi_buku" class="form-control" rows="4" cols="50" autocomplete="off" ><?= isset($book['deskripsi_buku']) ? htmlspecialchars($book['deskripsi_buku']) : "Tidak Ada Deskripsi Buku"  ?></textarea><br>
                         <p class="text-danger" id="deskripsi_buku_error"></p>
@@ -196,7 +206,6 @@ if (isset($_SESSION["is_login"]) == false) {
                 const jumlah_halaman = document.forms["edit_book"]["jumlah_halaman"].value.trim();
                 const bahasa_buku = document.forms["edit_book"]["bahasa_buku"].value.trim();
                 const isbn_buku = document.forms["edit_book"]["isbn_buku"].value.trim();
-                const download_buku = document.forms["edit_book"]["download_buku"].value.trim();
                 const deskripsi_buku = document.forms["edit_book"]["deskripsi_buku"].value.trim();
 
                 const judul_buku_error = document.getElementById("judul_buku_error");
@@ -206,7 +215,6 @@ if (isset($_SESSION["is_login"]) == false) {
                 const jumlah_halaman_error = document.getElementById("jumlah_halaman_error");
                 const bahasa_buku_error = document.getElementById("bahasa_buku_error");
                 const isbn_buku_error = document.getElementById("isbn_buku_error");
-                const download_buku_error = document.getElementById("download_buku_error");
                 const deskripsi_buku_error = document.getElementById("deskripsi_buku_error");
 
                 if(!judul_buku || judul_buku.length < 5 || judul_buku.length > 100){
@@ -250,12 +258,6 @@ if (isset($_SESSION["is_login"]) == false) {
                     return;
                 } else {
                     isbn_buku_error.textContent = "";
-                }
-                if(download_buku < 0){
-                    download_buku_error.textContent = "Download buku harus lebih dari 0";
-                    return;
-                } else {
-                    download_buku_error.textContent = "";
                 }
                 if(!deskripsi_buku || deskripsi_buku.length < 20 || deskripsi_buku.length > 500){
                     deskripsi_buku_error.textContent = "Deskripsi buku harus lebih dari 20 karakter dan kurang dari 500 karakter";

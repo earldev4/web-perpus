@@ -54,6 +54,9 @@ $footerResult = $footer['footer'];
                         <span class="fw-bold">Kategori: </span><?= isset($book['kategori_buku']) ? htmlspecialchars($book['kategori_buku']) : "Tidak ada kategori buku" ?>
                     </li>
                     <li class="list-group-item">
+                        <span class="fw-bold">Jenis Buku: </span><?= isset($book['jenis_buku']) ? htmlspecialchars($book['jenis_buku']) : "Tidak ada jenis buku" ?>
+                    </li>
+                    <li class="list-group-item">
                         <span class="fw-bold">Pengarang: </span><?= isset($book['pengarang_buku']) ? htmlspecialchars($book['pengarang_buku']) : "Tidak ada pengarang buku"; ?>
                     </li>
                     <li class="list-group-item">
@@ -68,22 +71,31 @@ $footerResult = $footer['footer'];
                     <li class="list-group-item">
                         <span class="fw-bold">Bahasa: </span> <?= isset($book['bahasa_buku']) ? htmlspecialchars($book['bahasa_buku']) : "Tidak ada bahasa buku";  ?>
                     </li>
-                    <li class="list-group-item">
-                        <span class="fw-bold">Download: </span> <?= isset($book['download']) ? htmlspecialchars($book['download']) : "Tidak ada download";  ?>x
-                    </li>
+                    <?php if($book["jenis_buku"] == "E-Book"){ ?>
+                        <li class="list-group-item">
+                            <span class="fw-bold">Download: </span> <?= isset($book['download']) ? htmlspecialchars($book['download']) : "Tidak ada download";  ?>x
+                        </li>
+                    <?php } else { ?>
+                        <li class="list-group-item">
+                            <span class="fw-bold">Pinjam: </span> <?= isset($book['pinjam']) ? htmlspecialchars($book['pinjam']) : "Tidak ada pinjam";  ?>x
+                        </li>
+                    <?php } ?>
                     <li class="list-group-item">
                         <span class="fw-bold">ISBN Buku: </span> <?= isset($book['isbn_buku']) ? htmlspecialchars($book['isbn_buku']) : "Tidak ada ISBN buku"; ?>
                     </li>
-                    <li class="list-group-item">
-                        <a href="download.php?id_buku=<?= $book['id_buku'] ?>" class="btn btn-primary w-100">
-                            <i class="fa-solid fa-book"></i> Download Buku
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="form_peminjaman.php?id=<?= $book['id_buku'] ?>" class="btn btn-primary w-100">
-                            <i class="fa-solid fa-book"></i> Pinjam Buku
-                        </a>
-                    </li>
+                    <?php if($book['jenis_buku'] == "E-Book"){?>
+                        <li class="list-group-item">
+                            <a href="download.php?id_buku=<?= $book['id_buku'] ?>" class="btn btn-primary w-100">
+                                <i class="fa-solid fa-book"></i> Download Buku
+                            </a>
+                        </li>
+                    <?php } else { ?>
+                        <li class="list-group-item">
+                            <a href="form_peminjaman.php?id=<?= $book['id_buku'] ?>" class="btn btn-primary w-100">
+                                <i class="fa-solid fa-book"></i> Pinjam Buku
+                            </a>
+                        </li>
+                    <?php } ?>
                 </ul>
             </div>
             <div class="col-md-7 col-12">

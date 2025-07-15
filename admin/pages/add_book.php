@@ -91,9 +91,10 @@ if (isset($_SESSION["is_login"]) == false) {
                         <input class="form-control" type="text" name="judul_buku" id="judul_buku" autocomplete="off" required><br>
                         <p class="text-danger" id="judul_buku_error"></p>
                         
-                        <label class="form-label" for="lampiran_buku">Lampirkan Buku (pdf, doc, docx):</label><br>
+                        <label class="form-label" for="lampiran_buku">Lampirkan Buku (pdf, doc, docx): <span class="text-muted">Kosongkan kalo buku adalah buku fisik</span></label><br>
                         <input class="form-control" type="file" name="lampiran_buku" accept=".pdf,.doc,.docx" id="lampiran_buku" autocomplete="off" placeholder="Lampirkan file pdf, doc, docx"><br>
-                        
+
+                        <label class="form-label" for="kategori_buku">Kategori Buku</label>
                         <?php
                         $kategoriList = [
                             "Romansa" => "Romansa",
@@ -117,6 +118,22 @@ if (isset($_SESSION["is_login"]) == false) {
                         <select class="form-select" name="kategori_buku" id="kategori_buku" required>
                             <option value="">-- Pilih Kategori --</option>
                             <?php foreach ($kategoriList as $value => $label): ?>
+                                <option value="<?= $value ?>">
+                                    <?= $label ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+
+                        <label class="form-label" for="jenis_buku">Jenis Buku</label>
+                        <?php
+                        $jenisList = [
+                            "Fisik" => "Fisik",
+                            "E-Book" => "E-Book",
+                        ];
+                        ?>
+                        <select class="form-select" name="jenis_buku" id="jenis_buku" required>
+                            <option value="">-- Pilih Jenis --</option>
+                            <?php foreach ($jenisList as $value => $label): ?>
                                 <option value="<?= $value ?>">
                                     <?= $label ?>
                                 </option>
