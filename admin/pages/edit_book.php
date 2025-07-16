@@ -70,8 +70,12 @@ if (isset($_SESSION["is_login"]) == false) {
                         <p class="text-danger" id="judul_buku_error"></p>
 
                         <?php if($book["jenis_buku"] == "E-Book"){ ?>
-                            <label class="form-label" for="lampiran_buku">Lampirkan Buku (pdf, doc, docx):</label><br>
+                            <label class="form-label" for="lampiran_buku">Lampirkan Buku (Untuk Buku E-Book, Format pdf, doc, docx):</label><br>
                             <input class="form-control" type="file" name="lampiran_buku" accept=".pdf,.doc,.docx" id="lampiran_buku" value="<?= isset($book['lampiran_buku']) ? htmlspecialchars($book['lampiran_buku']) : "Tidak Ada Lampiran" ?>" autocomplete="off" placeholder="Lampirkan file pdf, doc, docx"><br>
+                        <?php } else {?>
+                            <label class="form-label" for="thumbnail_buku">Thumbnail Buku (Untuk Buku Fisik, Format jpeg, jpg, png):</label><br>
+                            <input class="form-control" type="file" name="thumbnail_buku" id="thumbnail_buku" accept=".jpg, .jpeg, .png" autocomplete="off"><br>
+                            <p class="text-danger" id="thumbnail_buku_error"></p>
                         <?php } ?>
 
                         <label class="form-label" for="kategori_buku">Pilih Kategori Buku:</label><br>

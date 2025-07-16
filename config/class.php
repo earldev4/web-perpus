@@ -506,7 +506,7 @@ class Perpustakaan{
             if($id_buku && $id_informasi && $judul_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $download_buku && $bahasa_buku && $isbn_buku){
                 if (!empty($lampiran_buku_name)) {
                     if (in_array($file_ext_actual, $allowed)) {
-                        if($lampiran_buku_size < 15000000){
+                        if($lampiran_buku_size < 50000000){
                             $sql = <<<SQL
                                 UPDATE informasi SET jumlah_halaman = ?, bahasa_buku = ?, isbn_buku = ? WHERE id_informasi = ?;
                             SQL;
@@ -518,37 +518,65 @@ class Perpustakaan{
                             $stmt->execute();
 
                             $sql = <<<SQL
-                                SELECT lampiran_buku FROM buku WHERE id_buku = ?
+                                SELECT lampiran_buku, thumbnail_buku FROM buku WHERE id_buku = ?
                             SQL;
                             $stmt = $this->conn->prepare($sql);
                             $stmt->bindParam(1, $id_buku);
                             $stmt->execute();
                             $result = $stmt->fetch(PDO::FETCH_ASSOC);
                             $fileName = $result["lampiran_buku"];
+                            $fileName2 = $result["thumbnail_buku"];
                             unlink(__DIR__ . '/../assets/img/buku/' . $fileName);
+                            unlink(__DIR__ . '/../assets/img/thumbnail/' . $fileName2);
 
                             $lampiran_name_new = uniqid('', true) . "." . $file_ext_actual;
                             $lampiran_folder = __DIR__ . '/../assets/img/buku/' . $lampiran_name_new;
-                            move_uploaded_file($lampiran_buku_temp, $lampiran_folder);
-                            $sql = <<<SQL
-                                UPDATE buku SET judul_buku = ?, lampiran_buku = ?, kategori_buku = ?, pengarang_buku = ?,  penerbit_buku = ?, jumlah_buku = ?, download = ?, deskripsi_buku = ? WHERE id_buku = ?;
-                            SQL;
-                            $stmt = $this->conn->prepare($sql);
-                            $stmt->bindParam(1, $judul_buku);
-                            $stmt->bindParam(2, $lampiran_name_new);
-                            $stmt->bindParam(3, $kategori_buku);
-                            $stmt->bindParam(4, $pengarang_buku);
-                            $stmt->bindParam(5, $penerbit_buku);
-                            $stmt->bindParam(6, $jumlah_buku);
-                            $stmt->bindParam(7, $download_buku);
-                            $stmt->bindParam(8, $deskripsi_buku);
-                            $stmt->bindParam(9, $id_buku);
-                            $stmt->execute();
-                            return [
-                                "status" => "success",
-                                "message" => "Buku Berhasil Diedit",
-                                "redirect" => "add_book.php"
-                            ];
+
+                            if (move_uploaded_file($lampiran_buku_temp, $lampiran_folder)) {
+                                $thumbnail_name = pathinfo($lampiran_name_new, PATHINFO_FILENAME) . ".jpg";
+                                $thumbnail_path = __DIR__ . '/../assets/img/thumbnail/' . $thumbnail_name;
+                                try {
+                                    $imagick = new Imagick();
+                                    $imagick->setResolution(150, 150);
+                                    $imagick->readImage($lampiran_folder . "[0]"); 
+                                    $imagick->setImageFormat('jpeg');
+                                    $imagick->writeImage($thumbnail_path);
+                                    $imagick->clear();
+                                    $imagick->destroy();
+                                } catch (Exception $e) {
+                                    return [
+                                        "status" => "error",
+                                        "message" => "Gagal membuat thumbnail: " . $e->getMessage(),
+                                        "redirect" => ""
+                                    ];
+                                }
+                                $sql = <<<SQL
+                                    UPDATE buku SET judul_buku = ?, lampiran_buku = ?, thumbnail_buku = ?, kategori_buku = ?, pengarang_buku = ?,  penerbit_buku = ?, jumlah_buku = ?, download = ?, deskripsi_buku = ? WHERE id_buku = ?;
+                                SQL;
+                                $stmt = $this->conn->prepare($sql);
+                                $stmt->bindParam(1, $judul_buku);
+                                $stmt->bindParam(2, $lampiran_name_new);
+                                $stmt->bindParam(3, $thumbnail_name);
+                                $stmt->bindParam(4, $kategori_buku);
+                                $stmt->bindParam(5, $pengarang_buku);
+                                $stmt->bindParam(6, $penerbit_buku);
+                                $stmt->bindParam(7, $jumlah_buku);
+                                $stmt->bindParam(8, $download_buku);
+                                $stmt->bindParam(9, $deskripsi_buku);
+                                $stmt->bindParam(10, $id_buku);
+                                $stmt->execute();
+                                return [
+                                    "status" => "success",
+                                    "message" => "Buku Berhasil Diedit",
+                                    "redirect" => "add_book.php"
+                                ];
+                            } else {
+                                return [
+                                    "status" => "error",
+                                    "message" => "Gagal mengupload thumbnail buku",
+                                    "redirect" => ""
+                                ];
+                            }
                         } else {
                             return [
                                 "status" => "error",
@@ -601,6 +629,11 @@ class Perpustakaan{
                 ];
             }
         } else {
+            $thumbnail_buku = $_FILES["thumbnail_buku"];
+            $thumbnail_buku_name = $_FILES["thumbnail_buku"]["name"];
+            $thumbnail_buku_temp = $_FILES["thumbnail_buku"]["tmp_name"];
+            $thumbnail_buku_size = $_FILES["thumbnail_buku"]["size"];
+            $thumbnail_buku_type = $_FILES["thumbnail_buku"]["type"];
             $kategori_buku = $data["kategori_buku"];
             $pengarang_buku = $data["pengarang_buku"];
             $penerbit_buku = $data["penerbit_buku"];
@@ -610,35 +643,101 @@ class Perpustakaan{
             $pinjam_buku = $data["pinjam_buku"];
             $bahasa_buku = $data["bahasa_buku"];
             $isbn_buku = $data["isbn_buku"]; 
+            $file_ext = explode('.', $thumbnail_buku_name);
+            $file_ext_actual = strtolower(end($file_ext));
+            $allowed = array('jpg', 'jpeg', 'png');
             if($id_buku && $id_informasi && $judul_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $pinjam_buku && $bahasa_buku && $isbn_buku){
-                $sql = <<<SQL
-                    UPDATE informasi SET jumlah_halaman = ?, bahasa_buku = ?, isbn_buku = ? WHERE id_informasi = ?;
-                SQL;
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bindParam(1, $jumlah_halaman);
-                $stmt->bindParam(2, $bahasa_buku);
-                $stmt->bindParam(3, $isbn_buku);
-                $stmt->bindParam(4, $id_informasi);
-                $stmt->execute();
+                if (!empty($thumbnail_buku_name)) {
+                    if (in_array($file_ext_actual, $allowed)) {
+                        if($thumbnail_buku_size < 10000000){
+                            $sql = <<<SQL
+                                SELECT thumbnail_buku FROM buku WHERE id_buku = ?;
+                            SQL;
+                            $stmt = $this->conn->prepare($sql);
+                            $stmt->bindParam(1, $id_buku);
+                            $stmt->execute();
+                            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                            $fileName = $result["thumbnail_buku"];
+                            unlink(__DIR__ . '/../assets/img/thumbnail/' . $fileName);
 
-                $sql = <<<SQL
-                    UPDATE buku SET judul_buku = ?, kategori_buku = ?, pengarang_buku = ?,  penerbit_buku = ?, jumlah_buku = ?, pinjam = ?, deskripsi_buku = ? WHERE id_buku = ?;
-                SQL;
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bindParam(1, $judul_buku);
-                $stmt->bindParam(2, $kategori_buku);
-                $stmt->bindParam(3, $pengarang_buku);
-                $stmt->bindParam(4, $penerbit_buku);
-                $stmt->bindParam(5, $jumlah_buku);
-                $stmt->bindParam(6, $pinjam_buku);
-                $stmt->bindParam(7, $deskripsi_buku);
-                $stmt->bindParam(8, $id_buku);
-                $stmt->execute();
-                return [
-                    "status" => "success",
-                    "message" => "Buku Berhasil Diedit",
-                    "redirect" => "add_book.php"
-                ];
+                            $thumbnail_buku_name_new = uniqid('', true) . '.' . $file_ext_actual;
+                            $thumbnail_buku_folder = __DIR__ . '/../assets/img/thumbnail/' . $thumbnail_buku_name_new;
+                            move_uploaded_file($thumbnail_buku_temp, $thumbnail_buku_folder);
+
+                            $sql = <<<SQL
+                            UPDATE informasi SET jumlah_halaman = ?, bahasa_buku = ?, isbn_buku = ? WHERE id_informasi = ?;
+                            SQL;
+                            $stmt = $this->conn->prepare($sql);
+                            $stmt->bindParam(1, $jumlah_halaman);
+                            $stmt->bindParam(2, $bahasa_buku);
+                            $stmt->bindParam(3, $isbn_buku);
+                            $stmt->bindParam(4, $id_informasi);
+                            $stmt->execute();
+
+                            $sql = <<<SQL
+                                UPDATE buku SET judul_buku = ?, thumbnail_buku = ?, kategori_buku = ?, pengarang_buku = ?,  penerbit_buku = ?, jumlah_buku = ?, pinjam = ?, deskripsi_buku = ? WHERE id_buku = ?;
+                            SQL;
+                            $stmt = $this->conn->prepare($sql);
+                            $stmt->bindParam(1, $judul_buku);
+                            $stmt->bindParam(2, $thumbnail_buku_name_new);
+                            $stmt->bindParam(3, $kategori_buku);
+                            $stmt->bindParam(4, $pengarang_buku);
+                            $stmt->bindParam(5, $penerbit_buku);
+                            $stmt->bindParam(6, $jumlah_buku);
+                            $stmt->bindParam(7, $pinjam_buku);
+                            $stmt->bindParam(8, $deskripsi_buku);
+                            $stmt->bindParam(9, $id_buku);
+                            $stmt->execute();
+                            return [
+                                "status" => "success",
+                                "message" => "Buku Berhasil Diedit",
+                                "redirect" => "add_book.php"
+                            ];
+
+                        } else {
+                            return [
+                                "status" => "error",
+                                "message" => "Ukuran File Terlalu Besar, Maksimal 10 MB",
+                                "redirect" => ""
+                            ];
+                        }
+                    } else {
+                        return [
+                            "status" => "error",
+                            "message" => "Format File Tidak Sesuai, Format Yang Diperbolehkan .jpg, .jpeg, .png",
+                            "redirect" => ""
+                        ];
+                    }
+                } else {
+                    $sql = <<<SQL
+                    UPDATE informasi SET jumlah_halaman = ?, bahasa_buku = ?, isbn_buku = ? WHERE id_informasi = ?;
+                    SQL;
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bindParam(1, $jumlah_halaman);
+                    $stmt->bindParam(2, $bahasa_buku);
+                    $stmt->bindParam(3, $isbn_buku);
+                    $stmt->bindParam(4, $id_informasi);
+                    $stmt->execute();
+
+                    $sql = <<<SQL
+                        UPDATE buku SET judul_buku = ?, kategori_buku = ?, pengarang_buku = ?,  penerbit_buku = ?, jumlah_buku = ?, pinjam = ?, deskripsi_buku = ? WHERE id_buku = ?;
+                    SQL;
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bindParam(1, $judul_buku);
+                    $stmt->bindParam(2, $kategori_buku);
+                    $stmt->bindParam(3, $pengarang_buku);
+                    $stmt->bindParam(4, $penerbit_buku);
+                    $stmt->bindParam(5, $jumlah_buku);
+                    $stmt->bindParam(6, $pinjam_buku);
+                    $stmt->bindParam(7, $deskripsi_buku);
+                    $stmt->bindParam(8, $id_buku);
+                    $stmt->execute();
+                    return [
+                        "status" => "success",
+                        "message" => "Buku Berhasil Diedit",
+                        "redirect" => "add_book.php"
+                    ];
+                }
             } else {
                 return [
                     "status" => "error",
