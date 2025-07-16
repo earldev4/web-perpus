@@ -99,7 +99,7 @@ $footerResult = $footer['footer'];
                 </ul>
             </div>
             <div class="col-md-7 col-12">
-                <p style="text-align: justify"><?= isset($book['deskripsi_buku']) ? htmlspecialchars_decode($book['deskripsi_buku']) : "Tidak ada deskripsi buku"; ?></p>
+                <p style=""><?= isset($book['deskripsi_buku']) ? $book['deskripsi_buku'] : "Tidak ada deskripsi buku"; ?></p>
             </div>
         </div>
     </div>
