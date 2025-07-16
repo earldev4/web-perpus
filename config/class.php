@@ -329,26 +329,52 @@ class Perpustakaan{
 
                         $lampiran_name_new = uniqid('', true) . "." . $file_ext_actual;
                         $lampiran_folder = __DIR__ . '/../assets/img/buku/' . $lampiran_name_new;
-                        move_uploaded_file($lampiran_buku_temp, $lampiran_folder);
-                        $sql = <<<SQL
-                            INSERT INTO buku (judul_buku, lampiran_buku, jenis_buku, kategori_buku, pengarang_buku,  penerbit_buku, jumlah_buku, id_informasi, deskripsi_buku) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
-                        SQL;
-                        $stmt = $this->conn->prepare($sql);
-                        $stmt->bindParam(1, $judul_buku);
-                        $stmt->bindParam(2, $lampiran_name_new);
-                        $stmt->bindParam(3, $jenis_buku);
-                        $stmt->bindParam(4, $kategori_buku);
-                        $stmt->bindParam(5, $pengarang_buku);
-                        $stmt->bindParam(6, $penerbit_buku);
-                        $stmt->bindParam(7, $jumlah_buku);
-                        $stmt->bindParam(8, $id_informasi);
-                        $stmt->bindParam(9, $deskripsi_buku);
-                        $stmt->execute();
-                        return [
-                            "status" => "success",
-                            "message" => "Buku Berhasil Ditambahkan",
-                            "redirect" => "add_book.php"
-                        ];
+
+                        if (move_uploaded_file($lampiran_buku_temp, $lampiran_folder)) {
+                            $thumbnail_name = pathinfo($lampiran_name_new, PATHINFO_FILENAME) . ".jpg";
+                            $thumbnail_path = __DIR__ . '/../assets/img/thumbnail/' . $thumbnail_name;
+                            try {
+                                $imagick = new Imagick();
+                                $imagick->setResolution(150, 150);
+                                $imagick->readImage($lampiran_folder . "[0]"); 
+                                $imagick->setImageFormat('jpeg');
+                                $imagick->writeImage($thumbnail_path);
+                                $imagick->clear();
+                                $imagick->destroy();
+                            } catch (Exception $e) {
+                                return [
+                                    "status" => "error",
+                                    "message" => "Gagal membuat thumbnail: " . $e->getMessage(),
+                                    "redirect" => ""
+                                ];
+                            }
+                            $sql = <<<SQL
+                                INSERT INTO buku (judul_buku, thumbnail_buku, lampiran_buku, jenis_buku, kategori_buku, pengarang_buku,  penerbit_buku, jumlah_buku, id_informasi, deskripsi_buku) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                            SQL;
+                            $stmt = $this->conn->prepare($sql);
+                            $stmt->bindParam(1, $judul_buku);
+                            $stmt->bindParam(2, $thumbnail_name);
+                            $stmt->bindParam(3, $lampiran_name_new);
+                            $stmt->bindParam(4, $jenis_buku);
+                            $stmt->bindParam(5, $kategori_buku);
+                            $stmt->bindParam(6, $pengarang_buku);
+                            $stmt->bindParam(7, $penerbit_buku);
+                            $stmt->bindParam(8, $jumlah_buku);
+                            $stmt->bindParam(9, $id_informasi);
+                            $stmt->bindParam(10, $deskripsi_buku);
+                            $stmt->execute();
+                            return [
+                                "status" => "success",
+                                "message" => "Buku Berhasil Ditambahkan",
+                                "redirect" => "add_book.php"
+                            ];
+                        } else {
+                            return [
+                                "status" => "error",
+                                "message" => "Gagal Upload File",
+                                "redirect" => ""
+                            ];
+                        }
                     } else {
                         return [
                             "status" => "error",
@@ -359,7 +385,7 @@ class Perpustakaan{
                 } else {
                     return [
                         "status" => "error",
-                        "message" => "Format File Tidak Sesuai, Format Yang Diperbolehkan .pdf, .doc, .docx",
+                        "message" => "Format File Tidak Sesuai, Format Yang Diperbolehkan .pdf",
                         "redirect" => ""
                     ];
                 }
@@ -614,6 +640,16 @@ class Perpustakaan{
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             $fileName = $result["lampiran_buku"];
             unlink(__DIR__ . '/../assets/img/buku/' . $fileName);
+
+            $sql = <<<SQL
+            SELECT  thumbnail_buku FROM buku WHERE id_buku = ?
+            SQL;
+            $stmt= $this->conn->prepare($sql);
+            $stmt->bindParam(1, $id_buku);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $fileName = $result["thumbnail_buku"];
+            unlink(__DIR__ . '/../assets/img/thumbnail/' . $fileName);
 
             $sql = <<<SQL
                 DELETE FROM informasi WHERE id_informasi = ?;
