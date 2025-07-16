@@ -31,7 +31,7 @@
                             <form action="add_book.php" class="delete_book_form" method="POST">
                                 <input type="hidden" name="hapus_buku" value="<?= htmlspecialchars($book['id_buku']) ?>">
                                 <input type="hidden" name="hapus_informasi" value="<?= htmlspecialchars($book['id_informasi']) ?>">
-                                <button class="btn btn-danger">
+                                <button class="btn btn-danger w-100">
                                     Hapus Buku
                                 </button>
                             </form>
@@ -41,7 +41,7 @@
                 } 
             } else { ?>
                 <tr>
-                    <td scope="row" class="fs-sm-5 text-center" colspan="6">Tidak ada buku</td>
+                    <td scope="row" class="fs-sm-5 text-center" colspan="7">Tidak ada buku</td>
                 </tr>
             <?php } ?>
         </tbody>

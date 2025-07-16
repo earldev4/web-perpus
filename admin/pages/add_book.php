@@ -94,6 +94,9 @@ if (isset($_SESSION["is_login"]) == false) {
                         <label class="form-label" for="lampiran_buku">Lampirkan Buku (pdf): <span class="text-muted">Kosongkan kalo buku adalah buku fisik</span></label><br>
                         <input class="form-control" type="file" name="lampiran_buku" accept=".pdf" id="lampiran_buku" autocomplete="off" placeholder="Lampirkan file pdf, doc, docx"><br>
 
+                        <label class="form-label" for="thumbnail_buku">Lampirkan thumbnail buku (jpg, jpeg, png): <span class="text-muted">Kosongkan kalo buku adalah buku E-Book</span></label><br>
+                        <input class="form-control" type="file" id="thumbnail_buku" name="thumbnail_buku" accept=".jpg, .jpeg, .png" id="thumbnail_buku" autocomplete="off" placeholder="Lampirkan thumbnail buku jpg, jpeg, png"><br>
+
                         <label class="form-label" for="kategori_buku">Kategori Buku</label>
                         <?php
                         $kategoriList = [

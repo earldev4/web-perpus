@@ -316,7 +316,7 @@ class Perpustakaan{
             $allowed = array('pdf');
             if($judul_buku && $lampiran_buku && $jenis_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $bahasa_buku && $isbn_buku){
                 if (in_array($file_ext_actual, $allowed)) {
-                    if($lampiran_buku_size < 15000000){
+                    if($lampiran_buku_size < 50000000){
                         $sql = <<<SQL
                             INSERT INTO informasi (jumlah_halaman, bahasa_buku, isbn_buku) VALUES (?, ?, ?);
                         SQL;
@@ -365,7 +365,7 @@ class Perpustakaan{
                             $stmt->execute();
                             return [
                                 "status" => "success",
-                                "message" => "Buku Berhasil Ditambahkan",
+                                "message" => "E-Book Berhasil Ditambahkan",
                                 "redirect" => "add_book.php"
                             ];
                         } else {
@@ -378,7 +378,7 @@ class Perpustakaan{
                     } else {
                         return [
                             "status" => "error",
-                            "message" => "Ukuran File Terlalu Besar, Maksimal 15 MB",
+                            "message" => "Ukuran File Terlalu Besar, Maksimal 50 MB",
                             "redirect" => ""
                         ];
                     }
@@ -404,6 +404,11 @@ class Perpustakaan{
                     "redirect" => ""
                 ];
             } else {
+                $thumbnail_buku = $_FILES["thumbnail_buku"];
+                $thumbnail_buku_name = $_FILES["thumbnail_buku"]["name"];
+                $thumbnail_buku_temp = $_FILES["thumbnail_buku"]["tmp_name"];
+                $thumbnail_buku_size = $_FILES["thumbnail_buku"]["size"];
+                $thumbnail_buku_type = $_FILES["thumbnail_buku"]["type"];
                 $kategori_buku = $data["kategori_buku"];
                 $pengarang_buku = $data["pengarang_buku"];
                 $penerbit_buku = $data["penerbit_buku"];
@@ -412,34 +417,58 @@ class Perpustakaan{
                 $deskripsi_buku = $data["deskripsi_buku"];
                 $bahasa_buku = $data["bahasa_buku"];
                 $isbn_buku = $data["isbn_buku"];
-                if ($judul_buku && $jenis_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $bahasa_buku && $isbn_buku){
-                    $sql = <<<SQL
-                    INSERT INTO informasi (jumlah_halaman, bahasa_buku, isbn_buku) VALUES (?, ?, ?);
-                    SQL;
-                    $stmt = $this->conn->prepare($sql);
-                    $stmt->bindParam(1, $jumlah_halaman);
-                    $stmt->bindParam(2, $bahasa_buku);
-                    $stmt->bindParam(3, $isbn_buku);
-                    $stmt->execute();
-                    $id_informasi = $this->conn->lastInsertId();
-                    $sql = <<<SQL
-                        INSERT INTO buku (judul_buku, jenis_buku, kategori_buku, pengarang_buku,  penerbit_buku, jumlah_buku, id_informasi, deskripsi_buku) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-                    SQL;
-                    $stmt = $this->conn->prepare($sql);
-                    $stmt->bindParam(1, $judul_buku);
-                    $stmt->bindParam(2, $jenis_buku);
-                    $stmt->bindParam(3, $kategori_buku);
-                    $stmt->bindParam(4, $pengarang_buku);
-                    $stmt->bindParam(5, $penerbit_buku);
-                    $stmt->bindParam(6, $jumlah_buku);
-                    $stmt->bindParam(7, $id_informasi);
-                    $stmt->bindParam(8, $deskripsi_buku);
-                    $stmt->execute();
-                    return [
-                        "status" => "success",
-                        "message" => "E-Book Berhasil Ditambahkan",
-                        "redirect" => "add_book.php"
-                    ];
+                $file_ext = explode('.', $thumbnail_buku_name);
+                $file_ext_actual = strtolower(end($file_ext));
+                $allowed = array('jpg', 'jpeg', 'png');
+                if ($judul_buku && $jenis_buku && $thumbnail_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $bahasa_buku && $isbn_buku){
+                    if(in_array($file_ext_actual, $allowed)){
+                        if($thumbnail_buku_size < 10000000){
+                            $sql = <<<SQL
+                            INSERT INTO informasi (jumlah_halaman, bahasa_buku, isbn_buku) VALUES (?, ?, ?);
+                            SQL;
+                            $stmt = $this->conn->prepare($sql);
+                            $stmt->bindParam(1, $jumlah_halaman);
+                            $stmt->bindParam(2, $bahasa_buku);
+                            $stmt->bindParam(3, $isbn_buku);
+                            $stmt->execute();
+                            $id_informasi = $this->conn->lastInsertId();
+                            $thumbnail_name_new = uniqid('', true) . "." . $file_ext_actual;
+                            $thumbnail_folder = __DIR__ . '/../assets/img/thumbnail/' . $thumbnail_name_new;
+                            move_uploaded_file($thumbnail_buku_temp, $thumbnail_folder);
+
+                            $sql = <<<SQL
+                            INSERT INTO buku (judul_buku, thumbnail_buku, jenis_buku, kategori_buku, pengarang_buku,  penerbit_buku, jumlah_buku, id_informasi, deskripsi_buku) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+                            SQL;
+                            $stmt = $this->conn->prepare($sql);
+                            $stmt->bindParam(1, $judul_buku);
+                            $stmt->bindParam(2, $thumbnail_name_new);
+                            $stmt->bindParam(3, $jenis_buku);
+                            $stmt->bindParam(4, $kategori_buku);
+                            $stmt->bindParam(5, $pengarang_buku);
+                            $stmt->bindParam(6, $penerbit_buku);
+                            $stmt->bindParam(7, $jumlah_buku);
+                            $stmt->bindParam(8, $id_informasi);
+                            $stmt->bindParam(9, $deskripsi_buku);
+                            $stmt->execute();
+                            return [
+                                "status" => "success",
+                                "message" => "Buku fisik Berhasil Ditambahkan",
+                                "redirect" => "add_book.php"
+                            ];
+                        } else {
+                            return [
+                                "status" => "error",
+                                "message" => "Ukuran File Terlalu Besar, Maksimal 10 MB",
+                                "redirect" => ""
+                            ];
+                        }
+                    } else {
+                        return [
+                            "status" => "error",
+                            "message" => "Format File Tidak Sesuai, Format Yang Diperbolehkan .jpg, .jpeg, .png",
+                            "redirect" => ""
+                        ];
+                    }
                 } else {
                     return [
                         "status" => "error",
