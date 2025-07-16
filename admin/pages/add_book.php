@@ -91,8 +91,8 @@ if (isset($_SESSION["is_login"]) == false) {
                         <input class="form-control" type="text" name="judul_buku" id="judul_buku" autocomplete="off" required><br>
                         <p class="text-danger" id="judul_buku_error"></p>
                         
-                        <label class="form-label" for="lampiran_buku">Lampirkan Buku (pdf, doc, docx): <span class="text-muted">Kosongkan kalo buku adalah buku fisik</span></label><br>
-                        <input class="form-control" type="file" name="lampiran_buku" accept=".pdf,.doc,.docx" id="lampiran_buku" autocomplete="off" placeholder="Lampirkan file pdf, doc, docx"><br>
+                        <label class="form-label" for="lampiran_buku">Lampirkan Buku (pdf): <span class="text-muted">Kosongkan kalo buku adalah buku fisik</span></label><br>
+                        <input class="form-control" type="file" name="lampiran_buku" accept=".pdf" id="lampiran_buku" autocomplete="off" placeholder="Lampirkan file pdf, doc, docx"><br>
 
                         <label class="form-label" for="kategori_buku">Kategori Buku</label>
                         <?php
@@ -177,7 +177,7 @@ if (isset($_SESSION["is_login"]) == false) {
                         <input type="text" class="form-control w-100" placeholder="Cari buku berdasarkan judul, kategori, pengarang atau penerbit" autocomplete="off" name="search_book">
                         <button type="submit" class="btn-search p-3"><i class="bi bi-search"></i></button>
                     </form>
-                    <?php include 'table.php'; ?>
+                    <?php include './table.php'; ?>
                 </div>
             </div>
         </div>
@@ -279,14 +279,14 @@ if (isset($_SESSION["is_login"]) == false) {
                 } else {
                     jumlah_buku_error.textContent = "";
                 }
-                if(!bahasa_buku || bahasa_buku.length < 5 || bahasa_buku.length > 100){
-                    bahasa_buku_error.textContent = "Bahasa buku harus lebih dari 5 karakter dan kurang dari 100 karakter";
+                if(!bahasa_buku || bahasa_buku.length < 5 || bahasa_buku.length > 45){
+                    bahasa_buku_error.textContent = "Bahasa buku harus lebih dari 5 karakter dan kurang dari 45 karakter";
                     return;
                 } else {
                     bahasa_buku_error.textContent = "";
                 }
-                if(!isbn_buku || isbn_buku.length < 5 || isbn_buku.length > 100){
-                    isbn_buku_error.textContent = "ISBN buku harus lebih dari 5 karakter dan kurang dari 100 karakter";
+                if(!isbn_buku || isbn_buku.length < 5 || isbn_buku.length > 45){
+                    isbn_buku_error.textContent = "ISBN buku harus lebih dari 5 karakter dan kurang dari 45 karakter";
                     return;
                 } else {
                     isbn_buku_error.textContent = "";

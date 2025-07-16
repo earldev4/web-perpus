@@ -1,5 +1,5 @@
 <?php 
-
+$base_url = "/web-perpus";
 class Perpustakaan{
     private $conn;
     public function __construct($dbConnection){
@@ -23,10 +23,11 @@ class Perpustakaan{
             if($dataUser){
                 $_SESSION["nama_user"] = $dataUser["nama_user"];
                 $_SESSION["is_login"] = true;
+                $base_url = "/web-perpus";
                 return [
                     "status"=> "success",
                     "message"=> "Login Berhasil",
-                    "redirect"=> "/admin/home.php"
+                    "redirect"=> $base_url."/admin/home.php"
                 ];
             } else {
                 return [
@@ -174,6 +175,7 @@ class Perpustakaan{
                 $stmt->bindParam(6, $tanggal_pengembalian);
                 $stmt->bindParam(7, $no_telp);
                 $stmt->execute();
+                $base_url = "/web-perpus";
                 return [
                     "status" => "success",
                     "message" => "Peminjaman Buku Berhasil",
@@ -369,48 +371,56 @@ class Perpustakaan{
                 ];
             }
         } else {
-            $kategori_buku = $data["kategori_buku"];
-            $pengarang_buku = $data["pengarang_buku"];
-            $penerbit_buku = $data["penerbit_buku"];
-            $jumlah_buku = $data["jumlah_buku"];
-            $jumlah_halaman = $data["jumlah_halaman"];
-            $deskripsi_buku = $data["deskripsi_buku"];
-            $bahasa_buku = $data["bahasa_buku"];
-            $isbn_buku = $data["isbn_buku"];
-            if ($judul_buku && $jenis_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $bahasa_buku && $isbn_buku){
-                $sql = <<<SQL
-                INSERT INTO informasi (jumlah_halaman, bahasa_buku, isbn_buku) VALUES (?, ?, ?);
-                SQL;
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bindParam(1, $jumlah_halaman);
-                $stmt->bindParam(2, $bahasa_buku);
-                $stmt->bindParam(3, $isbn_buku);
-                $stmt->execute();
-                $id_informasi = $this->conn->lastInsertId();
-                $sql = <<<SQL
-                    INSERT INTO buku (judul_buku, jenis_buku, kategori_buku, pengarang_buku,  penerbit_buku, jumlah_buku, id_informasi, deskripsi_buku) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-                SQL;
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bindParam(1, $judul_buku);
-                $stmt->bindParam(2, $jenis_buku);
-                $stmt->bindParam(3, $kategori_buku);
-                $stmt->bindParam(4, $pengarang_buku);
-                $stmt->bindParam(5, $penerbit_buku);
-                $stmt->bindParam(6, $jumlah_buku);
-                $stmt->bindParam(7, $id_informasi);
-                $stmt->bindParam(8, $deskripsi_buku);
-                $stmt->execute();
-                return [
-                    "status" => "success",
-                    "message" => "Buku Berhasil Ditambahkan",
-                    "redirect" => "add_book.php"
-                ];
-            } else {
+            if(isset($lampiran_buku)){
                 return [
                     "status" => "error",
-                    "message" => "Data Tidak Boleh Kosong", 
+                    "message" => "Lampiran Buku Harus Kosong",
                     "redirect" => ""
                 ];
+            } else {
+                $kategori_buku = $data["kategori_buku"];
+                $pengarang_buku = $data["pengarang_buku"];
+                $penerbit_buku = $data["penerbit_buku"];
+                $jumlah_buku = $data["jumlah_buku"];
+                $jumlah_halaman = $data["jumlah_halaman"];
+                $deskripsi_buku = $data["deskripsi_buku"];
+                $bahasa_buku = $data["bahasa_buku"];
+                $isbn_buku = $data["isbn_buku"];
+                if ($judul_buku && $jenis_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $bahasa_buku && $isbn_buku){
+                    $sql = <<<SQL
+                    INSERT INTO informasi (jumlah_halaman, bahasa_buku, isbn_buku) VALUES (?, ?, ?);
+                    SQL;
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bindParam(1, $jumlah_halaman);
+                    $stmt->bindParam(2, $bahasa_buku);
+                    $stmt->bindParam(3, $isbn_buku);
+                    $stmt->execute();
+                    $id_informasi = $this->conn->lastInsertId();
+                    $sql = <<<SQL
+                        INSERT INTO buku (judul_buku, jenis_buku, kategori_buku, pengarang_buku,  penerbit_buku, jumlah_buku, id_informasi, deskripsi_buku) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+                    SQL;
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bindParam(1, $judul_buku);
+                    $stmt->bindParam(2, $jenis_buku);
+                    $stmt->bindParam(3, $kategori_buku);
+                    $stmt->bindParam(4, $pengarang_buku);
+                    $stmt->bindParam(5, $penerbit_buku);
+                    $stmt->bindParam(6, $jumlah_buku);
+                    $stmt->bindParam(7, $id_informasi);
+                    $stmt->bindParam(8, $deskripsi_buku);
+                    $stmt->execute();
+                    return [
+                        "status" => "success",
+                        "message" => "E-Book Berhasil Ditambahkan",
+                        "redirect" => "add_book.php"
+                    ];
+                } else {
+                    return [
+                        "status" => "error",
+                        "message" => "Data Tidak Boleh Kosong", 
+                        "redirect" => ""
+                    ];
+                }
             }
         }
     }
@@ -587,33 +597,62 @@ class Perpustakaan{
         $id_buku = $data["hapus_buku"];
         $id_informasi = $data["hapus_informasi"];
         $sql = <<<SQL
-            SELECT  lampiran_buku FROM buku WHERE id_buku = ?
+            SELECT * FROM buku WHERE id_buku = ?
         SQL;
-        $stmt= $this->conn->prepare($sql);
+        $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(1, $id_buku);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $fileName = $result["lampiran_buku"];
-        unlink(__DIR__ . '/../assets/img/buku/' . $fileName);
+        $buku = $result["jenis_buku"];
+        if($buku == "E-Book"){
+            $sql = <<<SQL
+            SELECT  lampiran_buku FROM buku WHERE id_buku = ?
+            SQL;
+            $stmt= $this->conn->prepare($sql);
+            $stmt->bindParam(1, $id_buku);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $fileName = $result["lampiran_buku"];
+            unlink(__DIR__ . '/../assets/img/buku/' . $fileName);
 
-        $sql = <<<SQL
-            DELETE FROM informasi WHERE id_informasi = ?;
-        SQL;
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1, $id_informasi);
-        $stmt->execute();
+            $sql = <<<SQL
+                DELETE FROM informasi WHERE id_informasi = ?;
+            SQL;
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(1, $id_informasi);
+            $stmt->execute();
 
-        $sql = <<<SQL
-            DELETE FROM buku WHERE id_buku = ?;
-        SQL;
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(1, $id_buku);
-        $stmt->execute();
-        return [
-            "status" => "success",
-            "message" => "Buku Berhasil Dihapus",
-            "redirect" => "add_book.php"
-        ];
+            $sql = <<<SQL
+                DELETE FROM buku WHERE id_buku = ?;
+            SQL;
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(1, $id_buku);
+            $stmt->execute();
+            return [
+                "status" => "success",
+                "message" => "Buku Berhasil Dihapus",
+                "redirect" => "add_book.php"
+            ];
+        } else {
+            $sql = <<<SQL
+                DELETE FROM informasi WHERE id_informasi = ?;
+            SQL;
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(1, $id_informasi);
+            $stmt->execute();
+
+            $sql = <<<SQL
+                DELETE FROM buku WHERE id_buku = ?;
+            SQL;
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(1, $id_buku);
+            $stmt->execute();
+            return [
+                "status" => "success",
+                "message" => "Buku Berhasil Dihapus",
+                "redirect" => "add_book.php"
+            ];
+        }
     }
     public function viewBookDetail($id_berita): array{
         $id = $id_berita;
@@ -652,13 +691,13 @@ class Perpustakaan{
             return [
                 "status" => "success",
                 "message" => "Hero Text Berhasil Diubah",
-                "redirect" => "/admin/home.php"
+                "redirect" => "home.php"
             ];
         } else {
             return [
                 "status" => "error",
                 "message" => "Hero Text Kosong",
-                "redirect" => "/admin/home.php"
+                "redirect" => "home.php"
             ];
         }
     }
@@ -705,13 +744,13 @@ class Perpustakaan{
                 return [
                     "status" => "success",
                     "message" => "Nilai berhasil diubah",
-                    "redirect" => "/admin/home.php"
+                    "redirect" => "home.php"
                 ];
             } else {
                 return [
                     "status" => "error",
                     "message" => "Nilai bukan angka",
-                    "redirect" => "/admin/home.php"
+                    "redirect" => "home.php"
                 ];
             }
         } else {
@@ -761,13 +800,13 @@ class Perpustakaan{
             return [
                 "status" => "success",
                 "message" => "Footer Berhasil Diubah",
-                "redirect" => "/admin/home.php"
+                "redirect" => "home.php"
             ];
         } else {
             return [
                 "status" => "error",
                 "message" => "Input tidak lengkap",
-                "redirect" => "/admin/home.php"
+                "redirect" => "home.php"
             ];
         }
     } 
@@ -871,3 +910,4 @@ class Perpustakaan{
         }
     }  
 }
+

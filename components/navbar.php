@@ -8,7 +8,7 @@ $socialMedia = $perpustakaan->displaySocialMedia()["social"];
         <div class="container-fluid">
             <a class="navbar-brand" href="#" >
                 <!-- <img src="./assets/img/Lampung_coa.png" alt="" class="img-fluid lampung-logo"> -->
-                <img src="/assets/img/Lampung_coa.png" alt="" class="img-fluid lampung-logo">
+                <img src="<?= $base_url?>/assets/img/Lampung_coa.png" alt="" class="img-fluid lampung-logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -16,19 +16,19 @@ $socialMedia = $perpustakaan->displaySocialMedia()["social"];
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ps-5 me-auto mb-2 mb-lg-0 gap-3">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/index.php">Home</a>
+                        <a class="nav-link active" aria-current="page" href="<?= $base_url?>/index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="/pages/katalog.php">Catalog</a>
+                        <a class="nav-link text-dark" href="<?= $base_url?>/pages/katalog.php">Catalog</a>
                     </li>
                     <li class="nav-item dropdown">
                     <a class="nav-link text-dark d-flex align-items-center gap-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
                         Profil <i class="bi bi-chevron-down" style="text-shadow: 0 0 1px currentColor;"></i>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/pages/kelembagaan.php">Kelembagaan</a></li>
+                            <li><a class="dropdown-item" href="<?= $base_url?>/pages/kelembagaan.php">Kelembagaan</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/pages/struktur.php">Struktur Organisasi</a></li>
+                            <li><a class="dropdown-item" href="<?= $base_url?>/pages/struktur.php">Struktur Organisasi</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -49,11 +49,11 @@ $socialMedia = $perpustakaan->displaySocialMedia()["social"];
                     </li>
                     <?php if(isset($_SESSION["is_login"]) == true){?>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="/admin/home.php">Admin</a>
+                            <a class="nav-link text-dark" href="<?= $base_url?>/admin/home.php">Admin</a>
                         </li>
                     <?php } else {?>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="/pages/login.php">Login</a>
+                            <a class="nav-link text-dark" href="<?= $base_url?>/pages/login.php">Login</a>
                         </li>
                     <?php } ?>
                 </ul>

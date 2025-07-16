@@ -247,14 +247,14 @@ if (isset($_SESSION["is_login"]) == false) {
                 } else {
                     jumlah_buku_error.textContent = "";
                 }
-                if(!bahasa_buku || bahasa_buku.length < 5 || bahasa_buku.length > 100){
-                    bahasa_buku_error.textContent = "Bahasa buku harus lebih dari 5 karakter dan kurang dari 100 karakter";
+                if(!bahasa_buku || bahasa_buku.length < 5 || bahasa_buku.length > 45){
+                    bahasa_buku_error.textContent = "Bahasa buku harus lebih dari 5 karakter dan kurang dari 45 karakter";
                     return;
                 } else {
                     bahasa_buku_error.textContent = "";
                 }
-                if(!isbn_buku || isbn_buku.length < 5 || isbn_buku.length > 100){
-                    isbn_buku_error.textContent = "ISBN buku harus lebih dari 5 karakter dan kurang dari 100 karakter";
+                if(!isbn_buku || isbn_buku.length < 5 || isbn_buku.length > 45){
+                    isbn_buku_error.textContent = "ISBN buku harus lebih dari 5 karakter dan kurang dari 45 karakter";
                     return;
                 } else {
                     isbn_buku_error.textContent = "";

@@ -44,7 +44,7 @@
                 $id_peminjam++; } 
             } else { ?>
                 <tr>
-                    <td scope="row" class="fs-sm-5 text-center" colspan="6">Tidak ada Data Peminjaman</td>
+                    <td scope="row" class="fs-sm-5 text-center" colspan="9">Tidak ada Data Peminjaman</td>
                 </tr>
             <?php } ?>
         </tbody>

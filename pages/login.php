@@ -44,7 +44,7 @@ if (isset($_SESSION["is_login"]) == true) {
                 </div>
                 <div class="logo-section">
                     <div class="logo-circle">
-                        <img src="/assets/img/Lampung_coa.png" alt="Logo Bappeda" style="width: 70%; height: 70%; object-fit: contain;">
+                        <img src="<?= $base_url?>/assets/img/Lampung_coa.png" alt="Logo Bappeda" style="width: 70%; height: 70%; object-fit: contain;">
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@ if (isset($_SESSION["is_login"]) == true) {
                     
                     <div class="forgot-password">
                        <i class="fa-solid fa-house"></i>
-                        <a href="../index.php" class="forgot-link">Kembali ke Beranda</a>
+                        <a href="<?= $base_url?>../index.php" class="forgot-link">Kembali ke Beranda</a>
                     </div>
                 </form>
             </div>

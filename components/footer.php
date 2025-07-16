@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-sm-6 col-12 footer-content">
                     <div class="logo-section">
-                        <img src="/assets/img/Lampung_coa.png" alt="Logo" class="footer-logo">
+                        <img src="<?= $base_url?>/assets/img/Lampung_coa.png" alt="Logo" class="footer-logo">
                     </div>
                     <div class="footer-text">
                         <p><?= isset($footerResult["footer_text"]) ? htmlspecialchars_decode($footerResult["footer_text"]): "" ; ?></p>
