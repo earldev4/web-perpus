@@ -8,6 +8,7 @@
     $result = $perpustakaan->displayCatalogBook();
     $books = $result['books'];
     $books_top = $result['books_top'];
+    $books_lend_top = $result['books_lend_top'];
 
     $result = $perpustakaan->getHomeHero();
     $heroText = $result['hero'];
@@ -54,6 +55,9 @@
     </div>
     <div class="bg-light px-5 pt-1 pb-5">
         <?php include 'components/carousel_topdownload.php'; ?>
+    </div>
+    <div class="bg-light px-5 pt-1 pb-5">
+        <?php include 'components/carousel_toplend.php'; ?>
     </div>
     <?php include 'components/stats.php'; ?>
 

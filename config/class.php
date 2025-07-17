@@ -107,9 +107,15 @@ class Perpustakaan{
         $stmt = $this->conn->prepare("SELECT * FROM buku ORDER BY download DESC LIMIT $topbooks");
         $stmt->execute();
         $books_top = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt = $this->conn->prepare("SELECT * FROM buku ORDER BY pinjam DESC LIMIT $topbooks");
+        $stmt->execute();
+        $books_lend_top = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         return [
             "books" => $books,
             "books_top" => $books_top,
+            "books_lend_top" => $books_lend_top,
             "total_pages" => $total_pages
         ];
     }
