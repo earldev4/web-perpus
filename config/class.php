@@ -46,10 +46,11 @@ class Perpustakaan{
     public function handleLogout($logout): array {
         session_unset();
         session_destroy();
+        $base_url = "/web-perpus";
         return [
             "status" => "success",
             "message" => "Logout Berhasil",
-            "redirect" => $logout
+            "redirect" => $base_url."/pages/login.php"
         ];
     }
     public function changePassword($data, $redirect): array {
