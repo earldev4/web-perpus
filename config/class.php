@@ -12,15 +12,14 @@ class Perpustakaan{
 
         if($username && $password){
             $sql = <<<SQL
-                SELECT * FROM user where nama_user = ? AND password_user = ?
+                SELECT * FROM user where nama_user = ?
             SQL;
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(1, $username);
-            $stmt->bindParam(2, $password);
             $stmt->execute();
             
-            $dataUser = $stmt->fetch();
-            if($dataUser){
+            $dataUser = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($dataUser && password_verify($password, $dataUser["password_user"])){
                 $_SESSION["nama_user"] = $dataUser["nama_user"];
                 $_SESSION["is_login"] = true;
                 $base_url = "/web-perpus";
@@ -65,19 +64,32 @@ class Perpustakaan{
             $stmt->bindParam(1, $id);
             $stmt->execute();
             $result =  $stmt->fetch(PDO::FETCH_ASSOC);
-            if($old_password == $result["password_user"]){
-                $sql = <<<SQL
-                    UPDATE user SET password_user = ? WHERE id_user = ?;
-                SQL;
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bindParam(1, $new_password);
-                $stmt->bindParam(2, $id);
-                $stmt->execute();
-                return [
-                    "status" => "success",
-                    "message" => "Password Berhasil Diubah",
-                    "redirect" => $redirect
-                ];
+            if($result && password_verify($old_password, $result["password_user"])){
+                try {
+                    $this->conn->beginTransaction();
+                    $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
+                    $sql = <<<SQL
+                        UPDATE user SET password_user = ? WHERE id_user = ?;
+                    SQL;
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bindParam(1, $hashed_new_password);
+                    $stmt->bindParam(2, $id);
+                    $stmt->execute();
+
+                    $this->conn->commit();
+                    return [
+                        "status" => "success",
+                        "message" => "Password Berhasil Diubah",
+                        "redirect" => $redirect
+                    ];
+                } catch (Exception $e) {
+                    $this->conn->rollBack();
+                    return [
+                        "status" => "error",
+                        "message" => "Terjadi kesalahan saat mengubah password: " . $e->getMessage(),
+                        "redirect" => ""
+                    ];
+                }
             } else {
                 return [
                     "status" => "error",
@@ -163,39 +175,49 @@ class Perpustakaan{
                     "redirect" => ""
                 ];
             } else {
-                $sql = <<<SQL
+                try{
+                    $this->conn->beginTransaction();
+                    $sql = <<<SQL
                     UPDATE buku SET pinjam = pinjam + 1 WHERE judul_buku = ?
-                SQL;
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bindParam(1, $judul_buku);
-                $stmt->execute();
-                $sql = <<<SQL
-                    INSERT INTO peminjaman (nama_peminjam, nip_peminjam, jabatan_peminjam, bidang_peminjam, judul_buku, tanggal_pengembalian, no_telp) VALUES (?, ?, ?, ?, ?, ?, ?);
-                SQL;
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bindParam(1, $nama_peminjam);
-                $stmt->bindParam(2, $nip_peminjam);
-                $stmt->bindParam(3, $jabatan_peminjam);
-                $stmt->bindParam(4, $bidang_peminjam);
-                $stmt->bindParam(5, $judul_buku);
-                $stmt->bindParam(6, $tanggal_pengembalian);
-                $stmt->bindParam(7, $no_telp);
-                $stmt->execute();
-                $base_url = "/web-perpus";
-                return [
-                    "status" => "success",
-                    "message" => "Peminjaman Buku Berhasil",
-                    "redirect" => "../index.php"
-                ];
+                    SQL;
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bindParam(1, $judul_buku);
+                    $stmt->execute();
+                    $sql = <<<SQL
+                        INSERT INTO peminjaman (nama_peminjam, nip_peminjam, jabatan_peminjam, bidang_peminjam, judul_buku, tanggal_pengembalian, no_telp) VALUES (?, ?, ?, ?, ?, ?, ?);
+                    SQL;
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bindParam(1, $nama_peminjam);
+                    $stmt->bindParam(2, $nip_peminjam);
+                    $stmt->bindParam(3, $jabatan_peminjam);
+                    $stmt->bindParam(4, $bidang_peminjam);
+                    $stmt->bindParam(5, $judul_buku);
+                    $stmt->bindParam(6, $tanggal_pengembalian);
+                    $stmt->bindParam(7, $no_telp);
+                    $stmt->execute();
+
+                    $this->conn->commit();
+                    return [
+                        "status" => "success",
+                        "message" => "Peminjaman Buku Berhasil",
+                        "redirect" => "../index.php"
+                    ];
+                } catch (Exception $e) {
+                    return [
+                        "status" => "error",
+                        "message" => "Terjadi error saat meminjam buku: " . $e->getMessage(),
+                        "redirect" => ""
+                    ];
+                }
             }
         } else {
+            $this->conn->rollBack();
             return [
                 "status" => "error",
                 "message" => "Data Tidak Boleh Kosong",
                 "redirect" => ""
             ];
         }
-
     }
     public function deleteUser($data): array {
         $id = $data["id_peminjaman"];
