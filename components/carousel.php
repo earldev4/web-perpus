@@ -11,7 +11,7 @@
                         <div class="swiper-slide">
                             <a href="./pages/detail.php?id=<?= htmlspecialchars($book['id_buku']) ?>" class="text-decoration-none">
                                 <div class="card" style="width: 18rem; min-height: 25rem; ">
-                                    <img src="assets/img/thumbnail/<?= $book["thumbnail_buku"]?>" alt="<?= htmlspecialchars($book["judul_buku"])?>" class="card-img-top img-fluid">
+                                    <img loading="lazy" src="assets/img/thumbnail/<?= $book["thumbnail_buku"]?>" alt="<?= htmlspecialchars($book["judul_buku"])?>" class="card-img-top img-fluid">
                                     <div class="card-body d-flex flex-column justify-content-around">
                                         <div>
                                             <h5 class="card-title"><?= isset($book["judul_buku"]) ? htmlspecialchars($book["judul_buku"]) : "Tidak ada judul buku"?></h5>
