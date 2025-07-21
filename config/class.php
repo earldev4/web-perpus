@@ -345,7 +345,7 @@ class Perpustakaan{
             $allowed = array('pdf');
             if($judul_buku && $lampiran_buku && $jenis_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $bahasa_buku && $isbn_buku){
                 if (in_array($file_ext_actual, $allowed)) {
-                    if($lampiran_buku_size < 50000000){
+                    if($lampiran_buku_size < 250000000){
                         try{
                             $this->conn->beginTransaction();
                             $sql = <<<SQL
@@ -421,7 +421,7 @@ class Perpustakaan{
                     } else {
                         return [
                             "status" => "error",
-                            "message" => "Ukuran File Terlalu Besar, Maksimal 50 MB",
+                            "message" => "Ukuran File Terlalu Besar, Maksimal 250 MB",
                             "redirect" => ""
                         ];
                     }
@@ -568,7 +568,7 @@ class Perpustakaan{
             if($id_buku && $id_informasi && $judul_buku && $kategori_buku && $pengarang_buku && $penerbit_buku && $jumlah_buku && $jumlah_halaman && $deskripsi_buku && $download_buku && $bahasa_buku && $isbn_buku){
                 if (!empty($lampiran_buku_name)) {
                     if (in_array($file_ext_actual, $allowed)) {
-                        if($lampiran_buku_size < 50000000){
+                        if($lampiran_buku_size < 250000000){
                             try {
                                 $this->conn->beginTransaction();
                                 $sql = <<<SQL
@@ -656,7 +656,7 @@ class Perpustakaan{
                         } else {
                             return [
                                 "status" => "error",
-                                "message" => "Ukuran File Terlalu Besar, Maksimal 15 MB",
+                                "message" => "Ukuran File Terlalu Besar, Maksimal 250 MB",
                                 "redirect" => ""
                             ];
                         }
